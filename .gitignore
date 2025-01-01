@@ -1,2 +1,4 @@
+# MacOS-specific config
+.DS_Store
 # Work-specific config
 work.zsh
