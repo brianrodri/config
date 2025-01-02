@@ -1,4 +1,4 @@
-DOT_FILES = tmux.conf zshrc
+DOT_FILES = tmux.conf zshrc p10k.zsh
 
 install: $(DOT_FILES)
 	git submodule init
