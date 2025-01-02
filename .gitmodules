@@ -10,7 +10,3 @@
 [submodule "oh-my-zsh/plugins/zsh-completions"]
 	path = oh-my-zsh/plugins/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions
-[submodule "oh-my-zsh/themes"]
-	path = oh-my-zsh/themes
-	url = https://github.com/brianrodri/agnoster-zsh-theme
-	branch = beta
