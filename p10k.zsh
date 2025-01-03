@@ -572,7 +572,7 @@
 
   #######################[ direnv: direnv status (https://direnv.net/) ]########################
   # Direnv color.
-  typeset -g POWERLEVEL9K_DIRENV_FOREGROUND="#dbbc7f"
+  typeset -g POWERLEVEL9K_DIRENV_FOREGROUND="#d3c6aa"
   typeset -g POWERLEVEL9K_DIRENV_BACKGROUND="#4b565c"
   # Custom icon.
   # typeset -g POWERLEVEL9K_DIRENV_VISUAL_IDENTIFIER_EXPANSION='⭐'
@@ -839,13 +839,13 @@
   typeset -g POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND="#a7c080"
   # Text and color for visual vi mode.
   typeset -g POWERLEVEL9K_VI_VISUAL_MODE_STRING=VISUAL
-  typeset -g POWERLEVEL9K_VI_MODE_VISUAL_BACKGROUND="#7fbbb3"
+  typeset -g POWERLEVEL9K_VI_MODE_VISUAL_BACKGROUND="#e67e80"
   # Text and color for overtype (a.k.a. overwrite and replace) vi mode.
   typeset -g POWERLEVEL9K_VI_OVERWRITE_MODE_STRING=OVERTYPE
   typeset -g POWERLEVEL9K_VI_MODE_OVERWRITE_BACKGROUND="#dbbc7f"
   # Text and color for insert vi mode.
   typeset -g POWERLEVEL9K_VI_INSERT_MODE_STRING=
-  typeset -g POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND="#4b565c"
+  typeset -g POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND="#d3c6aa"
   # Custom icon.
   # typeset -g POWERLEVEL9K_VI_MODE_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
