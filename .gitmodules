@@ -13,3 +13,6 @@
 [submodule "oh-my-zsh/themes"]
 	path = oh-my-zsh/themes
 	url = https://github.com/romkatv/powerlevel10k.git
+[submodule "nvim"]
+	path = nvim
+	url = https://github.com/brianrodri/nvim-config.git
