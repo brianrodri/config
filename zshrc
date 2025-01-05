@@ -13,7 +13,6 @@ export plugins=(
 	"alias-tips"
 	"common-aliases"
 	"direnv"
-	"fzf"
 	"gh"
 	"git"
 	"history"
@@ -23,10 +22,7 @@ export plugins=(
 	"zsh-completions"
 )
 
-# TODO: Find a plugin that does this for me.
-export FZF_BASE;
-FZF_BASE=$(dirname "$(which fzf)")
-# This is a command's output, not a file.
+# Set up fzf key bindings and fuzzy completion
 # shellcheck source=/dev/null
 source <(fzf --zsh)
 
