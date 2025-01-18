@@ -63,5 +63,28 @@ fetch_stash_count = true
 fetch_status = true
 branch_icon = " "
 
+[[blocks]]
+alignment = "left"
+type = "prompt"
+newline = true
+
+[[blocks.segments]]
+background = "p:background"
+foreground_templates = [
+  "{{ if gt .Code 0 }}red{{ end }}",
+  "{{ if eq .Code 0 }}green{{ end }}",
+]
+style = "plain"
+template = "❯ "
+type = "text"
+
+[transient_prompt]
+background = "transparent"
+foreground_templates = [
+  "{{ if gt .Code 0 }}red{{ end }}",
+  "{{ if eq .Code 0 }}green{{ end }}",
+]
+template = "❯ "
+
 [palette]
 background = "#272e33"
