@@ -32,7 +32,6 @@ background = "blue"
 foreground = "p:background"
 powerline_symbol = ""
 style = "powerline"
-template = " {{ .Path }} "
 type = "path"
 
 [blocks.segments.properties]
