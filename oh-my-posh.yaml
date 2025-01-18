@@ -6,27 +6,43 @@ blocks:
     type: prompt
     newline: true
     segments:
-      - foreground: white
-        style: plain
-        template: "{{.Icon}} "
+      - foreground: transparent
+        background: green
+        style: powerline
+        template: " {{.Icon}}"
         type: os
+      - foreground: transparent
+        background: green
+        style: powerline
+        template: " <b>{{ .UserName }}</b> "
+        type: session
       - foreground: green
-        style: plain
+        background: "#414b50"
+        powerline_symbol: ""
+        style: powerline
         type: path
-        template: " {{ .Path }}/ "
+        template: " {{ .Path }} "
         properties:
           home_icon: " "
           folder_icon: " "
           style: full
-      - foreground_templates:
+      - foreground: "#414b50"
+        background: "#2e383c"
+        style: accordion
+        powerline_symbol: ""
+        type: plain
+        template: " "
+      - background_templates:
           - "{{ if or (.Working.Changed) (.Staging.Changed) }}yellow{{ end }}"
           - "{{ if and (gt .Ahead 0) (gt .Behind 0) }}yellow{{ end }}"
           - "{{ if gt .Ahead 0 }}cyan{{ end }}"
           - "{{ if gt .Behind 0 }}cyan{{ end }}"
-        foreground: green
-        style: plain
+        foreground: "#2e383c"
+        background: green
+        powerline_symbol: " "
+        style: powerline
         template:
-          " {{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if
+          " <b>{{ .HEAD }}</b>{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if
           .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if
           .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt
           .StashCount 0 }}  {{ .StashCount }}{{ end }} "
