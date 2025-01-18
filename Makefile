@@ -1,4 +1,4 @@
-DOT_FILES = tmux.conf zshrc oh-my-posh.toml
+DOT_FILES = tmux.conf zshrc oh-my-posh.yaml
 
 install: $(DOT_FILES)
 	git submodule init
