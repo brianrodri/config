@@ -24,4 +24,4 @@ export plugins=(
 # shellcheck disable=SC1091
 [ -f "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 # https://ohmyposh.dev/docs/installation/prompt
-type "oh-my-posh" &>/dev/null && eval "$(oh-my-posh init zsh)"
+type "oh-my-posh" &>/dev/null && eval "$(oh-my-posh init zsh --config "$HOME/.oh-my-posh.toml")"
