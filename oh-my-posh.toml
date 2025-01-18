@@ -3,6 +3,20 @@ final_space = true
 version = 3
 
 [[blocks]]
+overflow = "hidden"
+type = "rprompt"
+
+[[blocks.segments]]
+background = "transparent"
+foreground_templates = [
+  "{{ if gt .Code 0 }}red{{ end }}",
+  "{{ if eq .Code 0 }}white{{ end }}",
+]
+style = "plain"
+template = "{{ .FormattedMs }}"
+type = "executiontime"
+
+[[blocks]]
 alignment = "left"
 type = "prompt"
 
