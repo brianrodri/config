@@ -17,14 +17,11 @@ export plugins=(
 	"sublime"
 	"sublime-merge"
 	"tmux"
-	"vi-mode"
 	"zsh-autosuggestions"
 	"zsh-completions"
+	"zsh-vi-mode"
 )
 # shellcheck disable=SC1091
 [ -f "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
-
 # https://ohmyposh.dev/docs/installation/prompt
-if type "oh-my-posh" &>/dev/null; then
-	eval "$(oh-my-posh init zsh --config "$HOME/.oh-my-posh.toml")"
-fi
+type "oh-my-posh" &>/dev/null && eval "$(oh-my-posh init zsh)"

@@ -3,25 +3,12 @@ final_space = true
 version = 3
 
 [[blocks]]
-overflow = "hidden"
-type = "rprompt"
+alignment = "left"
+type = "prompt"
+newline = true
 
 [[blocks.segments]]
 background = "transparent"
-foreground_templates = [
-  "{{ if gt .Code 0 }}red{{ end }}",
-  "{{ if eq .Code 0 }}white{{ end }}",
-]
-style = "plain"
-template = "{{ .FormattedMs }}"
-type = "executiontime"
-
-[[blocks]]
-alignment = "left"
-type = "prompt"
-
-[[blocks.segments]]
-background = "p:background"
 foreground = "white"
 style = "powerline"
 template = " {{.Icon}} "
@@ -29,7 +16,7 @@ type = "os"
 
 [[blocks.segments]]
 background = "blue"
-foreground = "p:background"
+foreground = "transparent"
 powerline_symbol = ""
 style = "powerline"
 type = "path"
@@ -45,7 +32,7 @@ background_templates = [
   "{{ if gt .Ahead 0 }}magenta{{ end }}",
   "{{ if gt .Behind 0 }}magenta{{ end }}",
 ]
-foreground = "p:background"
+foreground = "transparent"
 powerline_symbol = ""
 style = "powerline"
 template = """ \
@@ -68,7 +55,7 @@ type = "prompt"
 newline = true
 
 [[blocks.segments]]
-background = "p:background"
+background = "transparent"
 foreground_templates = [
   "{{ if gt .Code 0 }}red{{ end }}",
   "{{ if eq .Code 0 }}green{{ end }}",
@@ -77,13 +64,27 @@ style = "plain"
 template = "❯ "
 type = "text"
 
+[[blocks]]
+overflow = "hidden"
+type = "rprompt"
+newline = true
+
+[[blocks.segments]]
+background = "transparent"
+foreground_templates = [
+  "{{ if gt .Code 0 }}red{{ end }}",
+  "{{ if eq .Code 0 }}white{{ end }}",
+]
+style = "text"
+template = "{{ .FormattedMs }}"
+type = "executiontime"
+
 [transient_prompt]
 background = "transparent"
 foreground_templates = [
   "{{ if gt .Code 0 }}red{{ end }}",
   "{{ if eq .Code 0 }}green{{ end }}",
 ]
-template = "❯ "
-
-[palette]
-background = "#272e33"
+style = "plain"
+template = "❯  "
+type = "text"
