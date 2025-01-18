@@ -21,7 +21,7 @@ alignment = "left"
 type = "prompt"
 
 [[blocks.segments]]
-background = "#272e33"
+background = "p:background"
 foreground = "white"
 style = "powerline"
 template = " {{.Icon}} "
@@ -29,7 +29,7 @@ type = "os"
 
 [[blocks.segments]]
 background = "blue"
-foreground = "#272e33"
+foreground = "p:background"
 powerline_symbol = ""
 style = "powerline"
 template = " {{ .Path }} "
@@ -46,7 +46,7 @@ background_templates = [
   "{{ if gt .Ahead 0 }}magenta{{ end }}",
   "{{ if gt .Behind 0 }}magenta{{ end }}",
 ]
-foreground = "#272e33"
+foreground = "p:background"
 powerline_symbol = ""
 style = "powerline"
 template = """ \
@@ -62,3 +62,6 @@ type = "git"
 fetch_stash_count = true
 fetch_status = true
 branch_icon = " "
+
+[palette]
+background = "#272e33"
