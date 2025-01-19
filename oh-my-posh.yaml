@@ -12,7 +12,7 @@ blocks:
         background: green
         background_templates:
           - "{{ if .Root }}red{{ end }}"
-        template: " {{ if .SSHSession }}󰱠 {{ else }}󰆍 {{ end }}<b>{{ .UserName }}</b> "
+        template: "{{ if .Root }} 󱐋 {{ else }}  {{ end }}<b>{{ .UserName }}</b> "
 
       - type: path
         style: powerline
