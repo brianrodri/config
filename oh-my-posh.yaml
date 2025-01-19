@@ -12,7 +12,7 @@ blocks:
         background: green
         background_templates:
           - "{{ if .Root }}red{{ end }}"
-        template: " {{ if .SSHSession }} {{ end }}<b>{{ .HostName }}</b> "
+        template: " {{ if .SSHSession }}󰱠 {{ else }}󰆍 {{ end }}<b>{{ .UserName }}</b> "
 
       - type: path
         style: powerline
@@ -24,6 +24,12 @@ blocks:
           home_icon: " "
           folder_icon: " "
           style: full
+
+      - type: git
+        style: "accordian"
+        powerline_symbol: 
+        foreground: transparent
+        background: transparent
 
       - type: git
         style: powerline
