@@ -6,20 +6,13 @@ blocks:
     alignment: left
     newline: true
     segments:
-      - type: os
-        style: powerline
-        foreground: white
-        background: transparent
-        template: " {{ .Icon }} "
-
       - type: session
         style: powerline
-        powerline_symbol: 
         foreground: transparent
         background: green
         background_templates:
           - "{{ if .Root }}red{{ end }}"
-        template: " <b>{{ if .SSHSession }} {{ end }}{{ .UserName }}</b> "
+        template: " {{ if .SSHSession }} {{ end }}<b>{{ .HostName }}</b> "
 
       - type: path
         style: powerline
@@ -42,12 +35,12 @@ blocks:
           - "{{ if and (gt .Ahead 0) (gt .Behind 0) }}red{{ end }}"
           - "{{ if gt .Ahead 0 }}cyan{{ end }}"
           - "{{ if gt .Behind 0 }}cyan{{ end }}"
-        template: >
-          <b> {{ .HEAD }} </b>
-          {{- if .BranchStatus }}{{ .BranchStatus }} {{ end -}}
-          {{- if .Working.Changed }} {{ .Working.String }} {{ end -}}
-          {{- if .Staging.Changed }} {{ .Staging.String }} {{ end -}}
-          {{- if gt .StashCount 0 }}󱈎 {{ .StashCount }} {{ end -}}
+        templates:
+          - " <b>{{ .HEAD }}</b> "
+          - "{{ if .BranchStatus }}{{ .BranchStatus }} {{ end }}"
+          - "{{ if .Working.Changed }} {{ .Working.String }} {{ end }}"
+          - "{{ if .Staging.Changed }} {{ .Staging.String }} {{ end }}"
+          - "{{ if gt .StashCount 0 }}󱈎 {{ .StashCount }} {{ end }}"
         properties:
           branch_icon: " "
           fetch_stash_count: true
@@ -59,9 +52,9 @@ blocks:
     segments:
       - type: text
         style: plain
+        foreground: green
         foreground_templates:
-          - "{{ if gt .Code 0 }}red{{ end }}"
-          - "{{ if eq .Code 0 }}green{{ end }}"
+          - "{{ if ne .Code 0 }}red{{ end }}"
         template: ❯
 
   - type: rprompt
@@ -73,7 +66,6 @@ blocks:
         foreground: yellow
         foreground_templates:
           - "{{ if gt .Code 0 }}red{{ end }}"
-          - "{{ if eq .Code 0 }}yellow{{ end }}"
         template: "{{ .FormattedMs }}  "
         properties:
           threshold: 1000
@@ -86,18 +78,18 @@ blocks:
         background_templates:
           - "{{ if lt .Percentage 20 }}red{{ end }}"
           - "{{ if lt .Percentage 50 }}yellow{{ end }}"
-        template: >-
-          {{ if not .Error }}{{ if le .Percentage 10 }}{{ if eq "Charging" .State.String }} 󰢜{{ else }} 󰁺{{ end }}
-          {{ else if le .Percentage 20 }}{{ if eq "Charging" .State.String }} 󰂆{{ else }} 󰁻{{ end }}
-          {{ else if le .Percentage 30 }}{{ if eq "Charging" .State.String }} 󰂇{{ else }} 󰁼{{ end }}
-          {{ else if le .Percentage 40 }}{{ if eq "Charging" .State.String }} 󰂈{{ else }} 󰁽{{ end }}
-          {{ else if le .Percentage 50 }}{{ if eq "Charging" .State.String }} 󰢝{{ else }} 󰁾{{ end }}
-          {{ else if le .Percentage 60 }}{{ if eq "Charging" .State.String }} 󰂉{{ else }} 󰁿{{ end }}
-          {{ else if le .Percentage 70 }}{{ if eq "Charging" .State.String }} 󰢞{{ else }} 󰂀{{ end }}
-          {{ else if le .Percentage 80 }}{{ if eq "Charging" .State.String }} 󰂊{{ else }} 󰂁{{ end }}
-          {{ else if le .Percentage 90 }}{{ if eq "Charging" .State.String }} 󰂋{{ else }} 󰂂{{ end }}
-          {{ else if eq "Full" .State.String }} 󰚥{{ else if eq "Charging" .State.String }} 󰂅{{ else }} 󰁹{{ end }}
-          <b>{{ .Percentage }}% </b>{{ end }}
+        templates:
+          - '{{ if le .Percentage 10 }}{{ if eq "Charging" .State.String }} 󰢜 {{ else }} 󰁺 {{ end }}{{ end }}'
+          - '{{ if le .Percentage 20 }}{{ if eq "Charging" .State.String }} 󰂆 {{ else }} 󰁻 {{ end }}{{ end }}'
+          - '{{ if le .Percentage 30 }}{{ if eq "Charging" .State.String }} 󰂇 {{ else }} 󰁼 {{ end }}{{ end }}'
+          - '{{ if le .Percentage 40 }}{{ if eq "Charging" .State.String }} 󰂈 {{ else }} 󰁽 {{ end }}{{ end }}'
+          - '{{ if le .Percentage 50 }}{{ if eq "Charging" .State.String }} 󰢝 {{ else }} 󰁾 {{ end }}{{ end }}'
+          - '{{ if le .Percentage 60 }}{{ if eq "Charging" .State.String }} 󰂉 {{ else }} 󰁿 {{ end }}{{ end }}'
+          - '{{ if le .Percentage 70 }}{{ if eq "Charging" .State.String }} 󰢞 {{ else }} 󰂀 {{ end }}{{ end }}'
+          - '{{ if le .Percentage 80 }}{{ if eq "Charging" .State.String }} 󰂊 {{ else }} 󰂁 {{ end }}{{ end }}'
+          - '{{ if le .Percentage 90 }}{{ if eq "Charging" .State.String }} 󰂋 {{ else }} 󰂂 {{ end }}{{ end }}'
+          - '{{ if eq "Full" .State.String }} 󰚥 {{ else if eq "Charging" .State.String }} 󰂅 {{ else }} 󰁹 {{ end }}'
+          - "<b>{{ .Percentage }}% </b>"
 
 transient_prompt:
   type: text
