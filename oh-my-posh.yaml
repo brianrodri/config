@@ -47,17 +47,6 @@ blocks:
           fetch_status: true
 
   - type: prompt
-    alignment: left
-    newline: true
-    segments:
-      - type: text
-        style: plain
-        foreground: green
-        foreground_templates:
-          - "{{ if ne .Code 0 }}red{{ end }}"
-        template: ❯
-
-  - type: rprompt
     alignment: right
     overflow: hidden
     segments:
@@ -90,6 +79,17 @@ blocks:
           - '{{ if le .Percentage 90 }}{{ if eq "Charging" .State.String }} 󰂋 {{ else }} 󰂂 {{ end }}{{ end }}'
           - '{{ if eq "Full" .State.String }} 󰚥 {{ else if eq "Charging" .State.String }} 󰂅 {{ else }} 󰁹 {{ end }}'
           - "<b>{{ .Percentage }}% </b>"
+
+  - type: prompt
+    alignment: left
+    newline: true
+    segments:
+      - type: text
+        style: plain
+        foreground: green
+        foreground_templates:
+          - "{{ if ne .Code 0 }}red{{ end }}"
+        template: ❯
 
 transient_prompt:
   type: text
