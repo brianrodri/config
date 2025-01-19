@@ -74,17 +74,17 @@ blocks:
           - "{{ if lt .Percentage 20 }}red{{ end }}"
           - "{{ if lt .Percentage 50 }}yellow{{ end }}"
         templates:
-          - '{{ if le .Percentage 10 }}{{ if eq "Charging" .State.String }} 󰢜 {{ else }} 󰁺 {{ end }}{{ end }}'
-          - '{{ if le .Percentage 20 }}{{ if eq "Charging" .State.String }} 󰂆 {{ else }} 󰁻 {{ end }}{{ end }}'
-          - '{{ if le .Percentage 30 }}{{ if eq "Charging" .State.String }} 󰂇 {{ else }} 󰁼 {{ end }}{{ end }}'
-          - '{{ if le .Percentage 40 }}{{ if eq "Charging" .State.String }} 󰂈 {{ else }} 󰁽 {{ end }}{{ end }}'
-          - '{{ if le .Percentage 50 }}{{ if eq "Charging" .State.String }} 󰢝 {{ else }} 󰁾 {{ end }}{{ end }}'
-          - '{{ if le .Percentage 60 }}{{ if eq "Charging" .State.String }} 󰂉 {{ else }} 󰁿 {{ end }}{{ end }}'
-          - '{{ if le .Percentage 70 }}{{ if eq "Charging" .State.String }} 󰢞 {{ else }} 󰂀 {{ end }}{{ end }}'
-          - '{{ if le .Percentage 80 }}{{ if eq "Charging" .State.String }} 󰂊 {{ else }} 󰂁 {{ end }}{{ end }}'
-          - '{{ if le .Percentage 90 }}{{ if eq "Charging" .State.String }} 󰂋 {{ else }} 󰂂 {{ end }}{{ end }}'
-          - '{{ if eq "Full" .State.String }} 󰚥 {{ else if eq "Charging" .State.String }} 󰂅 {{ else }} 󰁹 {{ end }}'
-          - "<b>{{ .Percentage }}% </b>"
+          - '{{ if le .Percentage 10 -}}            {{- if eq .State.String "Charging" }} 󰢜 {{ else }} 󰁺 {{ end }}{{ .Percentage }}% {{ end }}'
+          - '{{ if le .Percentage 20 -}}            {{- if eq .State.String "Charging" }} 󰂆 {{ else }} 󰁻 {{ end }}{{ .Percentage }}% {{ end }}'
+          - '{{ if le .Percentage 30 -}}            {{- if eq .State.String "Charging" }} 󰂇 {{ else }} 󰁼 {{ end }}{{ .Percentage }}% {{ end }}'
+          - '{{ if le .Percentage 40 -}}            {{- if eq .State.String "Charging" }} 󰂈 {{ else }} 󰁽 {{ end }}{{ .Percentage }}% {{ end }}'
+          - '{{ if le .Percentage 50 -}}            {{- if eq .State.String "Charging" }} 󰢝 {{ else }} 󰁾 {{ end }}{{ .Percentage }}% {{ end }}'
+          - '{{ if le .Percentage 60 -}}            {{- if eq .State.String "Charging" }} 󰂉 {{ else }} 󰁿 {{ end }}{{ .Percentage }}% {{ end }}'
+          - '{{ if le .Percentage 70 -}}            {{- if eq .State.String "Charging" }} 󰢞 {{ else }} 󰂀 {{ end }}{{ .Percentage }}% {{ end }}'
+          - '{{ if le .Percentage 80 -}}            {{- if eq .State.String "Charging" }} 󰂊 {{ else }} 󰂁 {{ end }}{{ .Percentage }}% {{ end }}'
+          - '{{ if le .Percentage 90 -}}            {{- if eq .State.String "Charging" }} 󰂋 {{ else }} 󰂂 {{ end }}{{ .Percentage }}% {{ end }}'
+          - '{{ if eq .State.String "Full" }} 󰚥 {{ else if eq .State.String "Charging" }} 󰂅 {{ else }} 󰁹 {{ end }}{{ .Percentage }}% {{ end }}'
+        templates_logic: first_match
 
   - type: prompt
     alignment: left
