@@ -90,7 +90,7 @@ blocks:
           - '{{ if le .Percentage 70 -}}            {{- if eq .State.String "Charging" }} 󰢞 {{ else }} 󰂀 {{ end }}{{ .Percentage }}% {{ end }}'
           - '{{ if le .Percentage 80 -}}            {{- if eq .State.String "Charging" }} 󰂊 {{ else }} 󰂁 {{ end }}{{ .Percentage }}% {{ end }}'
           - '{{ if le .Percentage 90 -}}            {{- if eq .State.String "Charging" }} 󰂋 {{ else }} 󰂂 {{ end }}{{ .Percentage }}% {{ end }}'
-          - '{{ if eq .State.String "Full" }} 󰚥 {{ else if eq .State.String "Charging" }} 󰂅 {{ else }} 󰁹 {{ end }}{{ .Percentage }}% {{ end }}'
+          - '{{ if eq .State.String "Full" }} 󰚥 {{ else if eq .State.String "Charging" }} 󰂅 {{ else }} 󰁹 {{ end }}{{ .Percentage }}% '
         templates_logic: first_match
 
   - type: prompt
