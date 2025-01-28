@@ -79,8 +79,8 @@ blocks:
         background: green
         background_templates:
           - '{{ if eq .State.String "Charging" }}green{{ end }}'
-          - "{{ if lt .Percentage 20 }}red{{ end }}"
-          - "{{ if lt .Percentage 50 }}yellow{{ end }}"
+          - "{{ if le .Percentage 20 }}red{{ end }}"
+          - "{{ if le .Percentage 50 }}yellow{{ end }}"
         templates:
           - '{{ if le .Percentage 10 -}}            {{- if eq .State.String "Charging" }} 󰢜 {{ else }} 󰁺 {{ end }}{{ .Percentage }}% {{ end }}'
           - '{{ if le .Percentage 20 -}}            {{- if eq .State.String "Charging" }} 󰂆 {{ else }} 󰁻 {{ end }}{{ .Percentage }}% {{ end }}'
