@@ -16,3 +16,6 @@
 [submodule "oh-my-zsh/plugins/zsh-vi-mode"]
 	path = oh-my-zsh/plugins/zsh-vi-mode
 	url = https://github.com/jeffreytse/zsh-vi-mode
+[submodule "godot/godot-minimal-theme"]
+	path = godot/godot-minimal-theme
+	url = https://github.com/passivestar/godot-minimal-theme
