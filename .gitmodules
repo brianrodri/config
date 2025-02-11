@@ -19,3 +19,6 @@
 [submodule "godot/godot-minimal-theme"]
 	path = godot/godot-minimal-theme
 	url = https://github.com/passivestar/godot-minimal-theme
+[submodule "godot/godot-syntax-themes"]
+	path = godot/godot-syntax-themes
+	url = https://github.com/godotengine/godot-syntax-themes
