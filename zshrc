@@ -1,5 +1,6 @@
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_CUSTOM="$HOME/Repositories/config/oh-my-zsh"
+export ZSH_TMUX_AUTOSTART=true
 export plugins=(
 	"F-Sy-H"
 	"alias-tips"
