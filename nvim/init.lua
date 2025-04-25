@@ -1,0 +1,5 @@
+require("config.lazy-bootstrap")
+require("config.options")
+require("config.autocmds")
+require("lazy").setup({ import = "plugins" })
+require("config.keymaps").set_global_keymaps()

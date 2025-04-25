@@ -26,3 +26,5 @@ export plugins=(
 [ -f "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 # https://ohmyposh.dev/docs/installation/prompt
 type "oh-my-posh" &>/dev/null && eval "$(oh-my-posh init zsh --config "$HOME/.oh-my-posh.yaml")"
+
+eval "$(perl -I$HOME/.perl5/lib/perl5 -Mlocal::lib=$HOME/.perl5)"
