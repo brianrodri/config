@@ -33,9 +33,10 @@ return {
                 ---@type snacks.dashboard.Item[]
                 keys = {
                     { icon = "󰝒 ", key = "n", desc = "New File", action = ":ene | startinsert" },
-                    { icon = "󱋡 ", key = "r", desc = "Recent Files", action = ":Telescope oldfiles" },
-                    { icon = "󰱼 ", key = "f", desc = "Find File", action = ":Telescope find_files" },
-                    { icon = "󱎸 ", key = "/", desc = "Find Text", action = ":Telescope oldfiles" },
+                    { icon = "󱋡 ", key = "l", desc = "Recent Files", action = ":Telescope oldfiles" },
+                    { icon = " ", key = "c", desc = "Config Files", action = ":Telescope find_files search_dirs=" .. vim.fn.stdpath("config") },
+                    { icon = "󰱼 ", key = "f", desc = "Files", action = ":Telescope find_files" },
+                    { icon = "󱎸 ", key = "/", desc = "Lines", action = ":Telescope live_grep" },
                     { icon = " ", key = "g", desc = "Lazygit", action = ":lua Snacks.lazygit()" },
                     { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
                     { icon = " ", key = "q", desc = "Quit", action = ":qa" },
