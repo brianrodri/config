@@ -18,7 +18,6 @@ end
 
 return { -- Autoformat
     "stevearc/conform.nvim",
-    dependencies = { "folke/snacks.nvim" },
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
     keys = function() return keymaps.set_formatter_keymaps(is_enabled, set_enabled) end,
