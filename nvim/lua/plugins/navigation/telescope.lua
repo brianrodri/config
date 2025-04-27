@@ -20,7 +20,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
             },
         },
     },
-    keys = keymaps.set_telescope_keymaps,
+    keys = keymaps.get_telescope_mappings,
     init = function()
         local load_extension = require("telescope").load_extension
         pcall(load_extension, "nerdy")

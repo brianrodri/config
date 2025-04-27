@@ -3,9 +3,9 @@ local M = {}
 function M.set_formatter_keymaps(get, set)
     local conform = require("conform")
     local snacks = require("snacks")
-    require("which-key").add({ "<leader>cf", function() conform.format({ lsp_format = "fallback" }) end, desc = "Format buffer" })
-    snacks.toggle({ name = "Auto Format (buffer)", get = get, set = function(enable) set(enable, false) end }):map("<leader>of")
-    snacks.toggle({ name = "Auto Format (global)", get = get, set = function(enable) set(enable, true) end }):map("<leader>oF")
+    require("which-key").add({ "<leader>cq", function() conform.format({ lsp_format = "fallback" }) end, desc = "Format Buffer" })
+    snacks.toggle({ name = "Auto Format (buffer)", get = get, set = function(enable) set(enable, false) end }):map("<leader>oq")
+    snacks.toggle({ name = "Auto Format (global)", get = get, set = function(enable) set(enable, true) end }):map("<leader>oQ")
 end
 
 function M.set_toggle_keymaps()
@@ -26,10 +26,7 @@ function M.set_global_keymaps()
     local snacks = require("snacks")
     require("which-key").add({
         { "<esc>", function() vim.cmd([[nohlsearch]]) end },
-
-        { "<leader>q", group = "quit" },
-        { "<leader>qq", ":qa!<CR>", desc = "Quit without saving" },
-        { "<leader>qw", ":wqa!<CR>", desc = "Save all and quit" },
+        { "ZA", ":qa!<CR>", desc = "Quit Without Saving" },
 
         { "<leader>b", group = "buffer" },
         { "<leader>bd", function() snacks.bufdelete.delete() end },
@@ -43,18 +40,18 @@ function M.set_dap_keymaps()
     local widgets = require("dap.ui.widgets")
     require("which-key").add({
         { "<leader>d", group = "debug" },
-        { "<leader>dn", function() dap.continue() end, desc = "Start/Resume debug session" },
-        { "<leader>d.", function() dap.run_last() end, desc = "Restart debug session" },
-        { "<leader>dl", function() dap.step_over() end, desc = "Step over" },
-        { "<leader>dj", function() dap.step_into() end, desc = "Step into" },
-        { "<leader>dk", function() dap.step_out() end, desc = "Step out" },
-        { "<leader>dr", function() dap.repl.toggle() end, desc = "Toggle debug REPL" },
-        { "<leader>db", function() dap.toggle_breakpoint() end, desc = "Toggle breakpoint" },
-        { "<leader>du", function() dapui.toggle() end, desc = "Toggle DAPUI" },
-        { "<leader>dK", function() widgets.hover() end, desc = "Show hover", mode = { "n", "v" } },
-        { "<leader>dp", function() widgets.preview() end, desc = "Show preview", mode = { "n", "v" } },
-        { "<leader>df", function() widgets.centered_float(widgets.frames) end, desc = "Show frames" },
-        { "<leader>ds", function() widgets.centered_float(widgets.scopes) end, desc = "Show scopes" },
+        { "<leader>dn", function() dap.continue() end, desc = "Start/Resume" },
+        { "<leader>d.", function() dap.run_last() end, desc = "Restart" },
+        { "<leader>dl", function() dap.step_over() end, desc = "Step Over" },
+        { "<leader>dj", function() dap.step_into() end, desc = "Step Into" },
+        { "<leader>dk", function() dap.step_out() end, desc = "Step Out" },
+        { "<leader>dr", function() dap.repl.toggle() end, desc = "Toggle REPL" },
+        { "<leader>db", function() dap.toggle_breakpoint() end, desc = "Toggle Breakpoint" },
+        { "<leader>du", function() dapui.toggle() end, desc = "Toggle UI" },
+        { "<leader>dK", function() widgets.hover() end, desc = "Show Hover", mode = { "n", "v" } },
+        { "<leader>dp", function() widgets.preview() end, desc = "Show Preview", mode = { "n", "v" } },
+        { "<leader>df", function() widgets.centered_float(widgets.frames) end, desc = "Show Frames" },
+        { "<leader>ds", function() widgets.centered_float(widgets.scopes) end, desc = "Show Scopes" },
     })
 end
 
@@ -65,80 +62,80 @@ function M.set_git_keymaps(bufnr)
     local snacks_lazygit = require("snacks.lazygit")
 
     which_key.add({
-        -- Finding
-        { "<leader>fg", function() telescope_builtin.git_files() end, desc = "Find git files" },
-        { "<leader>fG", function() telescope_builtin.git_status() end, desc = "Find changed git files" },
+        { "<leader>fg", function() telescope_builtin.git_files() end, desc = "Find Git Files" },
+        { "<leader>fG", function() telescope_builtin.git_status() end, desc = "Find Changed Git Files" },
 
-        -- Motions
-        { "]g", function() gitsigns.nav_hunk("next") end, desc = "Jump to next hunk" },
-        { "[g", function() gitsigns.nav_hunk("prev") end, desc = "Jump to previous hunk" },
+        { "]g", function() gitsigns.nav_hunk("next") end, desc = "Jump To Next Hunk" },
+        { "[g", function() gitsigns.nav_hunk("prev") end, desc = "Jump To Previous Hunk" },
 
-        -- Interfaces
         { "<leader>g", group = "git" },
         { "<leader>gg", function() snacks_lazygit.open() end, desc = "Lazygit" },
-        { "<leader>ga", function() gitsigns.stage_hunk() end, desc = "Stage hunk" },
-        { "<leader>gr", function() gitsigns.reset_hunk() end, desc = "Reset hunk" },
-        { "<leader>gA", function() gitsigns.stage_buffer() end, desc = "Stage buffer" },
-        { "<leader>gR", function() gitsigns.reset_buffer() end, desc = "Reset buffer" },
-        { "<leader>gp", function() gitsigns.preview_hunk_inline() end, desc = "Preview hunk (inline)" },
-        { "<leader>gP", function() gitsigns.preview_hunk() end, desc = "Preview hunk" },
-        { "<leader>gd", function() gitsigns.diffthis() end, desc = "Diff against index" },
-        { "<leader>gD", function() gitsigns.diffthis("main") end, desc = "Diff against main" },
-        { "<leader>gb", function() gitsigns.toggle_current_line_blame() end, desc = "Toggle blame" },
+        { "<leader>ga", function() gitsigns.stage_hunk() end, desc = "Stage Hunk" },
+        { "<leader>gr", function() gitsigns.reset_hunk() end, desc = "Reset Hunk" },
+        { "<leader>gA", function() gitsigns.stage_buffer() end, desc = "Stage Buffer" },
+        { "<leader>gR", function() gitsigns.reset_buffer() end, desc = "Reset Buffer" },
+        { "<leader>gp", function() gitsigns.preview_hunk_inline() end, desc = "Preview Hunk (inline)" },
+        { "<leader>gP", function() gitsigns.preview_hunk() end, desc = "Preview Hunk" },
+        { "<leader>gd", function() gitsigns.diffthis() end, desc = "Diff Against Index" },
+        { "<leader>gD", function() gitsigns.diffthis("main") end, desc = "Diff Against Main" },
+        { "<leader>gb", function() gitsigns.toggle_current_line_blame() end, desc = "Toggle Blame" },
 
-        { "<leader>ga", function() gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, desc = "git [s]tage hunk", mode = "v" },
-        { "<leader>gr", function() gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, desc = "git [r]eset hunk", mode = "v" },
+        { "<leader>ga", function() gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, desc = "Stage Hunk", mode = "v" },
+        { "<leader>gr", function() gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, desc = "Reset Hunk", mode = "v" },
     }, { buffer = bufnr })
 end
 
 function M.set_lsp_keymaps(client, event)
-    local builtins = require("telescope.builtin")
+    local telescope_builtin = require("telescope.builtin")
     local snacks = require("snacks")
     require("which-key").add({
         { "<leader>c", group = "code" },
-        { "<leader>cr", function() vim.lsp.buf.rename() end, desc = "Rename symbol", buffer = event.buf },
-        { "<leader>ca", function() vim.lsp.buf.code_action() end, desc = "Code action", mode = { "n", "x" }, buffer = event.buf },
-        { "<leader>c*", function() builtins.lsp_references() end, desc = "Symbol references", buffer = event.buf },
-        { "<leader>cd", function() builtins.lsp_definitions() end, desc = "Symbol definition", buffer = event.buf },
-        { "<leader>ci", function() vim.lsp.buf.declaration() end, desc = "Symbol declaration", buffer = event.buf },
-        { "<leader>cI", function() builtins.lsp_implementations() end, desc = "Symbol implementation", buffer = event.buf },
-        { "<leader>cy", function() builtins.lsp_type_definitions() end, desc = "[G]oto [T]ype Definition", buffer = event.buf },
-
-        { "<leader>c/", function() builtins.lsp_document_symbols() end, desc = "Find document symbols", buffer = event.buf },
-        { "<leader>fw", function() builtins.lsp_dynamic_workspace_symbols() end, desc = "Find workspace symbols", buffer = event.buf },
+        { "<leader>cr", function() vim.lsp.buf.rename() end, desc = "Rename Symbol", buffer = event.buf },
+        { "<leader>ca", function() vim.lsp.buf.code_action() end, desc = "Code Action", mode = { "n", "x" }, buffer = event.buf },
+        { "<leader>ci", function() telescope_builtin.lsp_incoming_calls() end, desc = "Incoming Calls", buffer = event.buf },
+        { "<leader>co", function() telescope_builtin.lsp_outgoing_calls() end, desc = "Outgoing Calls", buffer = event.buf },
+        { "<leader>c*", function() telescope_builtin.lsp_references() end, desc = "References", buffer = event.buf },
+        { "<leader>cd", function() vim.lsp.buf.declaration() end, desc = "Declaration", buffer = event.buf },
+        { "<leader>cD", function() telescope_builtin.lsp_definitions() end, desc = "Definitions", buffer = event.buf },
+        { "<leader>cy", function() telescope_builtin.lsp_implementations() end, desc = "Implementations", buffer = event.buf },
+        { "<leader>cY", function() telescope_builtin.lsp_type_definitions() end, desc = "Type Definitions", buffer = event.buf },
+        { "<leader>cf", function() telescope_builtin.lsp_document_symbols() end, desc = "Document Symbols", buffer = event.buf },
+        { "<leader>cF", function() telescope_builtin.lsp_dynamic_workspace_symbols() end, desc = "Workspace Symbols", buffer = event.buf },
     })
 
     if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then snacks.toggle.inlay_hints():map("<leader>oh") end
 end
 
-function M.set_telescope_keymaps()
+function M.get_telescope_mappings()
     local telescope = require("telescope")
     local telescope_builtin = require("telescope.builtin")
-    require("which-key").add({
+    return {
         { "<leader>f", group = "find", icon = "" },
-        { "<leader>f?", function() telescope_builtin.help_tags() end, desc = "Find help docs" },
-        { "<leader>f.", function() telescope_builtin.resume() end, desc = "Resume last search" },
-        { "<leader>f*", function() telescope_builtin.grep_string() end, desc = "Find word under cursor" },
-        { "<leader>f/", function() telescope_builtin.live_grep() end, desc = "Grep files with input pattern" },
-        { "<leader>fb", function() telescope_builtin.buffers() end, desc = "Find buffers" },
-        { "<leader>fc", function() telescope_builtin.find_files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find nvim config" },
-        { "<leader>fd", function() telescope_builtin.diagnostics() end, desc = "Find workspace diagnostics" },
-        { "<leader>ff", function() telescope_builtin.find_files() end, desc = "Find files in current directory" },
-        { "<leader>fk", function() telescope_builtin.keymaps() end, desc = "Find keymaps" },
-        { "<leader>fl", function() telescope_builtin.oldfiles() end, desc = "Find last opened files" },
-        { "<leader>fs", function() telescope_builtin.builtin() end, desc = "Find telescope builtins" },
-        { "<leader>fi", function() telescope.extensions.nerdy.nerdy() end, desc = "Find nerd font icons" },
-    })
+        { "<leader>f.", function() telescope_builtin.resume() end, desc = "Resume Finding" },
+        { "<leader>f?", function() telescope_builtin.help_tags() end, desc = "Find Help Docs" },
+        { "<leader>f*", function() telescope_builtin.grep_string() end, desc = "Find Word Under Cursor" },
+        { "<leader>f/", function() telescope_builtin.live_grep() end, desc = "Find Lines With Grep" },
+        { "<leader>f:", function() telescope_builtin.commands() end, desc = "Find Commands" },
+        { "<leader>fb", function() telescope_builtin.buffers() end, desc = "Find Buffers" },
+        { "<leader>fc", function() telescope_builtin.find_files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config Files" },
+        { "<leader>fd", function() telescope_builtin.diagnostics() end, desc = "Find Diagnostics" },
+        { "<leader>ff", function() telescope_builtin.find_files() end, desc = "Find Files" },
+        { "<leader>fk", function() telescope_builtin.keymaps() end, desc = "Find Keymaps" },
+        { "<leader>fl", function() telescope_builtin.oldfiles() end, desc = "Find Recent Files" },
+        { "<leader>fs", function() telescope_builtin.builtin() end, desc = "Find Telescope Builtins" },
+        { "<leader>fi", function() telescope.extensions.nerdy.nerdy() end, desc = "Find Nerd Font Icons" },
+        { "<leader>fz", function() telescope_builtin.spell_suggest() end, desc = "Find Spelling Suggestions" },
+    }
 end
 
 function M.set_neo_tree_keymaps()
     local neotree_command = require("neo-tree.command")
     require("which-key").add({
         { "<leader>n", group = "neotree", icon = "󰙅 " },
-        { "<leader>nf", function() neotree_command.execute({ source = "filesystem", toggle = true }) end, desc = "Open file system tree" },
-        { "<leader>nb", function() neotree_command.execute({ source = "buffers", toggle = true }) end, desc = "Open buffers tree" },
-        { "<leader>ng", function() neotree_command.execute({ source = "git_status", toggle = true }) end, desc = "Open git status tree" },
-        { "<leader>nm", function() neotree_command.execute({ source = "migrations", toggle = true }) end, desc = "Open migration tree" },
+        { "<leader>nf", function() neotree_command.execute({ source = "filesystem", toggle = true }) end, desc = "Open File System Tree" },
+        { "<leader>nb", function() neotree_command.execute({ source = "buffers", toggle = true }) end, desc = "Open Buffers Tree" },
+        { "<leader>ng", function() neotree_command.execute({ source = "git_status", toggle = true }) end, desc = "Open Git Status Tree" },
+        { "<leader>nm", function() neotree_command.execute({ source = "migrations", toggle = true }) end, desc = "Open Migrations Tree" },
     })
 end
 
@@ -146,16 +143,16 @@ function M.set_neotest_keymaps()
     local neotest = require("neotest")
     require("which-key").add({
         { "<leader>t", group = "test", icon = "󰙨 " },
-        { "<leader>tt", function() neotest.run.run(vim.fn.expand("%")) end, desc = "Run File (Neotest)" },
-        { "<leader>tT", function() neotest.run.run(vim.uv.cwd()) end, desc = "Run All Test Files (Neotest)" },
-        { "<leader>t*", function() neotest.run.run() end, desc = "Run Nearest (Neotest)" },
-        { "<leader>td", function() neotest.run.run({ strategy = "dap" }) end, desc = "Run File (Neotest)" },
-        { "<leader>tl", function() neotest.run.run_last() end, desc = "Run Last (Neotest)" },
-        { "<leader>ts", function() neotest.summary.toggle() end, desc = "Toggle Summary (Neotest)" },
-        { "<leader>to", function() neotest.output.open({ enter = true, auto_close = true }) end, desc = "Show Output (Neotest)" },
-        { "<leader>tO", function() neotest.output_panel.toggle() end, desc = "Toggle Output Panel (Neotest)" },
-        { "<leader>tq", function() neotest.run.stop() end, desc = "Stop (Neotest)" },
-        { "<leader>tw", function() neotest.watch.toggle(vim.fn.expand("%")) end, desc = "Toggle Watch (Neotest)" },
+        { "<leader>tt", function() neotest.run.run(vim.fn.expand("%")) end, desc = "Test File" },
+        { "<leader>tT", function() neotest.run.run(vim.uv.cwd()) end, desc = "Test All Files" },
+        { "<leader>t*", function() neotest.run.run() end, desc = "Test Nearest" },
+        { "<leader>td", function() neotest.run.run({ strategy = "dap" }) end, desc = "Test File With DAP" },
+        { "<leader>tl", function() neotest.run.run_last() end, desc = "Test Recent" },
+        { "<leader>ts", function() neotest.summary.toggle() end, desc = "Toggle Summary" },
+        { "<leader>to", function() neotest.output.open({ enter = true, auto_close = true }) end, desc = "Show Output" },
+        { "<leader>tO", function() neotest.output_panel.toggle() end, desc = "Toggle Output Panel" },
+        { "<leader>tq", function() neotest.run.stop() end, desc = "Stop" },
+        { "<leader>tw", function() neotest.watch.toggle(vim.fn.expand("%")) end, desc = "Toggle Watch" },
     })
 end
 
