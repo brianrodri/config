@@ -1,118 +1,111 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
-final_space: true
-enable_cursor_positioning: true
-blocks:
-  - type: prompt
-    alignment: left
-    newline: true
-    segments:
-      - type: os
-        style: powerline
-        foreground: white
-        background: transparent
-        template: " {{ .Icon }} "
-
-      - type: session
-        style: powerline
-        powerline_symbol: 
-        foreground: transparent
-        background: green
-        background_templates:
-          - "{{ if .Root }}red{{ end }}"
-        template: "{{ if .Root }} 󱐋 {{ else }}  {{ end }}<b>{{ .UserName }}</b> "
-
-      - type: path
-        style: powerline
-        powerline_symbol: 
-        foreground: green
-        background: "#414b50"
-        template: " {{ .Path }} "
-        properties:
-          home_icon: " "
-          folder_icon: " "
-          style: full
-
-      - type: git
-        style: "accordian"
-        powerline_symbol: 
-        foreground: transparent
-        background: transparent
-
-      - type: git
-        style: powerline
-        powerline_symbol: 
-        foreground: transparent
-        background: green
-        background_templates:
-          - "{{ if or (.Working.Changed) (.Staging.Changed) }}yellow{{ end }}"
-          - "{{ if and (gt .Ahead 0) (gt .Behind 0) }}red{{ end }}"
-          - "{{ if gt .Ahead 0 }}cyan{{ end }}"
-          - "{{ if gt .Behind 0 }}cyan{{ end }}"
-        templates:
-          - " <b>{{ .HEAD }}</b> "
-          - "{{ if .BranchStatus }}{{ .BranchStatus }} {{ end }}"
-          - "{{ if .Working.Changed }} {{ .Working.String }} {{ end }}"
-          - "{{ if .Staging.Changed }} {{ .Staging.String }} {{ end }}"
-          - "{{ if gt .StashCount 0 }}󱈎 {{ .StashCount }} {{ end }}"
-        properties:
-          branch_icon: " "
-          fetch_stash_count: true
-          fetch_status: true
-
-  - type: prompt
-    alignment: right
-    segments:
-      - type: executiontime
-        style: plain
-        foreground: yellow
-        foreground_templates:
-          - "{{ if gt .Code 0 }}red{{ end }}"
-        template: "{{ .FormattedMs }}  "
-        properties:
-          threshold: 1000
-
-      - type: battery
-        style: powerline
-        leading_powerline_symbol: 
-        foreground: transparent
-        background: green
-        background_templates:
-          - '{{ if eq .State.String "Charging" }}green{{ end }}'
-          - "{{ if le .Percentage 20 }}red{{ end }}"
-          - "{{ if le .Percentage 50 }}yellow{{ end }}"
-        templates:
-          - '{{ if le .Percentage 10 -}}            {{- if eq .State.String "Charging" }} 󰢜 {{ else }} 󰁺 {{ end }}{{ .Percentage }}% {{ end }}'
-          - '{{ if le .Percentage 20 -}}            {{- if eq .State.String "Charging" }} 󰂆 {{ else }} 󰁻 {{ end }}{{ .Percentage }}% {{ end }}'
-          - '{{ if le .Percentage 30 -}}            {{- if eq .State.String "Charging" }} 󰂇 {{ else }} 󰁼 {{ end }}{{ .Percentage }}% {{ end }}'
-          - '{{ if le .Percentage 40 -}}            {{- if eq .State.String "Charging" }} 󰂈 {{ else }} 󰁽 {{ end }}{{ .Percentage }}% {{ end }}'
-          - '{{ if le .Percentage 50 -}}            {{- if eq .State.String "Charging" }} 󰢝 {{ else }} 󰁾 {{ end }}{{ .Percentage }}% {{ end }}'
-          - '{{ if le .Percentage 60 -}}            {{- if eq .State.String "Charging" }} 󰂉 {{ else }} 󰁿 {{ end }}{{ .Percentage }}% {{ end }}'
-          - '{{ if le .Percentage 70 -}}            {{- if eq .State.String "Charging" }} 󰢞 {{ else }} 󰂀 {{ end }}{{ .Percentage }}% {{ end }}'
-          - '{{ if le .Percentage 80 -}}            {{- if eq .State.String "Charging" }} 󰂊 {{ else }} 󰂁 {{ end }}{{ .Percentage }}% {{ end }}'
-          - '{{ if le .Percentage 90 -}}            {{- if eq .State.String "Charging" }} 󰂋 {{ else }} 󰂂 {{ end }}{{ .Percentage }}% {{ end }}'
-          - '{{ if eq .State.String "Full" }} 󰚥 {{ else if eq .State.String "Charging" }} 󰂅 {{ else }} 󰁹 {{ end }}{{ .Percentage }}% '
-        templates_logic: first_match
-
-  - type: prompt
-    alignment: left
-    newline: true
-    segments:
-      - type: text
-        style: plain
-        foreground: green
-        foreground_templates:
-          - "{{ if ne .Code 0 }}red{{ end }}"
-        template: 
-
-transient_prompt:
-  type: text
-  style: plain
-  newline: true
-  foreground_templates:
-    - "{{ if gt .Code 0 }}red{{ end }}"
-    - "{{ if eq .Code 0 }}green{{ end }}"
-  template: " "
 
 secondary_prompt:
-  foreground: green
-  template: " "
+    template: ' '
+    foreground: green
+transient_prompt:
+    template: ' '
+    type: text
+    style: plain
+    foreground_templates:
+        - '{{ if gt .Code 0 }}red{{ end }}'
+        - '{{ if eq .Code 0 }}green{{ end }}'
+    newline: true
+blocks:
+    - type: prompt
+      alignment: left
+      segments:
+        - template: ' {{ .Icon }} '
+          foreground: white
+          background: transparent
+          type: os
+          style: powerline
+        - template: "{{ if .Root }} \U000F140B {{ else }}  {{ end }}<b>{{ .UserName }}</b> "
+          foreground: transparent
+          powerline_symbol: 
+          background: green
+          type: session
+          style: powerline
+          background_templates:
+            - '{{ if .Root }}red{{ end }}'
+        - properties:
+            folder_icon: ' '
+            home_icon: ' '
+            style: full
+          template: ' {{ .Path }} '
+          foreground: green
+          powerline_symbol: 
+          background: '#414b50'
+          type: path
+          style: powerline
+        - foreground: transparent
+          powerline_symbol: 
+          background: transparent
+          type: git
+          style: accordian
+        - properties:
+            branch_icon: ' '
+            fetch_stash_count: true
+            fetch_status: true
+          foreground: transparent
+          powerline_symbol: 
+          background: green
+          type: git
+          style: powerline
+          background_templates:
+            - '{{ if or (.Working.Changed) (.Staging.Changed) }}yellow{{ end }}'
+            - '{{ if and (gt .Ahead 0) (gt .Behind 0) }}red{{ end }}'
+            - '{{ if gt .Ahead 0 }}cyan{{ end }}'
+            - '{{ if gt .Behind 0 }}cyan{{ end }}'
+          templates:
+            - ' <b>{{ .HEAD }}</b> '
+            - '{{ if .BranchStatus }}{{ .BranchStatus }} {{ end }}'
+            - '{{ if .Working.Changed }} {{ .Working.String }} {{ end }}'
+            - '{{ if .Staging.Changed }} {{ .Staging.String }} {{ end }}'
+            - "{{ if gt .StashCount 0 }}\U000F120E {{ .StashCount }} {{ end }}"
+      newline: true
+    - type: prompt
+      alignment: right
+      segments:
+        - properties:
+            threshold: 1000
+          template: '{{ .FormattedMs }}  '
+          foreground: yellow
+          type: executiontime
+          style: plain
+          foreground_templates:
+            - '{{ if gt .Code 0 }}red{{ end }}'
+        - foreground: transparent
+          templates_logic: first_match
+          background: green
+          type: battery
+          style: powerline
+          leading_powerline_symbol: 
+          background_templates:
+            - '{{ if eq .State.String "Charging" }}green{{ end }}'
+            - '{{ if le .Percentage 20 }}red{{ end }}'
+            - '{{ if le .Percentage 50 }}yellow{{ end }}'
+          templates:
+            - "{{ if le .Percentage 10 -}}            {{- if eq .State.String \"Charging\" }} \U000F089C {{ else }} \U000F007A {{ end }}{{ .Percentage }}% {{ end }}"
+            - "{{ if le .Percentage 20 -}}            {{- if eq .State.String \"Charging\" }} \U000F0086 {{ else }} \U000F007B {{ end }}{{ .Percentage }}% {{ end }}"
+            - "{{ if le .Percentage 30 -}}            {{- if eq .State.String \"Charging\" }} \U000F0087 {{ else }} \U000F007C {{ end }}{{ .Percentage }}% {{ end }}"
+            - "{{ if le .Percentage 40 -}}            {{- if eq .State.String \"Charging\" }} \U000F0088 {{ else }} \U000F007D {{ end }}{{ .Percentage }}% {{ end }}"
+            - "{{ if le .Percentage 50 -}}            {{- if eq .State.String \"Charging\" }} \U000F089D {{ else }} \U000F007E {{ end }}{{ .Percentage }}% {{ end }}"
+            - "{{ if le .Percentage 60 -}}            {{- if eq .State.String \"Charging\" }} \U000F0089 {{ else }} \U000F007F {{ end }}{{ .Percentage }}% {{ end }}"
+            - "{{ if le .Percentage 70 -}}            {{- if eq .State.String \"Charging\" }} \U000F089E {{ else }} \U000F0080 {{ end }}{{ .Percentage }}% {{ end }}"
+            - "{{ if le .Percentage 80 -}}            {{- if eq .State.String \"Charging\" }} \U000F008A {{ else }} \U000F0081 {{ end }}{{ .Percentage }}% {{ end }}"
+            - "{{ if le .Percentage 90 -}}            {{- if eq .State.String \"Charging\" }} \U000F008B {{ else }} \U000F0082 {{ end }}{{ .Percentage }}% {{ end }}"
+            - "{{ if eq .State.String \"Full\" }} \U000F06A5 {{ else if eq .State.String \"Charging\" }} \U000F0085 {{ else }} \U000F0079 {{ end }}{{ .Percentage }}% "
+    - type: prompt
+      alignment: left
+      segments:
+        - template: 
+          foreground: green
+          type: text
+          style: plain
+          foreground_templates:
+            - '{{ if ne .Code 0 }}red{{ end }}'
+      newline: true
+version: 3
+enable_cursor_positioning: true
+final_space: true
