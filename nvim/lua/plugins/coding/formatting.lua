@@ -29,6 +29,7 @@ return { -- Autoformat
         formatters_by_ft = {
             lua = { "stylua" },
             markdown = { "markdownlint" },
+            typescript = { "prettier" },
         },
     },
 }
