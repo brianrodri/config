@@ -7,12 +7,7 @@ return {
     },
     {
         "nvim-treesitter/nvim-treesitter",
-        opts = { "lua", "luadoc" },
-        opts_extend = { "ensure_installed" },
-    },
-    {
-        "WhoIsSethDaniel/mason-tool-installer.nvim",
-        opts = { ensure_installed = { "stylua" } },
+        opts = { ensure_installed = { "lua", "luadoc" } },
         opts_extend = { "ensure_installed" },
     },
 }

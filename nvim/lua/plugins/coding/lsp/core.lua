@@ -2,9 +2,6 @@ return {
     -- Main LSP Configuration
     "neovim/nvim-lspconfig",
     dependencies = {
-        { "williamboman/mason.nvim", opts = {} },
-        "williamboman/mason-lspconfig.nvim",
-        "WhoIsSethDaniel/mason-tool-installer.nvim",
         { "j-hui/fidget.nvim", opts = {} },
         "saghen/blink.cmp",
     },
@@ -55,17 +52,5 @@ return {
                 },
             },
         }
-
-        require("mason-lspconfig").setup({
-            ensure_installed = {},
-            automatic_installation = true,
-            handlers = {
-                function(server_name)
-                    local server = servers[server_name] or {}
-                    server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-                    require("lspconfig")[server_name].setup(server)
-                end,
-            },
-        })
     end,
 }

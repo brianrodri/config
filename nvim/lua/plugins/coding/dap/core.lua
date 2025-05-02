@@ -7,10 +7,6 @@ return {
         "rcarriga/nvim-dap-ui",
         -- Required dependency for nvim-dap-ui
         "nvim-neotest/nvim-nio",
-        -- Installs the debug adapters for you
-        "williamboman/mason.nvim",
-        { "jay-babu/mason-nvim-dap.nvim", opts = { automatic_installation = true, ensure_installed = {} } },
-
         -- Debuggers
         "leoluz/nvim-dap-go",
     },
