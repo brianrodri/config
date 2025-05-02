@@ -23,7 +23,20 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         opts = {
-            ensure_installed = { "css", "javascript", "latex", "norg", "scss", "svelte", "tsx", "typst", "regex", "vue" },
+            ensure_installed = {
+                "css",
+                "html",
+                "javascript",
+                "latex",
+                "norg",
+                "regex",
+                "scss",
+                "svelte",
+                "tsx",
+                "typst",
+                "vue",
+            },
         },
+        opts_extend = { "ensure_installed" },
     },
 }

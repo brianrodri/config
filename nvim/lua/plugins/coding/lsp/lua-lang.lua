@@ -7,14 +7,12 @@ return {
     },
     {
         "nvim-treesitter/nvim-treesitter",
-        opts = function(_, opts) opts.ensure_installed = vim.list_extend(opts.ensure_installed or {}, { "lua", "luadoc" }) end,
+        opts = { "lua", "luadoc" },
+        opts_extend = { "ensure_installed" },
     },
     {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
-        opts = function(_, opts)
-            opts = opts or {}
-            opts.ensure_installed = vim.list_extend(opts.ensure_installed or {}, { "stylua" })
-            return opts
-        end,
+        opts = { ensure_installed = { "stylua" } },
+        opts_extend = { "ensure_installed" },
     },
 }
