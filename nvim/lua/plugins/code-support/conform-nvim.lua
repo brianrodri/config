@@ -20,7 +20,7 @@ return { -- Autoformat
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
-    keys = function() return keymaps.set_formatter_keymaps(is_enabled, set_enabled) end,
+    init = function() return keymaps.set_formatter_keymaps(is_enabled, set_enabled) end,
     opts = {
         format_on_save = function(buf)
             if is_enabled(buf) then return { timeout_ms = 500, lsp_format = "fallback" } end
