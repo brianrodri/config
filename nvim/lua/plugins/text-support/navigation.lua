@@ -1,3 +1,5 @@
+--- @module "lazy"
+--- @type LazySpec
 return {
 
     { -- Key mappings for "surrounding" text objects with characters

@@ -1,3 +1,5 @@
+--- @module "lazy"
+--- @type LazySpec
 return {
     { -- Configures LuaLS for editing Neovim config files
         "folke/lazydev.nvim",

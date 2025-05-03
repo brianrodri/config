@@ -1,3 +1,5 @@
+--- @module "lazy"
+--- @type LazySpec
 return {
     "mfussenegger/nvim-dap",
     dependencies = { "rcarriga/nvim-dap-ui", "nvim-neotest/nvim-nio" },
