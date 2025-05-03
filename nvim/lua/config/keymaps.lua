@@ -160,7 +160,7 @@ function M.set_trouble_keymaps()
     local trouble = require("trouble")
     require("which-key").add({
         { "<leader>x", group = "Trouble", icon = { icon = "󱍼 ", hl = "TSError" } },
-        { "<leader>xx",function() trouble.toggle("diagnostics") end, desc = "Diagnostics" },
+        { "<leader>xx", function() trouble.toggle("diagnostics") end, desc = "Diagnostics" },
     })
 end
 
