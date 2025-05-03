@@ -30,13 +30,7 @@ return {
         "folke/snacks.nvim",
         priority = 1000,
         lazy = false,
-        dependencies = {
-            { -- Required by snacks.image to display non-code files.
-                "nvim-treesitter/nvim-treesitter",
-                opts = { ensure_installed = { "css", "html", "javascript", "latex", "norg", "regex", "scss", "svelte", "tsx", "typst", "vue" } },
-                opts_extend = { "ensure_installed" },
-            },
-        },
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
         ---@module "snacks"
         ---@type snacks.Config
         opts = {
@@ -80,5 +74,11 @@ return {
                 SnacksDashboardSpecial = "Green",
             })
         end,
+    },
+
+    { -- Required by snacks.image for rendering
+        "nvim-treesitter/nvim-treesitter",
+        opts = { ensure_installed = { "css", "html", "javascript", "latex", "norg", "regex", "scss", "svelte", "tsx", "typst", "vue" } },
+        opts_extend = { "ensure_installed" },
     },
 }
