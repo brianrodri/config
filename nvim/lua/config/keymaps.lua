@@ -85,32 +85,32 @@ function M.set_git_keymaps(bufnr)
     }, { buffer = bufnr })
 end
 
-function M.set_lsp_keymaps(client, event)
+function M.set_lsp_keymaps(client, buffer)
     local telescope_builtin = require("telescope.builtin")
     local snacks = require("snacks")
     require("which-key").add({
-        { "<leader>c", group = "code" },
-        { "<leader>cr", function() vim.lsp.buf.rename() end, desc = "Rename Symbol", buffer = event.buf },
-        { "<leader>ca", function() vim.lsp.buf.code_action() end, desc = "Code Action", mode = { "n", "x" }, buffer = event.buf },
-        { "<leader>ci", function() telescope_builtin.lsp_incoming_calls() end, desc = "Incoming Calls", buffer = event.buf },
-        { "<leader>co", function() telescope_builtin.lsp_outgoing_calls() end, desc = "Outgoing Calls", buffer = event.buf },
-        { "<leader>c*", function() telescope_builtin.lsp_references() end, desc = "References", buffer = event.buf },
-        { "<leader>cd", function() vim.lsp.buf.declaration() end, desc = "Declaration", buffer = event.buf },
-        { "<leader>cD", function() telescope_builtin.lsp_definitions() end, desc = "Definitions", buffer = event.buf },
-        { "<leader>cy", function() telescope_builtin.lsp_implementations() end, desc = "Implementations", buffer = event.buf },
-        { "<leader>cY", function() telescope_builtin.lsp_type_definitions() end, desc = "Type Definitions", buffer = event.buf },
-        { "<leader>cf", function() telescope_builtin.lsp_document_symbols() end, desc = "Document Symbols", buffer = event.buf },
-        { "<leader>cF", function() telescope_builtin.lsp_dynamic_workspace_symbols() end, desc = "Workspace Symbols", buffer = event.buf },
+        { "<leader>c", group = "code", icon = " " },
+        { "<leader>cr", function() vim.lsp.buf.rename() end, desc = "Rename Symbol", buffer = buffer },
+        { "<leader>ca", function() vim.lsp.buf.code_action() end, desc = "Code Action", mode = { "n", "x" }, buffer = buffer },
+        { "<leader>ci", function() telescope_builtin.lsp_incoming_calls() end, desc = "Incoming Calls", buffer = buffer },
+        { "<leader>co", function() telescope_builtin.lsp_outgoing_calls() end, desc = "Outgoing Calls", buffer = buffer },
+        { "<leader>c*", function() telescope_builtin.lsp_references() end, desc = "References", buffer = buffer },
+        { "<leader>cd", function() vim.lsp.buf.declaration() end, desc = "Declaration", buffer = buffer },
+        { "<leader>cD", function() telescope_builtin.lsp_definitions() end, desc = "Definitions", buffer = buffer },
+        { "<leader>cy", function() telescope_builtin.lsp_implementations() end, desc = "Implementations", buffer = buffer },
+        { "<leader>cY", function() telescope_builtin.lsp_type_definitions() end, desc = "Type Definitions", buffer = buffer },
+        { "<leader>cf", function() telescope_builtin.lsp_document_symbols() end, desc = "Document Symbols", buffer = buffer },
+        { "<leader>cF", function() telescope_builtin.lsp_dynamic_workspace_symbols() end, desc = "Workspace Symbols", buffer = buffer },
     })
 
-    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then snacks.toggle.inlay_hints():map("<leader>oh") end
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, buffer) then snacks.toggle.inlay_hints():map("<leader>oh") end
 end
 
 function M.get_telescope_mappings()
     local telescope = require("telescope")
     local telescope_builtin = require("telescope.builtin")
-    return {
-        { "<leader>f", group = "find", icon = "" },
+    require("which-key").add({
+        { "<leader>f", group = "find", icon = " " },
         { "<leader>f.", function() telescope_builtin.resume() end, desc = "Resume Finding" },
         { "<leader>f?", function() telescope_builtin.help_tags() end, desc = "Find Help Docs" },
         { "<leader>f*", function() telescope_builtin.grep_string() end, desc = "Find Word Under Cursor" },
@@ -125,7 +125,7 @@ function M.get_telescope_mappings()
         { "<leader>fs", function() telescope_builtin.builtin() end, desc = "Find Telescope Builtins" },
         { "<leader>fi", function() telescope.extensions.nerdy.nerdy() end, desc = "Find Nerd Font Icons" },
         { "<leader>fz", function() telescope_builtin.spell_suggest() end, desc = "Find Spelling Suggestions" },
-    }
+    })
 end
 
 function M.set_neo_tree_keymaps()
@@ -146,7 +146,7 @@ function M.set_neotest_keymaps()
         { "<leader>tt", function() neotest.run.run(vim.fn.expand("%")) end, desc = "Test File" },
         { "<leader>tT", function() neotest.run.run(vim.uv.cwd()) end, desc = "Test All Files" },
         { "<leader>t*", function() neotest.run.run() end, desc = "Test Nearest" },
-        { "<leader>td", function() neotest.run.run({ strategy = "dap" }) end, desc = "Test File With DAP" },
+        { "<leader>td", function() neotest.run.run({ vim.fn.expand("%"), strategy = "dap", suite = true }) end, desc = "Test File With DAP" },
         { "<leader>tl", function() neotest.run.run_last() end, desc = "Test Recent" },
         { "<leader>ts", function() neotest.summary.toggle() end, desc = "Toggle Summary" },
         { "<leader>to", function() neotest.output.open({ enter = true, auto_close = true }) end, desc = "Show Output" },
