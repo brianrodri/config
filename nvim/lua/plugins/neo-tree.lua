@@ -1,5 +1,3 @@
-local keymaps = require("config.keymaps")
-
 return {
     "nvim-neo-tree/neo-tree.nvim",
     dependencies = {
@@ -9,5 +7,5 @@ return {
         "3rd/image.nvim",
     },
     lazy = false, -- neo-tree handles lazy loading on its own.
-    keys = keymaps.set_neo_tree_keymaps,
+    keys = require("config.keymaps").set_neo_tree_keymaps,
 }

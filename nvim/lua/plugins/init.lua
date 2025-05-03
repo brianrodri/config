@@ -1,6 +1,5 @@
 return {
-    { import = "plugins.coding" },
-    { import = "plugins.integrations" },
-    { import = "plugins.interfaces" },
-    { import = "plugins.navigation" },
+    { import = "plugins.code-support" },
+    { import = "plugins.text-support" },
+    { import = "plugins.tool-support" },
 }

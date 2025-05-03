@@ -9,11 +9,13 @@ return {
         },
         init = function() vim.lsp.enable("lua_ls") end,
     },
+
     {
         "nvim-treesitter/nvim-treesitter",
         opts = { ensure_installed = { "lua", "luadoc" } },
         opts_extend = { "ensure_installed" },
     },
+
     {
         "saghen/blink.cmp",
         opts = {

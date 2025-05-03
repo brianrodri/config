@@ -1,6 +1,6 @@
 local keymaps = require("config.keymaps")
 
-return { -- Fuzzy Finder (files, lsp, etc)
+return {
     "nvim-telescope/telescope.nvim",
     event = "VimEnter",
     dependencies = {
@@ -23,7 +23,6 @@ return { -- Fuzzy Finder (files, lsp, etc)
     keys = keymaps.get_telescope_mappings,
     init = function()
         local load_extension = require("telescope").load_extension
-        pcall(load_extension, "nerdy")
         pcall(load_extension, "fzf")
         pcall(load_extension, "ui-select")
     end,
