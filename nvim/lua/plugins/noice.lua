@@ -10,18 +10,20 @@ return {
                 },
             },
         },
-        dependencies = { "MunifTanjim/nui.nvim", "nvim-treesitter/nvim-treesitter" },
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+
+            {
+                "nvim-treesitter/nvim-treesitter",
+                opts = { ensure_installed = { "bash" } },
+                opts_extend = { "ensure_installed" },
+            },
+        },
         presets = {
             bottom_search = true,
             command_palette = true,
             long_message_to_split = true,
             lsp_doc_border = true,
         },
-    },
-
-    {
-        "nvim-treesitter/nvim-treesitter",
-        opts = { ensure_installed = { "bash" } },
-        opts_extend = { "ensure_installed" },
     },
 }
