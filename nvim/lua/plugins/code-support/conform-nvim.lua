@@ -23,6 +23,8 @@ return { -- Autoformatting
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
     init = function() return keymaps.set_formatter_keymaps(is_enabled, set_enabled) end,
+    ---@module "conform"
+    ---@type conform.setupOpts
     opts = {
         format_on_save = function(buf)
             if is_enabled(buf) then return { timeout_ms = 500, lsp_format = "fallback" } end

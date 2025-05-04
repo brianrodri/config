@@ -27,6 +27,9 @@ return { -- Configures LuaLS for editing Neovim config files
             opts_extend = { "sources.default" },
         },
     },
+    ---@module "lazydev"
+    ---@type lazydev.Config
+    ---@diagnostic disable: missing-fields
     opts = {
         library = {
             { path = "${3rd}/luv/library", words = { "vim%.uv" } },

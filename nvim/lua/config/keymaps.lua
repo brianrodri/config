@@ -164,10 +164,12 @@ function M.set_trouble_keymaps()
     })
 end
 
-function M.set_obsidian_keymaps(_, buffer)
+---@param client vim.lsp.Client
+---@param buffer integer?
+function M.set_obsidian_keymaps(client, buffer)
     local open_daily_note = function()
         local input = vim.fn.input("Open Daily Note", "today")
-        if input then vim.lsp.buf.execute_command({ command = "jump", arguments = { input } }) end
+        if input then client:exec_cmd({ title = "Open Daily Note", command = "jump", arguments = { input } }) end
     end
 
     require("which-key").add({

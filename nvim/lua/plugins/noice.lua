@@ -4,6 +4,9 @@ return {
     {
         "folke/noice.nvim",
         event = "VeryLazy",
+        ---@module "noice"
+        ---@type NoiceConfig
+        ---@diagnostic disable: missing-fields
         opts = {
             lsp = {
                 override = {
@@ -20,12 +23,6 @@ return {
                 opts = { ensure_installed = { "bash" } },
                 opts_extend = { "ensure_installed" },
             },
-        },
-        presets = {
-            bottom_search = true,
-            command_palette = true,
-            long_message_to_split = true,
-            lsp_doc_border = true,
         },
     },
 }
