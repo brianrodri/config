@@ -16,9 +16,9 @@ local function set_enabled(enable, global)
     end
 end
 
---- @module "lazy"
---- @type LazySpec
-return { -- Autoformat
+---@module "lazy"
+---@type LazySpec
+return { -- Autoformatting
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },

@@ -1,5 +1,5 @@
---- @module "lazy"
---- @type LazySpec
+---@module "lazy"
+---@type LazySpec
 return {
     {
         "folke/snacks.nvim",

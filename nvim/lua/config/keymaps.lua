@@ -132,10 +132,10 @@ function M.set_neo_tree_keymaps()
     local neotree_command = require("neo-tree.command")
     require("which-key").add({
         { "<leader>n", group = "neotree", icon = "󰙅 " },
-        { "<leader>nf", function() neotree_command.execute({ source = "filesystem", toggle = true }) end, desc = "Open File System Tree" },
-        { "<leader>nb", function() neotree_command.execute({ source = "buffers", toggle = true }) end, desc = "Open Buffers Tree" },
-        { "<leader>ng", function() neotree_command.execute({ source = "git_status", toggle = true }) end, desc = "Open Git Status Tree" },
-        { "<leader>nm", function() neotree_command.execute({ source = "migrations", toggle = true }) end, desc = "Open Migrations Tree" },
+        { "<leader>nf", function() neotree_command.execute({ source = "filesystem", toggle = true, reveal = true }) end, desc = "Open File System Tree" },
+        { "<leader>nb", function() neotree_command.execute({ source = "buffers", toggle = true, reveal = true }) end, desc = "Open Buffers Tree" },
+        { "<leader>ng", function() neotree_command.execute({ source = "git_status", toggle = true, reveal = true }) end, desc = "Open Git Status Tree" },
+        { "<leader>nm", function() neotree_command.execute({ source = "migrations", toggle = true, reveal = true }) end, desc = "Open Migrations Tree" },
     })
 end
 
@@ -159,8 +159,22 @@ end
 function M.set_trouble_keymaps()
     local trouble = require("trouble")
     require("which-key").add({
-        { "<leader>x", group = "Trouble", icon = { icon = "󱍼 ", hl = "TSError" } },
+        { "<leader>x", group = "trouble", icon = { icon = "󱍼 ", hl = "TSError" } },
         { "<leader>xx", function() trouble.toggle("diagnostics") end, desc = "Diagnostics" },
+    })
+end
+
+function M.set_obsidian_keymaps(_, buffer)
+    local open_daily_note = function()
+        local input = vim.fn.input("Open Daily Note", "today")
+        if input then vim.lsp.buf.execute_command({ command = "jump", arguments = { input } }) end
+    end
+
+    require("which-key").add({
+        { "<leader>j", group = "journal", icon = "󰠮 ", buffer = buffer },
+        { "<leader>jd", open_daily_note, desc = "Open Daily Note", buffer = buffer },
+        { "<leader>jf", "<cmd>ObsidianSearch<cr>", desc = "Find Note", buffer = buffer },
+        { "<leader>jn", "<cmd>ObsidianNew<CR>", desc = "New Note", buffer = buffer },
     })
 end
 

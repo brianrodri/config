@@ -1,7 +1,7 @@
 local keymaps = require("config.keymaps")
 
---- @module "lazy"
---- @type LazySpec
+---@module "lazy"
+---@type LazySpec
 return {
     "nvim-telescope/telescope.nvim",
     event = "VimEnter",
