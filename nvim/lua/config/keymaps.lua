@@ -88,7 +88,6 @@ end
 
 function M.set_lsp_keymaps(client, buffer)
     local telescope_builtin = require("telescope.builtin")
-    local snacks = require("snacks")
     require("which-key").add({
         { "<leader>c", group = "code", icon = " " },
         { "<leader>cr", function() vim.lsp.buf.rename() end, desc = "Rename Symbol", buffer = buffer },
@@ -102,9 +101,19 @@ function M.set_lsp_keymaps(client, buffer)
         { "<leader>cY", function() telescope_builtin.lsp_type_definitions() end, desc = "Type Definitions", buffer = buffer },
         { "<leader>cf", function() telescope_builtin.lsp_document_symbols() end, desc = "Document Symbols", buffer = buffer },
         { "<leader>cF", function() telescope_builtin.lsp_dynamic_workspace_symbols() end, desc = "Workspace Symbols", buffer = buffer },
+        {
+            "<leader>oh",
+            function()
+                local enabled = not vim.lsp.inlay_hint.is_enabled()
+                vim.lsp.inlay_hint.enable(enabled)
+                vim.notify(enabled and "Enabled **Inlay Hints**" or "Disabled **Inlay Hints**", enabled and vim.log.levels.INFO or vim.log.levels.WARN)
+            end,
+            icon = function() return vim.lsp.inlay_hint.is_enabled() and { icon = " ", color = "green" } or { icon = " ", color = "yellow" } end,
+            desc = function() return vim.lsp.inlay_hint.is_enabled() and "Disable Inlay Hints" or "Enable Inlay Hints" end,
+            cond = client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, buffer),
+            buffer = buffer,
+        },
     })
-
-    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, buffer) then snacks.toggle.inlay_hints():map("<leader>oh") end
 end
 
 function M.get_telescope_mappings()
