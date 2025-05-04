@@ -1,5 +1,18 @@
 local M = {}
 
+function M.set_global_keymaps()
+    local snacks = require("snacks")
+    require("which-key").add({
+        { "<esc>", function() vim.cmd([[nohlsearch]]) end },
+        { "ZA", ":qa!<CR>", desc = "Quit Without Saving" },
+
+        { "<leader>b", group = "buffer" },
+        { "<leader>bd", function() snacks.bufdelete.delete() end },
+    })
+    M.set_toggle_keymaps()
+    M.set_git_keymaps()
+end
+
 function M.set_formatter_keymaps(get, set)
     local conform = require("conform")
     local snacks = require("snacks")
@@ -20,18 +33,6 @@ function M.set_toggle_keymaps()
     snacks.toggle.treesitter():map("<leader>ot")
     snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>ow")
     snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>oz")
-end
-
-function M.set_global_keymaps()
-    local snacks = require("snacks")
-    require("which-key").add({
-        { "<esc>", function() vim.cmd([[nohlsearch]]) end },
-        { "ZA", ":qa!<CR>", desc = "Quit Without Saving" },
-
-        { "<leader>b", group = "buffer" },
-        { "<leader>bd", function() snacks.bufdelete.delete() end },
-    })
-    M.set_toggle_keymaps()
 end
 
 function M.set_dap_keymaps()
@@ -55,7 +56,7 @@ function M.set_dap_keymaps()
     })
 end
 
-function M.set_git_keymaps(bufnr)
+function M.set_git_keymaps()
     local gitsigns = require("gitsigns")
     local telescope_builtin = require("telescope.builtin")
     local which_key = require("which-key")
@@ -82,7 +83,7 @@ function M.set_git_keymaps(bufnr)
 
         { "<leader>ga", function() gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, desc = "Stage Hunk", mode = "v" },
         { "<leader>gr", function() gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, desc = "Reset Hunk", mode = "v" },
-    }, { buffer = bufnr })
+    })
 end
 
 function M.set_lsp_keymaps(client, buffer)
