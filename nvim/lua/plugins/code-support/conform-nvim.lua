@@ -1,10 +1,13 @@
 local keymaps = require("config.keymaps")
 
-local function is_enabled(buf)
-    if buf == nil or buf == 0 then buf = vim.api.nvim_get_current_buf() end
-    if vim.b[buf].autoformat ~= nil then return vim.b[buf].autoformat end
-    if vim.g.autoformat ~= nil then return vim.g.autoformat end
-    return true
+local function get_enabled(global)
+    if not global and vim.b.autoformat ~= nil then
+        return vim.b.autoformat
+    elseif vim.g.autoformat ~= nil then
+        return vim.g.autoformat
+    else
+        return true
+    end
 end
 
 local function set_enabled(enable, global)
@@ -22,12 +25,12 @@ return { -- Autoformatting
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
-    init = function() return keymaps.set_formatter_keymaps(is_enabled, set_enabled) end,
+    init = function() return keymaps.set_formatter_keymaps(get_enabled, set_enabled) end,
     ---@module "conform"
     ---@type conform.setupOpts
     opts = {
         format_on_save = function(buf)
-            if is_enabled(buf) then return { timeout_ms = 500, lsp_format = "fallback" } end
+            if get_enabled(buf) then return { timeout_ms = 500, lsp_format = "fallback" } end
             return nil
         end,
         formatters_by_ft = {

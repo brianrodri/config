@@ -17,8 +17,8 @@ function M.set_formatter_keymaps(get, set)
     local conform = require("conform")
     local snacks = require("snacks")
     require("which-key").add({ "<leader>cq", function() conform.format({ lsp_format = "fallback" }) end, desc = "Format Buffer" })
-    snacks.toggle({ name = "Auto Format (buffer)", get = get, set = function(enable) set(enable, false) end }):map("<leader>oq")
-    snacks.toggle({ name = "Auto Format (global)", get = get, set = function(enable) set(enable, true) end }):map("<leader>oQ")
+    snacks.toggle({ name = "Auto Format (buffer)", get = function() return get(false) end, set = function(enable) set(enable, false) end }):map("<leader>oq")
+    snacks.toggle({ name = "Auto Format (global)", get = function() return get(true) end, set = function(enable) set(enable, true) end }):map("<leader>oQ")
 end
 
 function M.set_toggle_keymaps()
