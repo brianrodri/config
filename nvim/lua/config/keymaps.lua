@@ -58,7 +58,7 @@ function M.set_dap_keymaps()
   local dapui = require("dapui")
   local widgets = require("dap.ui.widgets")
   require("which-key").add({
-    { "<leader>d", group = "debug" },
+    { "<leader>d", group = "debug", icon = { icon = " ", hl = "WhichKeyIconRed" } },
     { "<leader>dn", function() dap.continue() end, desc = "Start/Resume" },
     { "<leader>d.", function() dap.run_last() end, desc = "Restart" },
     { "<leader>dl", function() dap.step_over() end, desc = "Step Over" },
@@ -91,7 +91,7 @@ function M.set_git_keymaps()
     { "]g", function() gitsigns.nav_hunk("next") end, desc = "Jump To Next Hunk" },
     { "[g", function() gitsigns.nav_hunk("prev") end, desc = "Jump To Previous Hunk" },
 
-    { "<leader>g", group = "git" },
+    { "<leader>g", group = "git", icon = { icon = " ", hl = "WhichKeyIconWhite" } },
     { "<leader>gg", function() snacks_lazygit.open() end, desc = "Lazygit" },
     { "<leader>ga", function() gitsigns.stage_hunk() end, desc = "Stage Hunk" },
     { "<leader>gc", "<cmd>Git commit<cr>", desc = "Commit" },
@@ -124,7 +124,7 @@ end
 function M.set_lsp_keymaps(client, buffer)
   local trouble = require("trouble")
   require("which-key").add({
-    { "<leader>c", group = "code", icon = " " },
+    { "<leader>c", group = "code", icon = { icon = " ", hl = "WhichKeyIconCyan" } },
     { "<leader>cr", function() vim.lsp.buf.rename() end, desc = "Rename Symbol", buffer = buffer },
     {
       "<leader>ca",
@@ -188,7 +188,7 @@ function M.get_telescope_mappings()
   local telescope = require("telescope")
   local telescope_builtin = require("telescope.builtin")
   require("which-key").add({
-    { "<leader>f", group = "find", icon = " " },
+    { "<leader>f", group = "find", icon = { icon = " ", hl = "WhichKeyIconPurple" } },
     { "<leader>f.", function() telescope_builtin.resume() end, desc = "Resume Finding" },
     { "<leader>f?", function() telescope_builtin.help_tags() end, desc = "Find Help Docs" },
     {
@@ -229,7 +229,7 @@ end
 function M.set_neo_tree_keymaps()
   local neotree_command = require("neo-tree.command")
   require("which-key").add({
-    { "<leader>n", group = "neotree", icon = "󰙅 " },
+    { "<leader>n", group = "neotree", icon = { icon = "󰙅 ", hl = "WhichKeyIconWhite" } },
     {
       "<leader>nf",
       function() neotree_command.execute({ source = "filesystem", toggle = true, reveal = true }) end,
@@ -256,7 +256,7 @@ end
 function M.set_neotest_keymaps()
   local neotest = require("neotest")
   require("which-key").add({
-    { "<leader>t", group = "test", icon = "󰙨 " },
+    { "<leader>t", group = "test", icon = { icon = "󰙨 ", hl = "WhichKeyIconGreen" } },
     { "<leader>tt", function() neotest.run.run(vim.fn.expand("%")) end, desc = "Test File" },
     { "<leader>tT", function() neotest.run.run(vim.uv.cwd()) end, desc = "Test All Files" },
     { "<leader>t*", function() neotest.run.run() end, desc = "Test Nearest" },
@@ -285,45 +285,39 @@ end
 function M.set_trouble_keymaps()
   local trouble = require("trouble")
   require("which-key").add({
-    { "<leader>x", group = "trouble", icon = { icon = "󱍼 ", hl = "TSError" } },
+    { "<leader>x", group = "trouble", icon = { icon = "󱍼 ", hl = "WhichKeyIconRed" } },
     { "<leader>xx", function() trouble.toggle("diagnostics") end, desc = "Diagnostics" },
     { "<leader>xt", function() trouble.toggle("todo") end, desc = "Todo" },
   })
 end
 
 function M.set_journal_keymaps()
-  local obsidian_client = require("obsidian").get_client()
-  local inbox_note = obsidian_client:resolve_note("0 - Index/Inbox.md")
+  local client = require("obsidian").get_client()
+  assert(client, "Failed to get Obsidian client")
+
+  local note = client:resolve_note("0 - Index/Inbox.md")
+  assert(note:exists(), string.format("Failed to resolve note: %s", note.path))
+
+  local open_note_desc = "Open " .. note.path.stem
+  local open_note = function() client:open_note(note) end
+
+  local append_to_note_desc = "Append To " .. note.path.stem
+  local append_to_note = function()
+    require("snacks.input").input({ prompt = append_to_note_desc, default = "- " }, function(val)
+      local update_content = function(lines) return vim.list_extend(lines, { val }) end
+      client:write_note(note, { update_content = update_content })
+      local buffer_note = client:current_note()
+      if buffer_note and buffer_note.path == note.path then client:open_note(buffer_note) end
+    end)
+  end
 
   require("which-key").add({
-    { "<leader>j", group = "journal", icon = { icon = "󰠮 ", hl = "WhichKeyIconPurple" } },
-    { "<leader>jd", "<cmd>ObsidianToday<cr>", desc = "Open Today's Note" },
+    { "<leader>j", group = "journal", icon = { icon = "󰠮 ", hl = "WhichKeyIconYellow" } },
     { "<leader>jf", "<cmd>ObsidianSearch<cr>", desc = "Find Note" },
     { "<leader>jn", "<cmd>ObsidianNew<CR>", desc = "New Note" },
     { "<leader>jt", "<cmd>ObsidianToday<cr>", desc = "Open Today's Note" },
-    {
-      "<leader>jo",
-      function() obsidian_client:open_note(inbox_note) end,
-      desc = "Open " .. inbox_note.path.stem,
-    },
-    {
-      "<leader>ja",
-      function()
-        require("snacks.input").input(
-          { prompt = "Append to " .. inbox_note.path.stem, default = "- " },
-          function(value)
-            obsidian_client:write_note(
-              inbox_note,
-              { update_content = function(lines) return { unpack(lines), value } end }
-            )
-            if obsidian_client:current_note().path == inbox_note.path then
-              obsidian_client:open_note(inbox_note)
-            end
-          end
-        )
-      end,
-      desc = "Append To " .. inbox_note.path.stem,
-    },
+    { "<leader>jo", open_note, desc = open_note_desc },
+    { "<leader>ja", append_to_note, desc = append_to_note_desc },
   })
 end
 
