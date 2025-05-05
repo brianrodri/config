@@ -9,6 +9,7 @@ function M.set_global_keymaps()
         { "<leader>b", group = "buffer" },
         { "<leader>bd", function() snacks.bufdelete.delete() end },
     })
+    M.set_journal_keymaps()
     M.set_toggle_keymaps()
     M.set_git_keymaps()
 end
@@ -177,19 +178,31 @@ function M.set_trouble_keymaps()
     })
 end
 
----@param client vim.lsp.Client
----@param buffer integer?
-function M.set_obsidian_keymaps(client, buffer)
-    local open_daily_note = function()
-        local input = vim.fn.input("Open Daily Note", "today")
-        if input then client:exec_cmd({ title = "Open Daily Note", command = "jump", arguments = { input } }) end
-    end
+function M.set_journal_keymaps()
+    local obsidian_client = require("obsidian").get_client()
+    local inbox_note = obsidian_client:resolve_note("0 - Index/Inbox.md")
 
     require("which-key").add({
-        { "<leader>j", group = "journal", icon = "󰠮 ", buffer = buffer },
-        { "<leader>jd", open_daily_note, desc = "Open Daily Note", buffer = buffer },
-        { "<leader>jf", "<cmd>ObsidianSearch<cr>", desc = "Find Note", buffer = buffer },
-        { "<leader>jn", "<cmd>ObsidianNew<CR>", desc = "New Note", buffer = buffer },
+        { "<leader>j", group = "journal", icon = { icon = "󰠮 ", hl = "WhichKeyIconPurple" } },
+        { "<leader>jd", "<cmd>ObsidianToday<cr>", desc = "Open Today's Note" },
+        { "<leader>jf", "<cmd>ObsidianSearch<cr>", desc = "Find Note" },
+        { "<leader>jn", "<cmd>ObsidianNew<CR>", desc = "New Note" },
+        { "<leader>jt", "<cmd>ObsidianToday<cr>", desc = "Open Today's Note" },
+        {
+            "<leader>jo",
+            function() obsidian_client:open_note(inbox_note) end,
+            desc = "Open " .. inbox_note.path.stem,
+        },
+        {
+            "<leader>ja",
+            function()
+                require("snacks.input").input({ prompt = "Append to " .. inbox_note.path.stem, default = "- " }, function(value)
+                    obsidian_client:write_note(inbox_note, { update_content = function(lines) return { unpack(lines), value } end })
+                    if obsidian_client:current_note().path == inbox_note.path then obsidian_client:open_note(inbox_note) end
+                end)
+            end,
+            desc = "Append To " .. inbox_note.path.stem,
+        },
     })
 end
 
