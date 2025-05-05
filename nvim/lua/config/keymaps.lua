@@ -82,7 +82,11 @@ function M.set_git_keymaps()
 
   which_key.add({
     { "<leader>fg", function() telescope_builtin.git_files() end, desc = "Find Git Files" },
-    { "<leader>fG", function() telescope_builtin.git_status() end, desc = "Find Changed Git Files" },
+    {
+      "<leader>fG",
+      function() telescope_builtin.git_status() end,
+      desc = "Find Changed Git Files",
+    },
 
     { "]g", function() gitsigns.nav_hunk("next") end, desc = "Jump To Next Hunk" },
     { "[g", function() gitsigns.nav_hunk("prev") end, desc = "Jump To Previous Hunk" },
@@ -129,14 +133,54 @@ function M.set_lsp_keymaps(client, buffer)
       mode = { "n", "x" },
       buffer = buffer,
     },
-    { "<leader>c*", function() trouble.toggle("lsp_references") end, desc = "References", buffer = buffer },
-    { "<leader>cd", function() trouble.toggle("lsp_declarations") end, desc = "Declaration", buffer = buffer },
-    { "<leader>cD", function() trouble.toggle("lsp_definitions") end, desc = "Definitions", buffer = buffer },
-    { "<leader>cy", function() trouble.toggle("lsp_implementations") end, desc = "Implementations", buffer = buffer },
-    { "<leader>cY", function() trouble.toggle("lsp_type_definitions") end, desc = "Type Definitions", buffer = buffer },
-    { "<leader>cs", function() trouble.toggle("lsp_document_symbols") end, desc = "Document Symbols", buffer = buffer },
-    { "<leader>cj", function() trouble.toggle("lsp_incoming_calls") end, desc = "Incoming Calls", buffer = buffer },
-    { "<leader>ck", function() trouble.toggle("lsp_outgoing_calls") end, desc = "Outgoing Calls", buffer = buffer },
+    {
+      "<leader>c*",
+      function() trouble.toggle("lsp_references") end,
+      desc = "References",
+      buffer = buffer,
+    },
+    {
+      "<leader>cd",
+      function() trouble.toggle("lsp_declarations") end,
+      desc = "Declaration",
+      buffer = buffer,
+    },
+    {
+      "<leader>cD",
+      function() trouble.toggle("lsp_definitions") end,
+      desc = "Definitions",
+      buffer = buffer,
+    },
+    {
+      "<leader>cy",
+      function() trouble.toggle("lsp_implementations") end,
+      desc = "Implementations",
+      buffer = buffer,
+    },
+    {
+      "<leader>cY",
+      function() trouble.toggle("lsp_type_definitions") end,
+      desc = "Type Definitions",
+      buffer = buffer,
+    },
+    {
+      "<leader>cs",
+      function() trouble.toggle("lsp_document_symbols") end,
+      desc = "Document Symbols",
+      buffer = buffer,
+    },
+    {
+      "<leader>cj",
+      function() trouble.toggle("lsp_incoming_calls") end,
+      desc = "Incoming Calls",
+      buffer = buffer,
+    },
+    {
+      "<leader>ck",
+      function() trouble.toggle("lsp_outgoing_calls") end,
+      desc = "Outgoing Calls",
+      buffer = buffer,
+    },
   })
 end
 
@@ -147,7 +191,11 @@ function M.get_telescope_mappings()
     { "<leader>f", group = "find", icon = " " },
     { "<leader>f.", function() telescope_builtin.resume() end, desc = "Resume Finding" },
     { "<leader>f?", function() telescope_builtin.help_tags() end, desc = "Find Help Docs" },
-    { "<leader>f*", function() telescope_builtin.grep_string() end, desc = "Find Word Under Cursor" },
+    {
+      "<leader>f*",
+      function() telescope_builtin.grep_string() end,
+      desc = "Find Word Under Cursor",
+    },
     { "<leader>f/", function() telescope_builtin.live_grep() end, desc = "Grep Lines" },
     { "<leader>f:", function() telescope_builtin.commands() end, desc = "Find Commands" },
     { "<leader>fb", function() telescope_builtin.buffers() end, desc = "Find Buffers" },
@@ -158,10 +206,23 @@ function M.get_telescope_mappings()
     },
     { "<leader>ff", function() telescope_builtin.find_files() end, desc = "Find Files" },
     { "<leader>fk", function() telescope_builtin.keymaps() end, desc = "Find Keymaps" },
+    {
+      "<leader>fp",
+      function() telescope_builtin.find_files({ cwd = vim.fn.stdpath("data") .. "/lazy/" }) end,
+      desc = "Find Plugin Files",
+    },
     { "<leader>fr", function() telescope_builtin.oldfiles() end, desc = "Find Recent Files" },
     { "<leader>fs", function() telescope_builtin.builtin() end, desc = "Find Telescope Builtins" },
-    { "<leader>fi", function() telescope.extensions.nerdy.nerdy() end, desc = "Find Nerd Font Icons" },
-    { "<leader>fz", function() telescope_builtin.spell_suggest() end, desc = "Find Spelling Suggestions" },
+    {
+      "<leader>fi",
+      function() telescope.extensions.nerdy.nerdy() end,
+      desc = "Find Nerd Font Icons",
+    },
+    {
+      "<leader>fz",
+      function() telescope_builtin.spell_suggest() end,
+      desc = "Find Spelling Suggestions",
+    },
   })
 end
 
@@ -206,10 +267,18 @@ function M.set_neotest_keymaps()
     },
     { "<leader>tl", function() neotest.run.run_last() end, desc = "Test Recent" },
     { "<leader>ts", function() neotest.summary.toggle() end, desc = "Toggle Summary" },
-    { "<leader>to", function() neotest.output.open({ enter = true, auto_close = true }) end, desc = "Show Output" },
+    {
+      "<leader>to",
+      function() neotest.output.open({ enter = true, auto_close = true }) end,
+      desc = "Show Output",
+    },
     { "<leader>tO", function() neotest.output_panel.toggle() end, desc = "Toggle Output Panel" },
     { "<leader>tq", function() neotest.run.stop() end, desc = "Stop" },
-    { "<leader>tw", function() neotest.watch.toggle(vim.fn.expand("%")) end, desc = "Toggle Watch" },
+    {
+      "<leader>tw",
+      function() neotest.watch.toggle(vim.fn.expand("%")) end,
+      desc = "Toggle Watch",
+    },
   })
 end
 
@@ -240,13 +309,18 @@ function M.set_journal_keymaps()
     {
       "<leader>ja",
       function()
-        require("snacks.input").input({ prompt = "Append to " .. inbox_note.path.stem, default = "- " }, function(value)
-          obsidian_client:write_note(
-            inbox_note,
-            { update_content = function(lines) return { unpack(lines), value } end }
-          )
-          if obsidian_client:current_note().path == inbox_note.path then obsidian_client:open_note(inbox_note) end
-        end)
+        require("snacks.input").input(
+          { prompt = "Append to " .. inbox_note.path.stem, default = "- " },
+          function(value)
+            obsidian_client:write_note(
+              inbox_note,
+              { update_content = function(lines) return { unpack(lines), value } end }
+            )
+            if obsidian_client:current_note().path == inbox_note.path then
+              obsidian_client:open_note(inbox_note)
+            end
+          end
+        )
       end,
       desc = "Append To " .. inbox_note.path.stem,
     },

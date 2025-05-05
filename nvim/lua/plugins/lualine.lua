@@ -1,6 +1,7 @@
 local function get_gitsigns_diff()
   local gitsigns = vim.b.gitsigns_status_dict
-  return gitsigns and { added = gitsigns.added, modified = gitsigns.changed, removed = gitsigns.removed }
+  return gitsigns
+    and { added = gitsigns.added, modified = gitsigns.changed, removed = gitsigns.removed }
 end
 
 ---@module "lazy"
