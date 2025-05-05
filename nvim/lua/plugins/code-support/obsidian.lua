@@ -9,7 +9,7 @@ local workspaces = {
       attachments = { img_folder = "8 - Meta/Attachments" },
       daily_notes = { folder = "1 - Journal/Daily" },
       notes_subdir = "2 - Fleeting Notes",
-      note_frontmatter_func = nil,
+      note_frontmatter_func = function() return {} end,
       new_notes_location = "notes_subdir",
       note_id_func = function(title) return title and title:gsub("['\\.]", "") end,
       use_advanced_uri = true,
