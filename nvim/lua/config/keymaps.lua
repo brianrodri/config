@@ -42,13 +42,14 @@ function M.set_toggle_keymaps()
   local snacks = require("snacks")
   require("which-key").add({ "<leader>o", group = "toggle" })
   snacks.toggle.animate():map("<leader>oa")
+  snacks.toggle.diagnostics():map("<leader>od")
+  snacks.toggle.inlay_hints():map("<leader>oh")
   snacks.toggle.indent():map("<leader>oi")
   snacks.toggle.line_number():map("<leader>ol")
   snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>or")
   snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>os")
   snacks.toggle.treesitter():map("<leader>ot")
   snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>ow")
-  snacks.toggle.diagnostics():map("<leader>ox")
   snacks.toggle.zoom():map("<leader>oz")
 end
 
@@ -117,7 +118,7 @@ function M.set_git_keymaps()
 end
 
 function M.set_lsp_keymaps(client, buffer)
-  local telescope_builtin = require("telescope.builtin")
+  local trouble = require("trouble")
   require("which-key").add({
     { "<leader>c", group = "code", icon = " " },
     { "<leader>cr", function() vim.lsp.buf.rename() end, desc = "Rename Symbol", buffer = buffer },
@@ -128,48 +129,14 @@ function M.set_lsp_keymaps(client, buffer)
       mode = { "n", "x" },
       buffer = buffer,
     },
-    { "<leader>ci", function() telescope_builtin.lsp_incoming_calls() end, desc = "Incoming Calls", buffer = buffer },
-    { "<leader>co", function() telescope_builtin.lsp_outgoing_calls() end, desc = "Outgoing Calls", buffer = buffer },
-    { "<leader>c*", function() telescope_builtin.lsp_references() end, desc = "References", buffer = buffer },
-    { "<leader>cd", function() vim.lsp.buf.declaration() end, desc = "Declaration", buffer = buffer },
-    { "<leader>cD", function() telescope_builtin.lsp_definitions() end, desc = "Definitions", buffer = buffer },
-    { "<leader>cy", function() telescope_builtin.lsp_implementations() end, desc = "Implementations", buffer = buffer },
-    {
-      "<leader>cY",
-      function() telescope_builtin.lsp_type_definitions() end,
-      desc = "Type Definitions",
-      buffer = buffer,
-    },
-    {
-      "<leader>cf",
-      function() telescope_builtin.lsp_document_symbols() end,
-      desc = "Document Symbols",
-      buffer = buffer,
-    },
-    {
-      "<leader>cF",
-      function() telescope_builtin.lsp_dynamic_workspace_symbols() end,
-      desc = "Workspace Symbols",
-      buffer = buffer,
-    },
-    {
-      "<leader>oh",
-      function()
-        local enabled = not vim.lsp.inlay_hint.is_enabled()
-        vim.lsp.inlay_hint.enable(enabled)
-        vim.notify(
-          enabled and "Enabled **Inlay Hints**" or "Disabled **Inlay Hints**",
-          enabled and vim.log.levels.INFO or vim.log.levels.WARN
-        )
-      end,
-      icon = function()
-        return vim.lsp.inlay_hint.is_enabled() and { icon = " ", color = "green" }
-          or { icon = " ", color = "yellow" }
-      end,
-      desc = function() return vim.lsp.inlay_hint.is_enabled() and "Disable Inlay Hints" or "Enable Inlay Hints" end,
-      cond = client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, buffer),
-      buffer = buffer,
-    },
+    { "<leader>c*", function() trouble.toggle("lsp_references") end, desc = "References", buffer = buffer },
+    { "<leader>cd", function() trouble.toggle("lsp_declarations") end, desc = "Declaration", buffer = buffer },
+    { "<leader>cD", function() trouble.toggle("lsp_definitions") end, desc = "Definitions", buffer = buffer },
+    { "<leader>cy", function() trouble.toggle("lsp_implementations") end, desc = "Implementations", buffer = buffer },
+    { "<leader>cY", function() trouble.toggle("lsp_type_definitions") end, desc = "Type Definitions", buffer = buffer },
+    { "<leader>cs", function() trouble.toggle("lsp_document_symbols") end, desc = "Document Symbols", buffer = buffer },
+    { "<leader>cj", function() trouble.toggle("lsp_incoming_calls") end, desc = "Incoming Calls", buffer = buffer },
+    { "<leader>ck", function() trouble.toggle("lsp_outgoing_calls") end, desc = "Outgoing Calls", buffer = buffer },
   })
 end
 
@@ -189,7 +156,6 @@ function M.get_telescope_mappings()
       function() telescope_builtin.find_files({ cwd = vim.fn.stdpath("config") }) end,
       desc = "Find Config Files",
     },
-    { "<leader>fd", function() telescope_builtin.diagnostics() end, desc = "Find Diagnostics" },
     { "<leader>ff", function() telescope_builtin.find_files() end, desc = "Find Files" },
     { "<leader>fk", function() telescope_builtin.keymaps() end, desc = "Find Keymaps" },
     { "<leader>fr", function() telescope_builtin.oldfiles() end, desc = "Find Recent Files" },
@@ -252,6 +218,7 @@ function M.set_trouble_keymaps()
   require("which-key").add({
     { "<leader>x", group = "trouble", icon = { icon = "󱍼 ", hl = "TSError" } },
     { "<leader>xx", function() trouble.toggle("diagnostics") end, desc = "Diagnostics" },
+    { "<leader>xt", function() trouble.toggle("todo") end, desc = "Todo" },
   })
 end
 
