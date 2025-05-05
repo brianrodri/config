@@ -22,12 +22,6 @@ local workspaces = {
 return {
     "obsidian-nvim/obsidian.nvim",
     version = "*", -- recommended, use latest release instead of latest commit
-    lazy = true,
-    event = vim.iter(workspaces)
-        :map(function(wksp) return vim.fn.expand(wksp.path) .. "/*.md" end)
-        :map(function(glob) return { "BufReadPre " .. glob, "BufNewFile " .. glob } end)
-        :flatten()
-        :totable(),
     dependencies = { "nvim-lua/plenary.nvim" },
     ---@module "obsidian"
     ---@type obsidian.config.ClientOpts
