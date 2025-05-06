@@ -31,11 +31,6 @@ vim.opt.updatetime = 250
 -- Decrease mapped sequence wait time
 vim.opt.timeoutlen = 300
 
--- Configure how new splits should be opened
--- TODO: Use tmux plugin
-vim.opt.splitright = true
-vim.opt.splitbelow = true
-
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = "split"
 
