@@ -2,10 +2,12 @@
 ---@type LazySpec
 return {
   "folke/which-key.nvim",
+  dependencies = { "echasnovski/mini.icons" },
   ---@module "which-key"
   ---@class wk.Opts
   opts = {
     spec = {
+      -- Groups
       { "<leader>b", group = "buffer", icon = { icon = "󰈔 ", hl = "WhichKeyIconCyan" } },
       { "<leader>c", group = "code", icon = { icon = " ", hl = "WhichKeyIconOrange" } },
       { "<leader>d", group = "debug", icon = { icon = "󰃤 ", hl = "WhichKeyIconRed" } },
@@ -19,6 +21,12 @@ return {
       { "<leader>s", group = "search", icon = { icon = " ", hl = "WhichKeyIconGreen" } },
       { "<leader>t", group = "test", icon = { icon = "󰙨 ", hl = "WhichKeyIconGreen" } },
       { "<leader>x", group = "trouble", icon = { icon = "󱍼 ", hl = "WhichKeyIconRed" } },
+
+      -- Hidden keymaps
+      { "<leader><C-h>", ":leftabove vsplit<CR>", hidden = true },
+      { "<leader><C-j>", ":rightbelow split<CR>", hidden = true },
+      { "<leader><C-k>", ":leftabove split<CR>", hidden = true },
+      { "<leader><C-l>", ":rightbelow vsplit<CR>", hidden = true },
     },
     keys = {
       scroll_down = "<c-n>",

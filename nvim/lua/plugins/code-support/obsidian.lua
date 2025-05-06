@@ -53,7 +53,6 @@ return {
     ui = { enable = false },
   },
   keys = {
-    { "<leader>j", group = "journal", icon = { icon = "󰠮 ", hl = "WhichKeyIconYellow" } },
     { "<leader>jf", "<cmd>ObsidianSearch<cr>", desc = "Find Note" },
     { "<leader>jn", "<cmd>ObsidianNew<CR>", desc = "New Note" },
     { "<leader>jt", "<cmd>ObsidianToday<cr>", desc = "Open Today's Note" },
