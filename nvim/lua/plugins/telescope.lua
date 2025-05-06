@@ -52,9 +52,7 @@ return {
     },
     {
       "<leader>sp",
-      function()
-        require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("data") .. "/lazy/" })
-      end,
+      function() require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("data") .. "/lazy/" }) end,
       desc = "Find Plugin Files",
     },
     {

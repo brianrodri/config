@@ -12,23 +12,17 @@ return {
   keys = {
     {
       "<leader>nf",
-      function()
-        require("neo-tree.command").execute({ source = "filesystem", toggle = true, reveal = true })
-      end,
+      function() require("neo-tree.command").execute({ source = "filesystem", toggle = true, reveal = true }) end,
       desc = "Open File System Tree",
     },
     {
       "<leader>nb",
-      function()
-        require("neo-tree.command").execute({ source = "buffers", toggle = true, reveal = true })
-      end,
+      function() require("neo-tree.command").execute({ source = "buffers", toggle = true, reveal = true }) end,
       desc = "Open Buffers Tree",
     },
     {
       "<leader>ng",
-      function()
-        require("neo-tree.command").execute({ source = "git_status", toggle = true, reveal = true })
-      end,
+      function() require("neo-tree.command").execute({ source = "git_status", toggle = true, reveal = true }) end,
       desc = "Open Git Status Tree",
     },
   },
