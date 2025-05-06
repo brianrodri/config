@@ -119,6 +119,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
   group = vim.api.nvim_create_augroup("lint", { clear = true }),
   callback = function()
-    if vim.opt_local.modifiable:get() then require("lint").try_lint() end
+    local ok, lint = pcall(require, "lint")
+    if ok and vim.opt_local.modifiable:get() then lint.try_lint() end
   end,
 })

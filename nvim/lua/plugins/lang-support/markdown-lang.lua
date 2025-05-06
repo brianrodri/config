@@ -3,7 +3,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       highlight = { enable = true },
-      ensure_installed = { "markdown", "markdown_inline", "latex", "html", "typst", "yaml" },
+      ensure_installed = { "markdown", "markdown_inline", "yaml" },
     },
     opts_extend = { "ensure_installed" },
   },

@@ -1,7 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = { ensure_installed = { "javascript", "typescript" } },
+    opts = { ensure_installed = { "typescript" } },
     opts_extend = { "ensure_installed" },
   },
 
