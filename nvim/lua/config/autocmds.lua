@@ -55,6 +55,47 @@ local LSP_WHICH_KEY_SPECS = {
   },
 }
 
+---@type string[]
+---File types that can be closed by pressing "q" in normal mode.
+local CLOSE_WITH_Q = {
+  "PlenaryTestPopup",
+  "checkhealth",
+  "dbout",
+  "gitsigns-blame",
+  "grug-far",
+  "help",
+  "lspinfo",
+  "neotest-output",
+  "neotest-output-panel",
+  "neotest-summary",
+  "notify",
+  "qf",
+  "spectre_panel",
+  "startuptime",
+  "tsplayground",
+}
+
+-- Close some filetypes with <q>
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("close_with_q", { clear = true }),
+  pattern = CLOSE_WITH_Q,
+  callback = function(args)
+    local keymap_opts = { buffer = args.buf, silent = true, desc = "Delete Buffer" }
+    local buf_delete = function()
+      vim.bo[args.buf].buflisted = false
+      require("snacks.bufdelete").delete(args.buf)
+    end
+    vim.schedule(function() vim.keymap.set("n", "q", buf_delete, keymap_opts) end)
+  end,
+})
+
+-- Make it easier to close man-files when opened inline
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("man_unlisted", { clear = true }),
+  pattern = { "man" },
+  callback = function(event) vim.bo[event.buf].buflisted = false end,
+})
+
 -- Highlight when yanking text
 vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking text",
