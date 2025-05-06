@@ -2,6 +2,7 @@
 ---@type LazySpec
 return {
   { import = "plugins.code-support" },
+  { import = "plugins.lang-support" },
   { import = "plugins.text-support" },
   { import = "plugins.tool-support" },
 }

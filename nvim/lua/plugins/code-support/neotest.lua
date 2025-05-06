@@ -1,3 +1,5 @@
+local keymaps = require("config.keymaps")
+
 ---@module "lazy"
 ---@type LazySpec
 return {
@@ -8,5 +10,5 @@ return {
     "antoinemadec/FixCursorHold.nvim",
     "nvim-treesitter/nvim-treesitter",
   },
-  keys = require("config.keymaps").set_neotest_keymaps,
+  keys = keymaps.set_neotest_keymaps,
 }

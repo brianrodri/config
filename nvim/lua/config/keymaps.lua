@@ -9,6 +9,9 @@ function M.set_global_keymaps()
     { "<leader>b", group = "buffer" },
     { "<leader>bd", function() snacks.bufdelete.delete() end },
   })
+  M.set_neo_tree_keymaps()
+  M.set_trouble_keymaps()
+  M.get_telescope_mappings()
   M.set_journal_keymaps()
   M.set_toggle_keymaps()
   M.set_git_keymaps()

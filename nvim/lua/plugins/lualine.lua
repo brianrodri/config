@@ -8,7 +8,7 @@ end
 ---@type LazySpec
 return {
   "nvim-lualine/lualine.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
+  dependencies = { "nvim-tree/nvim-web-devicons", "lewis6991/gitsigns.nvim" },
   opts = function()
     return {
       theme = "everforest",
@@ -20,7 +20,6 @@ return {
         lualine_y = { "lsp_status" },
         lualine_z = { "location" },
       },
-      extensions = { "neo-tree", "nvim-dap-ui", "trouble" },
     }
   end,
 }

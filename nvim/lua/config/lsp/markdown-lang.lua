@@ -1,12 +1,4 @@
-vim.lsp.enable("markdown_oxide")
-
-vim.lsp.config("markdown_oxide", {
-  root_markers = { ".obsidian" },
-  capabilities = {
-    workspace = {
-      didChangeWatchedFiles = {
-        dynamicRegistration = true,
-      },
-    },
-  },
+local lint = require("lint")
+lint.linters_by_ft = vim.tbl_deep_extend("force", lint.linters_by_ft or {}, {
+  markdown = { "markdownlint" },
 })

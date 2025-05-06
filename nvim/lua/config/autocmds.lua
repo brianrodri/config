@@ -13,3 +13,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
     require("config.keymaps").set_lsp_keymaps(client, args.buf)
   end,
 })
+
+-- Automatically format on-write
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+  group = vim.api.nvim_create_augroup("lint", { clear = true }),
+  callback = function()
+    if vim.opt_local.modifiable:get() then require("lint").try_lint() end
+  end,
+})

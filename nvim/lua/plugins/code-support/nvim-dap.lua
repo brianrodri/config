@@ -1,3 +1,5 @@
+local keymaps = require("config.keymaps")
+
 ---@module "lazy"
 ---@type LazySpec
 return {
@@ -6,7 +8,6 @@ return {
   init = function()
     local dap = require("dap")
     local dapui = require("dapui")
-    local keymaps = require("config.keymaps")
     keymaps.set_dap_keymaps()
     dap.listeners.after.event_initialized["dapui_config"] = dapui.open
     dap.listeners.before.event_terminated["dapui_config"] = dapui.close

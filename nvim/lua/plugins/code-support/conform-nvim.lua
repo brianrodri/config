@@ -33,10 +33,5 @@ return { -- Autoformatting
       if get_enabled(buf) then return { timeout_ms = 500, lsp_format = "fallback" } end
       return nil
     end,
-    formatters_by_ft = {
-      lua = { "stylua" },
-      markdown = { "markdownlint" },
-      typescript = { "prettier" },
-    },
   },
 }

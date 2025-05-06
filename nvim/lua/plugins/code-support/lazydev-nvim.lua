@@ -4,11 +4,7 @@ return { -- Configures LuaLS for editing Neovim config files
   "folke/lazydev.nvim",
   ft = "lua",
   dependencies = {
-    {
-      "nvim-treesitter/nvim-treesitter",
-      opts = { ensure_installed = { "lua", "luadoc" } },
-      opts_extend = { "ensure_installed" },
-    },
+    "nvim-treesitter/nvim-treesitter",
 
     {
       "saghen/blink.cmp",
