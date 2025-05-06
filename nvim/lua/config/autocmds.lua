@@ -10,7 +10,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp-keymaps", { clear = true }),
   callback = function(args)
     require("which-key").add({
-      { "<leader>c", group = "code", icon = { icon = " ", hl = "WhichKeyIconCyan" } },
       {
         "<leader>cr",
         function() vim.lsp.buf.rename() end,

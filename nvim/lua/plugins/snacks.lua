@@ -119,9 +119,5 @@ return {
         end,
       })
     end,
-    keys = {
-      { "<leader>bd", function() require("snacks").bufdelete.delete() end },
-      { "<leader>gg", function() require("snacks.lazygit").open() end, desc = "Lazygit" },
-    },
   },
 }
