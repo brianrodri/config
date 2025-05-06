@@ -101,6 +101,27 @@ return {
         SnacksDashboardFooter = "Comment",
         SnacksDashboardSpecial = "Green",
       })
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "VeryLazy",
+        callback = function()
+          local snacks = require("snacks")
+          snacks.toggle.animate():map("<leader>oa")
+          snacks.toggle.diagnostics():map("<leader>od")
+          snacks.toggle.inlay_hints():map("<leader>oh")
+          snacks.toggle.indent():map("<leader>oi")
+          snacks.toggle.line_number():map("<leader>ol")
+          snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>or")
+          snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>os")
+          snacks.toggle.treesitter():map("<leader>ot")
+          snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>ow")
+          snacks.toggle.zoom():map("<leader>oz")
+        end,
+      })
     end,
+    keys = {
+      { "<leader>bd", function() require("snacks").bufdelete.delete() end },
+      { "<leader>gg", function() require("snacks.lazygit").open() end, desc = "Lazygit" },
+    },
   },
 }

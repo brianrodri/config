@@ -1,22 +1,31 @@
-local keymaps = require("config.keymaps")
-
-local function get_enabled(global)
-  if not global and vim.b.autoformat ~= nil then
-    return vim.b.autoformat
-  elseif vim.g.autoformat ~= nil then
-    return vim.g.autoformat
-  else
-    return true
-  end
+local function is_buffer_autoformat_enabled()
+  if vim.b.autoformat ~= nil then return vim.b.autoformat end
+  if vim.g.autoformat ~= nil then return vim.g.autoformat end
+  return true
 end
 
-local function set_enabled(enable, global)
-  if global then
-    vim.g.autoformat = enable
-    vim.b.autoformat = nil
-  else
-    vim.b.autoformat = enable
-  end
+local function toggle_buffer_autoformat()
+  local snacks = require("snacks")
+  return snacks.toggle({
+    name = "Auto Format (buffer)",
+    get = is_buffer_autoformat_enabled,
+    set = function(val) vim.b.autoformat = val end,
+  })
+end
+
+local function toggle_global_autoformat()
+  local snacks = require("snacks")
+  return snacks.toggle({
+    name = "Auto Format (global)",
+    get = function()
+      if vim.g.autoformat ~= nil then return vim.g.autoformat end
+      return true
+    end,
+    set = function(val)
+      vim.g.autoformat = val
+      vim.b.autoformat = nil
+    end,
+  })
 end
 
 ---@module "lazy"
@@ -25,13 +34,31 @@ return { -- Autoformatting
   "stevearc/conform.nvim",
   event = { "BufWritePre" },
   cmd = { "ConformInfo" },
-  init = function() return keymaps.set_formatter_keymaps(get_enabled, set_enabled) end,
   ---@module "conform"
   ---@type conform.setupOpts
   opts = {
-    format_on_save = function(buf)
-      if get_enabled(buf) then return { timeout_ms = 500, lsp_format = "fallback" } end
-      return nil
+    format_on_save = function()
+      if is_buffer_autoformat_enabled() then
+        return { timeout_ms = 500, lsp_format = "fallback" }
+      else
+        return nil
+      end
     end,
   },
+  keys = {
+    {
+      "<leader>cq",
+      function() require("conform").format({ lsp_format = "fallback" }) end,
+      desc = "Format Buffer",
+    },
+  },
+  init = function()
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "VeryLazy",
+      callback = function()
+        toggle_buffer_autoformat():map("<leader>oq")
+        toggle_global_autoformat():map("<leader>oQ")
+      end,
+    })
+  end,
 }
