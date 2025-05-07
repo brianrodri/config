@@ -28,3 +28,5 @@ export plugins=(
 type "oh-my-posh" &>/dev/null && eval "$(oh-my-posh init zsh --config "$HOME/.oh-my-posh.yaml")"
 
 eval "$(perl -I$HOME/.perl5/lib/perl5 -Mlocal::lib=$HOME/.perl5)"
+
+eval "$($(brew --prefix)/bin/brew shellenv)"
