@@ -1,10 +1,13 @@
--- Set <space> as the leader key
+--Set <space> as the leader key
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Make line numbers default
 vim.opt.number = true
+
+-- Disable wrap by default
+vim.o.wrap = false
 
 -- Use vibrant colors on dark backgrounds
 vim.o.termguicolors = true
