@@ -40,6 +40,7 @@ return {
         name = "Vault",
         path = "~/Documents/Vault",
         overrides = {
+          disable_frontmatter = true,
           attachments = { img_folder = "8 - Meta/Attachments" },
           daily_notes = { folder = "1 - Journal/Daily" },
           notes_subdir = "2 - Fleeting Notes",
