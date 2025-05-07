@@ -1,5 +1,3 @@
-local keymaps = require("config.keymaps")
-
 ---@module "lazy"
 ---@type LazySpec
 return {
