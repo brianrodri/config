@@ -19,5 +19,6 @@ return {
     },
     { "<leader>xq", function() require("trouble").toggle("qflist") end, desc = "QuickFix List" },
     { "<leader>xl", function() require("trouble").toggle("loclist") end, desc = "Location List" },
+    { "<leader>xm", "<cmd>NoiceAll<cr>", desc = "Messages" },
   },
 }

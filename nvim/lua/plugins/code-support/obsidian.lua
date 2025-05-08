@@ -49,26 +49,33 @@ local SUBSTITUTIONS = {
 local resolve_note = function()
   ---@type obsidian.Client
   local client = assert(require("obsidian").get_client(), "Obsidian Client not ready")
-  ---@type obsidian.Note
-  local note = client:resolve_note(INBOX_NOTE_PATH)
-  assert(note and note:exists(), "Obsidian Note not found: " .. INBOX_NOTE_PATH)
-  return client, note
+  local inbox_note = client:resolve_note(INBOX_NOTE_PATH)
+  assert(inbox_note and inbox_note:exists(), "Obsidian Note not found: " .. INBOX_NOTE_PATH)
+  return client, inbox_note
 end
 
-local open_note = function()
-  local client, note = resolve_note()
-  client:open_note(note)
+local open_inbox_note = function()
+  local client, inbox_note = resolve_inbox_note()
+  client:open_note(inbox_note)
 end
 
-local append_to_note = function()
-  local input = require("snacks.input")
-  local client, note = resolve_note()
-  input({ prompt = "Append To " .. INBOX_NOTE_PATH, default = "- " }, function(value)
+local append_to_inbox_note = function()
+  require("snacks.input").input({ prompt = "Append To " .. INBOX_NOTE_PATH, default = "- " }, function(value)
     local update_content = function(lines) return vim.list_extend(lines, { value }) end
-    client:write_note(note, { update_content = update_content })
-    local buffer_note = client:current_note()
-    if buffer_note and buffer_note.path == note.path then client:open_note(buffer_note) end
+    local client, inbox_note = resolve_inbox_note()
+    client:write_note(inbox_note, { update_content = update_content })
+    local current_note = client:current_note()
+    if current_note and current_note.path == inbox_note.path then client:open_note(current_note) end
   end)
+end
+
+local parse_iso_name = function(iso)
+  if type(iso) ~= "string" then return nil end
+  local iso_date_ok, _, d, m, y = string.find(iso, "^(%d%d%d%d)-(%d%d)-(%d%d)$")
+  if iso_date_ok then return { year = y, month = m, day = d } end
+  local iso_week_ok, _, wky, wkn = string.find(iso, "^(%d%d%d%d)-W(%d%d)$")
+  if iso_date_ok then return {} end
+  return nil
 end
 
 ---@module "lazy"
@@ -86,11 +93,10 @@ return {
         name = "Vault",
         path = "~/Documents/Vault",
         overrides = {
-          disable_frontmatter = true,
           attachments = { img_folder = "8 - Meta/Attachments" },
           daily_notes = { folder = "1 - Journal/Daily" },
+          disable_frontmatter = true,
           notes_subdir = "2 - Fleeting Notes",
-          note_frontmatter_func = function() return {} end,
           new_notes_location = "notes_subdir",
           note_id_func = function(title) return title and title:gsub("['\\.]", "") end,
           templates = {
