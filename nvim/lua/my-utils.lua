@@ -15,27 +15,25 @@ local function try_parse(format, timestring)
   end
 end
 
----@generic ALL_ARGS, LEFT_ARGS
----@param f fun(...: ALL_ARGS)
----@param ... LEFT_ARGS
+---@generic Args, Return
+---@param f fun(...: Args): Return
+---@param ...? Args
+---@return fun(...?: Args): Return
 local function bind_left(f, ...)
-  local bindings = { ... }
-  ---@generic RIGHT_ARGS
-  ---@param ... RIGHT_ARGS
-  return function(...) return f(unpack(bindings), ...) end
-end
-
----@generic ALL_ARGS, RIGHT_ARGS
----@param f fun(...: ALL_ARGS)
----@param ... RIGHT_ARGS
-local function bind_right(f, ...)
-  local bindings = { ... }
-  ---@generic LEFT_ARGS
-  ---@param ... LEFT_ARGS
-  return function(...) return f(..., unpack(bindings)) end
+  local left_args = { ... }
+  return function(...) return f(unpack(left_args), ...) end
 end
 
 local bind = bind_left
+
+---@generic Args, Return
+---@param f fun(...: Args): Return
+---@param ...? Args
+---@return fun(...?: Args): Return
+local function bind_right(f, ...)
+  local right_args = { ... }
+  return function(...) return f(..., unpack(right_args)) end
+end
 
 ---@param s1 string
 ---@param s2 string
@@ -46,13 +44,10 @@ local function concat(s1, s2) return s1 .. s2 end
 ---@param first_prefix? string
 local function indent(str, prefix, first_prefix)
   prefix = prefix or "\t"
-  first_prefix = first_prefix or prefix
-  local lines = vim.split(str, "\n")
-  local lines_with_prefixes = vim.list_extend(
-    { concat(first_prefix, lines[1]) },
-    vim.iter(vim.list_slice(lines, 2)):map(bind(concat, prefix)):totable()
-  )
-  return vim.iter(lines_with_prefixes):join("\n")
+  return vim
+    .iter(ipairs(vim.split(str, "\n")))
+    :map(function(i, line) return concat(i == 1 and first_prefix or prefix, line) end)
+    :join("\n")
 end
 
 ---@param epoch number
@@ -86,12 +81,12 @@ return {
   bind = bind,
   bind_left = bind_left,
   bind_right = bind_right,
-  try_parse = try_parse,
   concat = concat,
   indent = indent,
+  iso_date = iso_date,
   iso_week = iso_week,
   iso_week_number = iso_week_number,
-  iso_date = iso_date,
   pretty_date = pretty_date,
   pretty_week = pretty_week,
+  try_parse = try_parse,
 }
