@@ -1,4 +1,50 @@
+local my_utils = require("my-utils")
+
 local INBOX_NOTE_PATH = "0 - Index/Inbox.md"
+
+local ONE_DAY_IN_SECS = 86400
+local ONE_WEEK_IN_SECS = ONE_DAY_IN_SECS * 7
+
+---@module "obsidian"
+---@type { [string]: fun(note: obsidian.Note): string }
+local SUBSTITUTIONS = {
+  pretty_date = function(note)
+    local epoch = assert(my_utils.try_parse_iso(note.path.stem))
+    return my_utils.pretty_date(epoch)
+  end,
+  pretty_week = function(note)
+    local epoch = assert(my_utils.try_parse_iso(note.path.stem))
+    return my_utils.pretty_week(epoch)
+  end,
+  curr_iso_date = function(note)
+    local epoch = assert(my_utils.try_parse_iso(note.path.stem))
+    return my_utils.iso_date(epoch)
+  end,
+  prev_iso_date = function(note)
+    local epoch = assert(my_utils.try_parse_iso(note.path.stem))
+    return my_utils.iso_date(epoch - ONE_DAY_IN_SECS)
+  end,
+  next_iso_date = function(note)
+    local epoch = assert(my_utils.try_parse_iso(note.path.stem))
+    return my_utils.iso_date(epoch + ONE_DAY_IN_SECS)
+  end,
+  curr_iso_week = function(note)
+    local epoch = assert(my_utils.try_parse_iso(note.path.stem))
+    return my_utils.iso_week(epoch)
+  end,
+  curr_iso_week_number = function(note)
+    local epoch = assert(my_utils.try_parse_iso(note.path.stem))
+    return tostring(my_utils.iso_week_number(epoch))
+  end,
+  prev_iso_week = function(note)
+    local epoch = assert(my_utils.try_parse_iso(note.path.stem))
+    return my_utils.iso_week(epoch - ONE_WEEK_IN_SECS)
+  end,
+  next_iso_week = function(note)
+    local epoch = assert(my_utils.try_parse_iso(note.path.stem))
+    return my_utils.iso_week(epoch + ONE_WEEK_IN_SECS)
+  end,
+}
 
 local resolve_note = function()
   ---@type obsidian.Client
@@ -28,8 +74,8 @@ end
 ---@module "lazy"
 ---@type LazySpec
 return {
-  "obsidian-nvim/obsidian.nvim",
-  version = "*", -- recommended, use latest release instead of latest commit
+  "brianrodri/obsidian.nvim",
+  branch = "subst-args",
   dependencies = { "nvim-lua/plenary.nvim" },
   ---@module "obsidian"
   ---@type obsidian.config.ClientOpts
@@ -47,6 +93,10 @@ return {
           note_frontmatter_func = function() return {} end,
           new_notes_location = "notes_subdir",
           note_id_func = function(title) return title and title:gsub("['\\.]", "") end,
+          templates = {
+            folder = "8 - Meta/Neovim Templates",
+            substitutions = SUBSTITUTIONS,
+          },
           use_advanced_uri = true,
         },
       },
@@ -55,9 +105,9 @@ return {
   },
   keys = {
     { "<leader>jf", "<cmd>ObsidianSearch<cr>", desc = "Find Note" },
-    { "<leader>jn", "<cmd>ObsidianNew<CR>", desc = "New Note" },
-    { "<leader>jt", "<cmd>ObsidianToday<cr>", desc = "Open Today's Note" },
-    { "<leader>jo", open_note, desc = "Open Inbox" },
-    { "<leader>ja", append_to_note, desc = "Append To Inbox" },
+    { "<leader>jn", "<cmd>ObsidianNew<CR>",    desc = "New Note" },
+    { "<leader>jt", "<cmd>ObsidianToday<cr>",  desc = "Open Today's Note" },
+    { "<leader>jo", open_note,                 desc = "Open Inbox" },
+    { "<leader>ja", append_to_note,            desc = "Append To Inbox" },
   },
 }
