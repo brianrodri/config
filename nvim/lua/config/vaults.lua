@@ -4,11 +4,13 @@ local ONE_DAY = 86400 -- 60s * 60m * 24h
 
 local ISO_DATE_FORMAT = "%Y-%m-%d"
 local ISO_WEEK_FORMAT = "%Y-W%V"
+local ISO_MONTH_FORMAT = "%Y-%m"
+local ISO_YEAR_FORMAT = "%Y"
 local PRETTY_DATE_FORMAT = "%a %B %-d %Y"
 
 local INBOX_NOTE_PATH = "0 - Index/Inbox.md"
 
-local FILENAME_FORMAT_MAP = {
+local TEMPLATE_FORMATS = {
   ["Daily Template"] = "%Y-%m-%d",
   ["Weekly Template"] = "%Y-W%V",
   ["Monthly Template"] = "%Y-%m",
@@ -29,9 +31,9 @@ end
 ---@param template? obsidian.Path
 ---@return integer time
 local resolve_subst_time = function(target, template)
-  assert(target and target:is_file(), string.format("invalid target path: %s", target))
-  assert(template and template:is_file(), string.format("invalid template path: %s", template))
-  local format = assert(FILENAME_FORMAT_MAP[template.stem], string.format("unknown template: %s", template))
+  assert(target and target:is_file(), string.format("invalid target: %s", tostring(target)))
+  assert(template and template:is_file(), string.format("invalid template: %s", tostring(template)))
+  local format = assert(TEMPLATE_FORMATS[template.stem], string.format("unknown template: %s", template.stem))
   return assert(utils.try_parse(format, target.stem))
 end
 
@@ -65,6 +67,7 @@ return {
     end,
     append_to_inbox_note = function()
       require("snacks").input({ prompt = "Append To Inbox", default = "- " }, function(line)
+        if not line or line == "" then return end
         local client, inbox_note = lookup_note(INBOX_NOTE_PATH)
         client:write_note(inbox_note, { update_content = utils.bind_right(vim.list_extend, { line }) })
         if tostring(client:current_note()) == tostring(inbox_note) then client:open_note(inbox_note) end
@@ -80,14 +83,21 @@ return {
     ---@diagnostic disable-next-line: missing-fields
     overrides = {
       ---@param title string|?
-      note_id_func = function(title) return assert(title) end,
+      note_id_func = function(title)
+        if not title or title == "" then return tostring(os.date(ISO_DATE_FORMAT)) end
+        return title
+      end,
 
       ---@param spec { id: string, dir: obsidian.Path, title: string|? }
       note_path_func = function(spec)
-        if utils.try_parse("%Y-%m-%d", spec.id) then
+        if utils.try_parse(ISO_DATE_FORMAT, spec.id) then
           return string.format("1 - Journal/Daily/%s.md", spec.id)
-        elseif utils.try_parse("%Y-W%V", spec.id) then
+        elseif utils.try_parse(ISO_WEEK_FORMAT, spec.id) then
           return string.format("1 - Journal/Weekly/%s.md", spec.id)
+        elseif utils.try_parse(ISO_MONTH_FORMAT, spec.id) then
+          return string.format("1 - Journal/Monthly/%s.md", spec.id)
+        elseif utils.try_parse(ISO_YEAR_FORMAT, spec.id) then
+          return string.format("1 - Journal/Yearly/%s.md", spec.id)
         else
           return string.format("2 - Fleeting Notes/%s.md", spec.id)
         end
@@ -95,7 +105,7 @@ return {
 
       disable_frontmatter = true,
       use_advanced_uri = true,
-      notes_subdir = "/",
+      notes_subdir = "",
 
       ---@diagnostic disable-next-line: missing-fields
       attachments = {
