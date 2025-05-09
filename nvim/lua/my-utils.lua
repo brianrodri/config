@@ -1,56 +1,44 @@
----@generic Args, Return
----@param f fun(...: Args): ...: Return
----@param ...? Args
----@return fun(...?: Args): ...: Return
----Returns a new function with pre-defined leading arguments.
-local function bind_left(f, ...)
+---@generic Arg, Ret
+---@param func fun(...: Arg): Ret
+---@param ...? Arg
+---@return fun(...?: Arg): Ret
+local function bind_left(func, ...)
   local left_args = { ... }
-  return function(...) return f(unpack(left_args), ...) end
+  return function(...) return func(unpack(left_args), ...) end
 end
 
----@generic Args, Return
----@param f fun(...: Args): Return
----@param ...? Args
----@return fun(...?: Args): Return
----Returns a new function with pre-defined trailing arguments.
-local function bind_right(f, ...)
+---@generic Arg, Ret
+---@param func fun(...: Arg): Ret
+---@param ...? Arg
+---@return fun(...?: Arg): Ret
+local function bind_right(func, ...)
   local right_args = { ... }
-  return function(...) return f(..., unpack(right_args)) end
+  return function(...) return func(..., unpack(right_args)) end
 end
 
----@generic Args, Return
----@param f fun(...: Args)
----@param g fun(...): Return
----@return fun(...: Args): ...: Return
----Returns a new function that calls g with the result of calling f.
+---@generic FArg, GArg, GRet
+---@param f fun(...: FArg): ...: GArg
+---@param g fun(...: GArg): ...: GRet
+---@return fun(...: FArg): ...: GRet
 local function compose(f, g)
   return function(...) return g(f(...)) end
 end
 
----@generic T
----@param ... T
----@return T ...
-local function identity(...) return ... end
-
----@nodiscard
----@overload fun(format: string, time: integer): string, nil
----@overload fun(format: string, time: integer): nil, string
----Attempts to return the time with the given format encoding, otherwise nil and an error.
-local function try_format(format, time)
-  local ok, result = pcall(os.date, format, time)
-  if not ok then return nil, string.format('os.date("%s", %s) error: %s', format, time, result) end
+---@overload fun(format_str: string, time: integer): time_str: string, err: nil
+---@overload fun(format_str: string, time: integer): time_str: nil, err: string
+local function try_format(format_str, time)
+  local ok, result = pcall(os.date, format_str, time)
+  if not ok then return nil, string.format('format("%s", %d) error: %s', format_str, time, result) end
+  if not result then return nil, string.format('format("%s", %d) error: bad format', format_str, time) end
   return tostring(result), nil
 end
 
----@nodiscard
----@overload fun(format: string, time_str: string): integer, nil
----@overload fun(format: string, time_str: string): nil, string
----Attempts to parse an epoch time (as per os.date()) from the timestring using the provided format.
----If successful, returns the epoch time. Otherwise, returns nil and an error describing the issue.
-local function try_parse(format, time_str)
-  local ok, result = pcall(vim.fn.strptime, format, time_str)
-  if not ok then return nil, string.format('strptime("%s", "%s") error: %s', format, time_str, result) end
-  if result == 0 then return nil, string.format('strptime("%s", "%s") error: bad format', format, time_str) end
+---@overload fun(format_str: string, time_str: string): time: integer, err: nil
+---@overload fun(format_str: string, time_str: string): time: nil, err: string
+local function try_parse(format_str, time_str)
+  local ok, result = pcall(vim.fn.strptime, format_str, time_str)
+  if not ok then return nil, string.format('parse("%s", "%s") error: %s', format_str, time_str, result) end
+  if result == 0 then return nil, string.format('parse("%s", "%s") error: bad format', format_str, time_str) end
   return result, nil
 end
 
@@ -58,7 +46,6 @@ return {
   bind_left = bind_left,
   bind_right = bind_right,
   compose = compose,
-  identity = identity,
   try_format = try_format,
   try_parse = try_parse,
 }
