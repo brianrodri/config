@@ -17,7 +17,7 @@ local FILENAME_FORMAT_MAP = {
 
 ---@param path string
 ---@return obsidian.Client client, obsidian.Note note
-local function connect_with_note(path)
+local function lookup_note(path)
   local plugin = assert(require("obsidian"), "obsidian.nvim plugin is nil")
   local client = assert(plugin.get_client(), "obsidian.nvim client is nil")
   local note = client:resolve_note(path)
@@ -28,7 +28,7 @@ end
 ---@param target? obsidian.Path
 ---@param template? obsidian.Path
 ---@return integer time
-local resolve_time = function(target, template)
+local resolve_subst_time = function(target, template)
   assert(target and target:is_file(), string.format("invalid target path: %s", target))
   assert(template and template:is_file(), string.format("invalid template path: %s", template))
   local format = assert(FILENAME_FORMAT_MAP[template.stem], string.format("unknown template: %s", template))
@@ -60,12 +60,12 @@ end
 return {
   actions = {
     open_inbox_note = function()
-      local client, inbox_note = connect_with_note(INBOX_NOTE_PATH)
+      local client, inbox_note = lookup_note(INBOX_NOTE_PATH)
       client:open_note(inbox_note)
     end,
     append_to_inbox_note = function()
       require("snacks").input({ prompt = "Append To Inbox", default = "- " }, function(line)
-        local client, inbox_note = connect_with_note(INBOX_NOTE_PATH)
+        local client, inbox_note = lookup_note(INBOX_NOTE_PATH)
         client:write_note(inbox_note, { update_content = utils.bind_right(vim.list_extend, { line }) })
         if tostring(client:current_note()) == tostring(inbox_note) then client:open_note(inbox_note) end
       end)
@@ -79,6 +79,10 @@ return {
     name = "Vault",
     ---@diagnostic disable-next-line: missing-fields
     overrides = {
+      ---@param title string|?
+      note_id_func = function(title) return assert(title) end,
+
+      ---@param spec { id: string, dir: obsidian.Path, title: string|? }
       note_path_func = function(spec)
         if utils.try_parse("%Y-%m-%d", spec.id) then
           return string.format("1 - Journal/Daily/%s.md", spec.id)
@@ -88,8 +92,10 @@ return {
           return string.format("2 - Fleeting Notes/%s.md", spec.id)
         end
       end,
+
       disable_frontmatter = true,
       use_advanced_uri = true,
+      notes_subdir = "/",
 
       ---@diagnostic disable-next-line: missing-fields
       attachments = {
@@ -98,20 +104,24 @@ return {
       ---@diagnostic disable-next-line: missing-fields
       daily_notes = {
         folder = "1 - Journal/Daily",
+        template = "Daily Template.md",
+        workdays_only = false,
       },
       ---@diagnostic disable-next-line: missing-fields
       templates = {
         folder = "8 - Meta/Neovim Templates",
+        date_format = "%Y-%m-%d",
+        time_format = "%H:%M",
         substitutions = {
-          pretty_date = utils.compose(resolve_time, date_formatter(PRETTY_DATE_FORMAT)),
-          pretty_week = utils.compose(resolve_time, week_formatter(PRETTY_DATE_FORMAT)),
-          curr_iso_date = utils.compose(resolve_time, date_formatter(ISO_DATE_FORMAT)),
-          prev_iso_date = utils.compose(resolve_time, date_formatter(ISO_DATE_FORMAT, -1)),
-          next_iso_date = utils.compose(resolve_time, date_formatter(ISO_DATE_FORMAT, 1)),
-          curr_iso_week = utils.compose(resolve_time, date_formatter(ISO_WEEK_FORMAT)),
-          prev_iso_week = utils.compose(resolve_time, date_formatter(ISO_WEEK_FORMAT, -7)),
-          next_iso_week = utils.compose(resolve_time, date_formatter(ISO_WEEK_FORMAT, 7)),
-          curr_iso_week_number = utils.compose(resolve_time, date_formatter("%-V")),
+          pretty_date = utils.compose(resolve_subst_time, date_formatter(PRETTY_DATE_FORMAT)),
+          pretty_week = utils.compose(resolve_subst_time, week_formatter(PRETTY_DATE_FORMAT)),
+          curr_iso_date = utils.compose(resolve_subst_time, date_formatter(ISO_DATE_FORMAT)),
+          prev_iso_date = utils.compose(resolve_subst_time, date_formatter(ISO_DATE_FORMAT, -1)),
+          next_iso_date = utils.compose(resolve_subst_time, date_formatter(ISO_DATE_FORMAT, 1)),
+          curr_iso_week = utils.compose(resolve_subst_time, date_formatter(ISO_WEEK_FORMAT)),
+          prev_iso_week = utils.compose(resolve_subst_time, date_formatter(ISO_WEEK_FORMAT, -7)),
+          next_iso_week = utils.compose(resolve_subst_time, date_formatter(ISO_WEEK_FORMAT, 7)),
+          curr_iso_week_number = utils.compose(resolve_subst_time, date_formatter("%-V")),
         },
       },
     },
