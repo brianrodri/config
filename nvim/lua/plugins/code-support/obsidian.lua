@@ -14,11 +14,12 @@ return {
     ui = { enable = false },
   },
   keys = {
+    { "<leader>jo", vaults.actions.open_inbox_note, desc = "Open Inbox" },
+    { "<leader>ja", vaults.actions.append_to_inbox_note, desc = "Append To Inbox" },
+    -- TODO: Refactor these mappings into action functions.
     { "<leader>j/", "<cmd>ObsidianSearch<cr>", desc = "Search Notes" },
     { "<leader>jf", "<cmd>ObsidianQuickSwitch<cr>", desc = "Open Note" },
     { "<leader>jn", "<cmd>ObsidianNew<cr>", desc = "New Note" },
     { "<leader>jt", "<cmd>ObsidianToday<cr>", desc = "Open Today's Note" },
-    { "<leader>jo", vaults.actions.open_inbox_note, desc = "Open Inbox" },
-    { "<leader>ja", vaults.actions.append_to_inbox_note, desc = "Append To Inbox" },
   },
 }
