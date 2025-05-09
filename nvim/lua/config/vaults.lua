@@ -1,12 +1,14 @@
 local utils = require("my-utils")
 
-local ONE_DAY = 86400 -- 60s * 60m * 24h
-
+-- for parsing, see: https://www.man7.org/linux/man-pages/man3/strptime.3.html
+-- for formatting, see: https://www.man7.org/linux/man-pages/man3/strftime.3.html
 local ISO_DATE_FORMAT = "%Y-%m-%d"
 local ISO_WEEK_FORMAT = "%Y-W%V"
 local ISO_MONTH_FORMAT = "%Y-%m"
 local ISO_YEAR_FORMAT = "%Y"
 local PRETTY_DATE_FORMAT = "%a %B %-d %Y"
+
+local ONE_DAY = 86400 -- 60s * 60m * 24h
 
 local TEMPLATE_FORMATS = {
   ["Daily Template"] = ISO_DATE_FORMAT,
