@@ -2,6 +2,8 @@ local utils = require("my-utils")
 
 -- for parsing, see: https://www.man7.org/linux/man-pages/man3/strptime.3.html
 -- for formatting, see: https://www.man7.org/linux/man-pages/man3/strftime.3.html
+-- TODO: ISO_WEEK_FORMAT needs to be "%G-W%V" for correctness, but strptime doesn't support "%G" on my system.
+-- strftime _does_ support "%G" on my system, however.
 local ISO_DATE_FORMAT = "%Y-%m-%d"
 local ISO_WEEK_FORMAT = "%Y-W%V"
 local ISO_MONTH_FORMAT = "%Y-%m"
