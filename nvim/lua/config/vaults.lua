@@ -8,14 +8,14 @@ local ISO_MONTH_FORMAT = "%Y-%m"
 local ISO_YEAR_FORMAT = "%Y"
 local PRETTY_DATE_FORMAT = "%a %B %-d %Y"
 
-local INBOX_NOTE_PATH = "0 - Index/Inbox.md"
-
 local TEMPLATE_FORMATS = {
-  ["Daily Template"] = "%Y-%m-%d",
-  ["Weekly Template"] = "%Y-W%V",
-  ["Monthly Template"] = "%Y-%m",
-  ["Yearly Template"] = "%Y",
+  ["Daily Template"] = ISO_DATE_FORMAT,
+  ["Weekly Template"] = ISO_WEEK_FORMAT,
+  ["Monthly Template"] = ISO_MONTH_FORMAT,
+  ["Yearly Template"] = ISO_YEAR_FORMAT,
 }
+
+local INBOX_NOTE_PATH = "0 - Index/Inbox.md"
 
 ---@param path string
 ---@return obsidian.Client client, obsidian.Note note
