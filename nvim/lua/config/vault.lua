@@ -21,15 +21,8 @@ local TEMPLATE_FORMATS = {
 
 local INBOX_NOTE_PATH = "0 - Index/Inbox.md"
 
----@param path string
----@return obsidian.Client client, obsidian.Note note
-local function lookup_note(path)
-  local plugin = assert(require("obsidian"), "obsidian.nvim plugin is nil")
-  local client = assert(plugin.get_client(), "obsidian.nvim client is nil")
-  local note = client:resolve_note(path)
-  assert(note and note:exists(), string.format("error resolving path: %s", path))
-  return client, note
-end
+---@return obsidian.Client client
+local function acquire_client() return assert(require("obsidian").get_client(), "failed to acquire client") end
 
 ---@param ctx obsidian.SubstitutionContext
 ---@return integer time|?
@@ -63,20 +56,36 @@ local function week_formatter(date_format, delta_days, date_sep)
   end
 end
 
+local function opens_note(name)
+  return function()
+    local client = acquire_client()
+    local note = assert(client:resolve_note(name), string.format("failed to resolve note: %s", name))
+    client:open_note(note)
+  end
+end
+
+local function appends_to_note(name)
+  return function()
+    local client = acquire_client()
+    local note = assert(client:resolve_note(name), string.format("failed to resolve note: %s", name))
+    vim.notify(tostring(note))
+    require("snacks").input({ prompt = "Append To " .. note.path.stem, default = "- " }, function(line)
+      if not line or line == "" then return end
+      client:write_note(note, { update_content = utils.bind_right(vim.list_extend, { line }) })
+      if tostring(client:current_note().path) == tostring(note.path) then client:open_note(note) end
+    end)
+  end
+end
+
+local function calls_command(cmd_name, cmd_data)
+  return function() acquire_client():command(cmd_name, cmd_data or { args = "" }) end
+end
+
 return {
-  actions = {
-    open_inbox_note = function()
-      local client, inbox_note = lookup_note(INBOX_NOTE_PATH)
-      client:open_note(inbox_note)
-    end,
-    append_to_inbox_note = function()
-      require("snacks").input({ prompt = "Append To Inbox", default = "- " }, function(line)
-        if not line or line == "" then return end
-        local client, inbox_note = lookup_note(INBOX_NOTE_PATH)
-        client:write_note(inbox_note, { update_content = utils.bind_right(vim.list_extend, { line }) })
-        if tostring(client:current_note()) == tostring(inbox_note) then client:open_note(inbox_note) end
-      end)
-    end,
+  action = {
+    open_inbox_note = opens_note(INBOX_NOTE_PATH),
+    append_to_inbox_note = appends_to_note(INBOX_NOTE_PATH),
+    calls_command = calls_command,
   },
 
   ---@module "obsidian"
@@ -86,13 +95,10 @@ return {
     name = "Vault",
     ---@diagnostic disable-next-line: missing-fields
     overrides = {
-      ---@param title string|?
       note_id_func = function(title)
         if not title or title == "" then return tostring(os.date(ISO_DATE_FORMAT)) end
         return title
       end,
-
-      ---@param spec { id: string, dir: obsidian.Path, title: string|? }
       note_path_func = function(spec)
         if utils.try_parse(ISO_DATE_FORMAT, spec.id) then
           return string.format("1 - Journal/Daily/%s.md", spec.id)
@@ -106,7 +112,6 @@ return {
           return string.format("2 - Fleeting Notes/%s.md", spec.id)
         end
       end,
-
       disable_frontmatter = true,
       use_advanced_uri = true,
       notes_subdir = "",
