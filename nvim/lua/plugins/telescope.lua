@@ -3,7 +3,7 @@
 return {
   "nvim-telescope/telescope.nvim",
   event = "VimEnter",
-  dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
+  dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons", "Myzel394/jsonfly.nvim" },
   keys = {
     {
       "<leader>s.",
@@ -29,6 +29,13 @@ return {
       "<leader>s:",
       function() require("telescope.builtin").commands() end,
       desc = "Find Commands",
+    },
+    {
+      "<leader>so",
+      "<cmd>Telescope jsonfly<cr>",
+      desc = "Search LSP Options",
+      ft = { "json", "xml", "yaml", "toml" },
+      mode = { "n" },
     },
     {
       "<leader>sb",
@@ -86,6 +93,7 @@ return {
       desc = "Find Changed Git Files",
     },
   },
+  ---@module "telescope"
   opts = {
     defaults = {
       mappings = {
@@ -96,4 +104,5 @@ return {
       },
     },
   },
+  init = function() require("telescope").load_extension("jsonfly") end,
 }
