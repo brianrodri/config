@@ -7,14 +7,20 @@ end
 ---@type LazySpec
 return {
   "nvim-lualine/lualine.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons", "lewis6991/gitsigns.nvim" },
+  dependencies = { "nvim-tree/nvim-web-devicons", "lewis6991/gitsigns.nvim", "folke/noice.nvim" },
   opts = function()
     return {
       theme = "everforest",
       sections = {
         lualine_a = { "mode" },
         lualine_b = { "b:gitsigns_head", { "diff", source = get_gitsigns_diff }, "diagnostics" },
-        lualine_c = { "filename" },
+        lualine_c = {
+          "filename",
+          {
+            function() return require("noice").api.status.search.get() end,
+            cond = function() return require("noice").api.status.search.has() end,
+          },
+        },
         lualine_x = { "filetype" },
         lualine_y = { "lsp_status" },
         lualine_z = { "location" },
