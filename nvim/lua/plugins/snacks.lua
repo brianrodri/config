@@ -130,4 +130,18 @@ return {
       })
     end,
   },
+
+  -- :h snacks-rename-neo-tree
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = function(_, opts)
+      local function on_move(data) require("snacks").rename.on_rename_file(data.source, data.destination) end
+      local events = require("neo-tree.events")
+      opts = opts or {}
+      opts.event_handlers = vim.list_extend(opts.event_handlers or {}, {
+        { event = events.FILE_MOVED, handler = on_move },
+        { event = events.FILE_RENAMED, handler = on_move },
+      })
+    end,
+  },
 }
