@@ -10,6 +10,14 @@ local function set_toggle_keymaps()
   snacks.toggle.treesitter():map("<leader>ot")
   snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>ow")
   snacks.toggle.zoom():map("<leader>oz")
+
+  snacks
+    .toggle({
+      name = "Color Column",
+      get = function() return vim.o.colorcolumn:len() > 0 end,
+      set = function(enable) vim.o.colorcolumn = enable and "+1" or "" end,
+    })
+    :map("<leader>oc")
 end
 
 ---@module "lazy"
