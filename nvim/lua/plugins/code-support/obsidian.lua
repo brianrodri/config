@@ -14,11 +14,11 @@ return {
     ui = { enable = false },
   },
   keys = {
-    { "<leader>jo", vault.action.open_inbox_note, desc = "Open Inbox" },
-    { "<leader>ja", vault.action.append_to_inbox_note, desc = "Append To Inbox" },
-    { "<leader>j/", vault.action.search_notes, desc = "Search Notes" },
-    { "<leader>jf", vault.action.quick_switch, desc = "Open Note" },
-    { "<leader>jn", vault.action.new_note, desc = "New Note" },
-    { "<leader>jt", vault.action.todays_note, desc = "Open Today's Note" },
+    { "<leader>no", vault.action.open_inbox_note, desc = "Open Inbox" },
+    { "<leader>na", vault.action.append_to_inbox_note, desc = "Append To Inbox" },
+    { "<leader>n/", vault.action.search_notes, desc = "Search Notes" },
+    { "<leader>nf", vault.action.quick_switch, desc = "Open Note" },
+    { "<leader>nn", vault.action.new_note, desc = "New Note" },
+    { "<leader>nt", vault.action.todays_note, desc = "Open Today's Note" },
   },
 }

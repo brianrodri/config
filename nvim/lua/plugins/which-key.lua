@@ -2,7 +2,8 @@
 ---@type LazySpec
 return {
   "folke/which-key.nvim",
-  dependencies = { "echasnovski/mini.icons" },
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+
   ---@module "which-key"
   ---@class wk.Opts
   opts = {
@@ -13,9 +14,8 @@ return {
       { "<leader>d", group = "debug", icon = { icon = "󰃤 ", hl = "WhichKeyIconRed" } },
       { "<leader>f", group = "file", icon = { icon = "󰈔", hl = "WhichKeyIconCyan" } },
       { "<leader>g", group = "git", icon = { icon = " ", hl = "WhichKeyIconGrey" } },
-      { "<leader>j", group = "journal", icon = { icon = "󰠮 ", hl = "WhichKeyIconPurple" } },
       { "<leader>l", group = "lazy", icon = { icon = "󰒲 ", hl = "WhichKeyIconCyan" } },
-      { "<leader>n", group = "neo-tree", icon = { icon = "󰙅 ", hl = "WhichKeyIconGrey" } },
+      { "<leader>n", group = "notes", icon = { icon = "󰠮 ", hl = "WhichKeyIconPurple" } },
       { "<leader>o", group = "toggle", icon = { icon = " ", hl = "WhichKeyIconYellow" } },
       { "<leader>q", group = "quit", icon = { icon = "󰈆 ", hl = "WhichKeyIconRed" } },
       { "<leader>s", group = "search", icon = { icon = " ", hl = "WhichKeyIconGreen" } },
