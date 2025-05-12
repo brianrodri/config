@@ -11,4 +11,10 @@ return {
     "stevearc/conform.nvim",
     opts = { formatters_by_ft = { lua = { "stylua" } } },
   },
+
+  {
+    "nvim-neotest/neotest",
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-neotest/neotest-plenary" },
+    opts = { adapters = { ["neotest-plenary"] = {} } },
+  },
 }
