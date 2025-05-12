@@ -14,4 +14,12 @@ return {
     "stevearc/conform.nvim",
     opts = { formatters_by_ft = { markdown = { "markdownlint" } } },
   },
+
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons", "nvim-treesitter/nvim-treesitter" },
+    ---@module "render-markdown"
+    ---@type render.md.UserConfig
+    opts = { preset = "obsidian" },
+  },
 }

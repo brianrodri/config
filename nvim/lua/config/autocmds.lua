@@ -69,7 +69,6 @@ local CLOSE_WITH_Q = {
   "neotest-output-panel",
   "neotest-summary",
   "notify",
-  "oil",
   "qf",
   "spectre_panel",
   "startuptime",

@@ -11,6 +11,7 @@ return {
       width_preview = 64,
     },
     mappings = {
+      close = "-",
       go_in = "",
       go_in_plus = "L",
       go_out = "",

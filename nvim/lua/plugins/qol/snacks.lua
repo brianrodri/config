@@ -100,7 +100,7 @@ return {
               icon = " ",
               key = "-",
               desc = "Open Directory",
-              action = function() require("oil").open_float() end,
+              action = function() require("mini.files").open() end,
             },
             { icon = "󰝒 ", key = "n", desc = "New File", action = ":ene | startinsert" },
             { icon = "󱎸 ", key = "/", desc = "Grep", action = ":Telescope live_grep" },
