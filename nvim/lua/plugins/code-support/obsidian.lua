@@ -16,9 +16,9 @@ return {
   keys = {
     { "<leader>jo", vault.action.open_inbox_note, desc = "Open Inbox" },
     { "<leader>ja", vault.action.append_to_inbox_note, desc = "Append To Inbox" },
-    { "<leader>j/", vault.action.calls_command("search"), desc = "Search Notes" },
-    { "<leader>jf", vault.action.calls_command("quick_switch"), desc = "Open Note" },
-    { "<leader>jn", vault.action.calls_command("new"), desc = "New Note" },
-    { "<leader>jt", vault.action.calls_command("today"), desc = "Open Today's Note" },
+    { "<leader>j/", vault.action.search_notes, desc = "Search Notes" },
+    { "<leader>jf", vault.action.quick_switch, desc = "Open Note" },
+    { "<leader>jn", vault.action.new_note, desc = "New Note" },
+    { "<leader>jt", vault.action.todays_note, desc = "Open Today's Note" },
   },
 }
