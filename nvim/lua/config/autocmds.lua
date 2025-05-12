@@ -79,13 +79,15 @@ local CLOSE_WITH_Q = {
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("close_with_q", { clear = true }),
   pattern = CLOSE_WITH_Q,
-  callback = function(args)
-    local keymap_opts = { buffer = args.buf, silent = true, desc = "Delete Buffer" }
-    local buf_delete = function()
-      vim.bo[args.buf].buflisted = false
-      require("snacks.bufdelete").delete(args.buf)
-    end
-    vim.schedule(function() vim.keymap.set("n", "q", buf_delete, keymap_opts) end)
+  callback = function(event)
+    vim.bo[event.buf].buflisted = false
+    vim.schedule(function()
+      local close_buffer = function()
+        vim.cmd("close")
+        pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
+      end
+      vim.keymap.set("n", "q", close_buffer, { buffer = event.buf, silent = true, desc = "Close Buffer" })
+    end)
   end,
 })
 
