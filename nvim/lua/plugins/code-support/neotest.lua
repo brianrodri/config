@@ -1,3 +1,8 @@
+local function resolve_adapter(name, config)
+  local adapter = require(name)
+  return vim.tbl_isempty(config) and adapter or adapter(config)
+end
+
 ---@module "lazy"
 ---@type LazySpec
 return {
@@ -60,4 +65,9 @@ return {
       desc = "Toggle Watch",
     },
   },
+  config = function(_, opts)
+    opts = opts or {}
+    opts.adapters = vim.iter(pairs(opts.adapters or {})):map(resolve_adapter):totable()
+    require("neotest").setup(opts)
+  end,
 }

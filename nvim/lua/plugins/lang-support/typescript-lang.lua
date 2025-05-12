@@ -15,8 +15,6 @@ return {
   {
     "nvim-neotest/neotest",
     dependencies = { "marilari88/neotest-vitest" },
-    opts = function(_, opts)
-      return vim.tbl_extend("keep", opts or {}, { adapters = { require("neotest-vitest") } })
-    end,
+    opts = { adapters = { ["neotest-vitest"] = {} } },
   },
 }
