@@ -11,4 +11,12 @@ return {
     "stevearc/conform.nvim",
     opts = { formatters_by_ft = { javascript = { "prettier" }, typescript = { "prettier" } } },
   },
+
+  {
+    "nvim-neotest/neotest",
+    dependencies = { "marilari88/neotest-vitest" },
+    opts = function(_, opts)
+      return vim.tbl_extend("keep", opts or {}, { adapters = { require("neotest-vitest") } })
+    end,
+  },
 }
