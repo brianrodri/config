@@ -95,10 +95,7 @@ return {
     name = "Vault",
     ---@diagnostic disable-next-line: missing-fields
     overrides = {
-      note_id_func = function(title)
-        if not title or title == "" then return tostring(os.date(ISO_DATE_FORMAT)) end
-        return title
-      end,
+      note_id_func = function(title) return title or tostring(os.date(ISO_DATE_FORMAT)) end,
       note_path_func = function(spec)
         if utils.try_parse(ISO_DATE_FORMAT, spec.id) then
           return string.format("1 - Journal/Daily/%s.md", spec.id)
