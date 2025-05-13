@@ -22,6 +22,5 @@ return {
     "mfussenegger/nvim-lint",
     ---@type my.LintOpts
     opts = { linters_by_ft = { json = { "jsonlint" } } },
-    opts_extend = { "linters_by_ft" },
   },
 }
