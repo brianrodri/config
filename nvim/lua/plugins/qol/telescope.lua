@@ -3,7 +3,12 @@
 return {
   "nvim-telescope/telescope.nvim",
   event = "VimEnter",
-  dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons", "Myzel394/jsonfly.nvim" },
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-tree/nvim-web-devicons",
+    "Myzel394/jsonfly.nvim",
+    "2KAbhishek/nerdy.nvim",
+  },
   -- stylua: ignore
   -- luacheck: no max line length
   keys = {
@@ -36,5 +41,8 @@ return {
       },
     },
   },
-  init = function() require("telescope").load_extension("jsonfly") end,
+  init = function()
+    require("telescope").load_extension("nerdy")
+    require("telescope").load_extension("jsonfly")
+  end,
 }
