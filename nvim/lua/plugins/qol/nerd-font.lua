@@ -11,4 +11,22 @@ return {
       { "<leader>si", function() require("telescope").extensions.nerdy.nerdy() end, desc = "Find Nerd Font Icons" },
     },
   },
+
+  {
+    "saghen/blink.cmp",
+    dependencies = { "MahanRahmati/blink-nerdfont.nvim" },
+    opts = {
+      sources = {
+        default = { "nerdfont" },
+        providers = {
+          nerdfont = {
+            module = "blink-nerdfont",
+            name = "Nerd Fonts",
+            score_offset = 15,
+          },
+        },
+      },
+    },
+    opts_extend = { "sources.default" },
+  },
 }
