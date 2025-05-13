@@ -1,7 +1,3 @@
-local utils = require("my.utils")
-
-local FORMAT_OPTS = { lsp_format = "fallback" }
-
 ---@module "lazy"
 ---@type LazySpec
 return {
@@ -10,8 +6,11 @@ return {
   cmd = { "ConformInfo" },
   ---@module "conform"
   ---@type conform.setupOpts
-  opts = { format_on_save = function() return utils.get_var("autoformat") and FORMAT_OPTS or nil end },
+  opts = {
+    default_format_opts = { lsp_format = "fallback" },
+    format_on_save = function() return require("my.utils").get_var("autoformat") and {} or nil end,
+  },
   keys = {
-    { "<leader>cq", function() require("conform").format(FORMAT_OPTS) end, desc = "Format" },
+    { "<leader>cq", function() require("conform").format() end, desc = "Format" },
   },
 }
