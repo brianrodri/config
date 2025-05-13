@@ -14,16 +14,13 @@ return {
 
   {
     "saghen/blink.cmp",
-    dependencies = { "MahanRahmati/blink-nerdfont.nvim" },
+    dependencies = { "moyiz/blink-emoji.nvim", "MahanRahmati/blink-nerdfont.nvim" },
     opts = {
       sources = {
-        default = { "nerdfont" },
+        default = { "emoji", "nerdfont" },
         providers = {
-          nerdfont = {
-            module = "blink-nerdfont",
-            name = "Nerd Fonts",
-            score_offset = 15,
-          },
+          emoji = { module = "blink-emoji", name = "Emoji", score_offset = 20 },
+          nerdfont = { module = "blink-nerdfont", name = "Nerd Fonts", score_offset = 10 },
         },
       },
     },
