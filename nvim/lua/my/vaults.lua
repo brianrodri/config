@@ -5,6 +5,7 @@ local ISO_DATE_FORMAT = "%Y-%m-%d"
 local ISO_WEEK_FORMAT = "%Y-W%V" -- TODO: Need to use "%G" here rather than "%Y" for correctness.
 local TEMPLATE_MAP = { ["Daily Template"] = ISO_DATE_FORMAT, ["Weekly Template"] = ISO_WEEK_FORMAT }
 local FOLDER_MAP = { ["1 - Journal/Daily"] = ISO_DATE_FORMAT, ["1 - Journal/Weekly"] = ISO_WEEK_FORMAT }
+
 local INBOX_PATH = "0 - Index/Inbox.md"
 
 ---@overload fun(): client: obsidian.Client
@@ -41,6 +42,9 @@ local function calling_command(name, data)
   return function() acquire_client():command(name, data or { args = "" }) end
 end
 
+---@class my.WorkspaceSpec: obsidian.workspace.WorkspaceSpec
+---@field inbox_path fun(self: my.WorkspaceSpec): string
+
 return {
   action = {
     open_inbox_note = function()
@@ -64,10 +68,12 @@ return {
     todays_note = calling_command("today"),
   },
   ---@module "obsidian"
-  ---@type obsidian.workspace.WorkspaceSpec
+  ---@type my.WorkspaceSpec
   personal = {
     path = "~/Documents/Vault",
     name = "Vault",
+    inbox_path = function(self) return vim.fs.normalize(self.path .. "/" .. INBOX_PATH) end,
+
     ---@diagnostic disable-next-line: missing-fields
     overrides = {
       note_id_func = function(title) return title or tostring(os.date(ISO_DATE_FORMAT)) end,
