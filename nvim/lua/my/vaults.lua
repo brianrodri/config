@@ -1,4 +1,4 @@
-local utils = require("my-utils")
+local utils = require("my.utils")
 
 local PRETTY_DATE_FORMAT = "%a %B %-d %Y"
 local ISO_DATE_FORMAT = "%Y-%m-%d"
@@ -65,7 +65,7 @@ return {
   },
   ---@module "obsidian"
   ---@type obsidian.workspace.WorkspaceSpec
-  personal_vault = {
+  personal = {
     path = "~/Documents/Vault",
     name = "Vault",
     ---@diagnostic disable-next-line: missing-fields
