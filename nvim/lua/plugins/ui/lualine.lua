@@ -26,9 +26,12 @@ return {
             cond = function() return require("noice").api.status.search.has() end,
           },
         },
-        lualine_y = { "lsp_status" },
-        lualine_z = { "location" },
         lualine_x = { "copilot", "filetype" },
+        lualine_y = {
+          { function() return string.format(" %2d", vim.fn.line(".")) end },
+          { function() return string.format(" %2d", vim.fn.charcol(".")) end },
+        },
+        lualine_z = { { "lsp_status", ignore_lsp = { "copilot" } } },
       },
     }
   end,
