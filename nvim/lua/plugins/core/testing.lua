@@ -19,6 +19,7 @@ return {
     require("neotest").setup(opts)
   end,
   -- stylua: ignore
+  -- luacheck: no max line length
   keys = {
     { "<leader>tt", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Test File" },
     { "<leader>tT", function() require("neotest").run.run(vim.uv.cwd()) end, desc = "Test All Files" },

@@ -11,6 +11,7 @@ return {
     dap.listeners.before.event_exited["dapui_config"] = dapui.close
   end,
   -- stylua: ignore
+  -- luacheck: no max line length
   keys = {
     { "<leader>dn", function() require("dap").continue() end, desc = "Start/Resume" },
     { "<leader>d.", function() require("dap").run_last() end, desc = "Restart" },
