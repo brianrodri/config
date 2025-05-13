@@ -1,7 +1,0 @@
-require("config.lang.json")
-require("config.lang.lua")
-require("config.lang.markdown")
-require("config.lang.obsidian")
-require("config.lang.rust")
-require("config.lang.typescript")
-require("config.lang.yaml")

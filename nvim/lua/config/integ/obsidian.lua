@@ -65,7 +65,7 @@ return {
   },
   ---@module "obsidian"
   ---@type obsidian.workspace.WorkspaceSpec
-  personal = {
+  personal_vault = {
     path = "~/Documents/Vault",
     name = "Vault",
     ---@diagnostic disable-next-line: missing-fields

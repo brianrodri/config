@@ -50,4 +50,16 @@ return {
       },
     },
   },
+
+  {
+    "neovim/nvim-lspconfig",
+    ---@type my.LspConfig
+    opts = { lua_ls = {} },
+  },
+
+  {
+    "mfussenegger/nvim-lint",
+    ---@type my.LintOpts
+    opts = { linters_by_ft = { lua = { "luacheck" } } },
+  },
 }

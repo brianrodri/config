@@ -17,4 +17,16 @@ return {
     dependencies = { "marilari88/neotest-vitest" },
     opts = { adapters = { ["neotest-vitest"] = {} } },
   },
+
+  {
+    "neovim/nvim-lspconfig",
+    ---@type my.LspConfig
+    opts = { ts_ls = {} },
+  },
+
+  {
+    "mfussenegger/nvim-lint",
+    ---@type my.LintOpts
+    opts = { linters_by_ft = { typescript = { "eslint" } } },
+  },
 }

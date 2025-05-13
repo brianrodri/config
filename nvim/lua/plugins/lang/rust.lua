@@ -17,4 +17,16 @@ return {
     dependencies = { "rouge8/neotest-rust" },
     opts = { adapters = { ["neotest-rust"] = {} } },
   },
+
+  {
+    "neovim/nvim-lspconfig",
+    ---@type my.LspConfig
+    opts = { rust_analyzer = {} },
+  },
+
+  {
+    "mfussenegger/nvim-lint",
+    ---@type my.LintOpts
+    opts = { linters_by_ft = { rust = { "clippy" } } },
+  },
 }
