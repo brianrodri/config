@@ -14,13 +14,4 @@ return {
   keys = {
     { "<leader>cq", function() require("conform").format(FORMAT_OPTS) end, desc = "Format" },
   },
-  init = function()
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "VeryLazy",
-      callback = function()
-        toggle_buffer_autoformat():map("<leader>oq")
-        toggle_global_autoformat():map("<leader>oQ")
-      end,
-    })
-  end,
 }

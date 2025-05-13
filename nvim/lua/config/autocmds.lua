@@ -1,62 +1,7 @@
----@module "which-key"
----@type wk.Spec[]
----Keymaps to attach to _every_ LSP.
-local LSP_WHICH_KEY_SPECS = {
-  {
-    "<leader>cr",
-    function() vim.lsp.buf.rename() end,
-    desc = "Rename Symbol",
-  },
-  {
-    "<leader>ca",
-    function() vim.lsp.buf.code_action() end,
-    desc = "Code Action",
-    mode = { "n", "x" },
-  },
-  {
-    "<leader>c*",
-    function() require("trouble").toggle("lsp_references") end,
-    desc = "References",
-  },
-  {
-    "<leader>cd",
-    function() require("trouble").toggle("lsp_declarations") end,
-    desc = "Declaration",
-  },
-  {
-    "<leader>cD",
-    function() require("trouble").toggle("lsp_definitions") end,
-    desc = "Definitions",
-  },
-  {
-    "<leader>cy",
-    function() require("trouble").toggle("lsp_implementations") end,
-    desc = "Implementations",
-  },
-  {
-    "<leader>cY",
-    function() require("trouble").toggle("lsp_type_definitions") end,
-    desc = "Type Definitions",
-  },
-  {
-    "<leader>cs",
-    function() require("trouble").toggle("lsp_document_symbols") end,
-    desc = "Document Symbols",
-  },
-  {
-    "<leader>cj",
-    function() require("trouble").toggle("lsp_incoming_calls") end,
-    desc = "Incoming Calls",
-  },
-  {
-    "<leader>ck",
-    function() require("trouble").toggle("lsp_outgoing_calls") end,
-    desc = "Outgoing Calls",
-  },
-}
+local toggle = require("my.toggle")
 
 ---@type string[]
----File types that can be closed by pressing "q" in normal mode.
+--- File types that can be closed by pressing "q" in normal mode.
 local CLOSE_WITH_Q = {
   "PlenaryTestPopup",
   "checkhealth",
@@ -75,6 +20,22 @@ local CLOSE_WITH_Q = {
   "tsplayground",
 }
 
+---@module "which-key"
+---@type wk.Spec[]
+--- Keymaps to attach to every LSP.
+local LSP_WHICH_KEY_SPECS = {
+  { "<leader>cr", function() vim.lsp.buf.rename() end, desc = "Rename Symbol" },
+  { "<leader>ca", function() vim.lsp.buf.code_action() end, desc = "Code Action", mode = { "n", "x" } },
+  { "<leader>c*", function() require("trouble").toggle("lsp_references") end, desc = "References" },
+  { "<leader>cd", function() require("trouble").toggle("lsp_declarations") end, desc = "Declaration" },
+  { "<leader>cD", function() require("trouble").toggle("lsp_definitions") end, desc = "Definitions" },
+  { "<leader>cy", function() require("trouble").toggle("lsp_implementations") end, desc = "Implementations" },
+  { "<leader>cY", function() require("trouble").toggle("lsp_type_definitions") end, desc = "Type Definitions" },
+  { "<leader>cs", function() require("trouble").toggle("lsp_document_symbols") end, desc = "Document Symbols" },
+  { "<leader>cj", function() require("trouble").toggle("lsp_incoming_calls") end, desc = "Incoming Calls" },
+  { "<leader>ck", function() require("trouble").toggle("lsp_outgoing_calls") end, desc = "Outgoing Calls" },
+}
+
 -- Close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("close_with_q", { clear = true }),
@@ -88,6 +49,15 @@ vim.api.nvim_create_autocmd("FileType", {
       end
       vim.keymap.set("n", "q", close_buffer, { buffer = event.buf, silent = true, desc = "Close Buffer" })
     end)
+  end,
+})
+
+-- Add keymaps that need to wait for all plugins to load.
+vim.api.nvim_create_autocmd("User", {
+  pattern = "VeryLazy",
+  callback = function()
+    toggle.var({ desc = "Auto Format", var_name = "autoformat", global = false }):map("<leader>oq")
+    toggle.var({ desc = "Auto Format", var_name = "autoformat", global = true }):map("<leader>oQ")
   end,
 })
 
