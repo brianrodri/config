@@ -8,7 +8,9 @@ return {
     event = "InsertEnter",
     ---@module "copilot"
     ---@type CopilotConfig
-    opts = {},
+    ---@diagnostic disable-next-line: missing-fields
+    opts = { workspace_folders = { vim.fs.normalize("~/Repositories") } },
+    opts_extend = { "workspace_folders" },
   },
 
   {
