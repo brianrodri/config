@@ -7,10 +7,10 @@ local TEMPLATE_MAP = { ["Daily Template"] = ISO_DATE_FORMAT, ["Weekly Template"]
 local FOLDER_MAP = { ["1 - Journal/Daily"] = ISO_DATE_FORMAT, ["1 - Journal/Weekly"] = ISO_WEEK_FORMAT }
 local INBOX_PATH = "0 - Index/Inbox.md"
 
----@type fun(): client: obsidian.Client
+---@overload fun(): client: obsidian.Client
 local function acquire_client() return assert(require("obsidian").get_client(), "failed to acquire client") end
 
----@type fun(ctx: obsidian.SubstitutionContext): time: integer
+---@overload fun(ctx: obsidian.SubstitutionContext): time: integer
 local resolve_subst_time = function(ctx)
   assert(ctx.action == "clone_template")
   assert(ctx.target_note.path, string.format("invalid target: %s", tostring(ctx.target_note.path)))
@@ -19,13 +19,13 @@ local resolve_subst_time = function(ctx)
   return assert(utils.try_parse(format, ctx.target_note.path.stem))
 end
 
----@type fun(date_format: string, delta_days?: integer): fun(time: integer): time_str: string
+---@overload fun(date_format: string, delta_days?: integer): fun(time: integer): time_str: string
 local function date_formatter(date_format, delta_days)
   local delta_time = (delta_days or 0) * 86400 -- 60s * 60m * 24h
   return function(time) return assert(utils.try_format(date_format, time + delta_time)) end
 end
 
----@type fun(date_format: string, delta_days?: integer, date_sep?: string): fun(time: integer): time_str: string
+---@overload fun(date_format: string, delta_days?: integer, date_sep?: string): fun(time: integer): time_str: string
 local function week_formatter(date_format, delta_days, date_sep)
   local format_date = date_formatter(date_format, delta_days)
   return function(time)
@@ -36,7 +36,7 @@ local function week_formatter(date_format, delta_days, date_sep)
   end
 end
 
----@type fun(name: string, data?: table): fun()
+---@overload fun(name: string, data?: table): fun()
 local function calling_command(name, data)
   return function() acquire_client():command(name, data or { args = "" }) end
 end
