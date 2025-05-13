@@ -23,21 +23,11 @@ return {
     opts = {
       preset = "obsidian",
       checkbox = {
-        unchecked = { icon = "󰄱" },
-        checked = { icon = "󰄲", scope_highlight = "@markup.strikethrough" },
+        -- stylua: ignore
+        -- luacheck: no max line length
         custom = {
-          todo = {
-            raw = "[-]",
-            rendered = "󱋬",
-            highlight = "RenderMarkdownError",
-            scope_highlight = "@markup.strikethrough",
-          },
-          mood = {
-            raw = "[=]",
-            rendered = "󰥱",
-            highlight = "MiniIconsPurple",
-            scope_highlight = "MiniIconsPurple",
-          },
+          todo = { raw = "[-]", rendered = "󱋬", highlight = "MiniIconsRed", scope_highlight = "@markup.strikethrough" },
+          mood = { raw = "[=]", rendered = "󰥱", highlight = "MiniIconsPurple", scope_highlight = "MiniIconsPurple" },
         },
       },
     },
