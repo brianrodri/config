@@ -37,11 +37,6 @@ local function week_formatter(date_format, delta_days, date_sep)
   end
 end
 
----@overload fun(name: string, data?: table): fun()
-local function calling_command(name, data)
-  return function() acquire_client():command(name, data or { args = "" }) end
-end
-
 ---@class my.WorkspaceSpec: obsidian.workspace.WorkspaceSpec
 ---@field inbox_path fun(self: my.WorkspaceSpec): string
 
@@ -62,10 +57,10 @@ return {
         if current_note and tostring(current_note.path) == tostring(note.path) then client:open_note(note) end
       end)
     end,
-    search_notes = calling_command("search"),
-    quick_switch = calling_command("quick_switch"),
-    new_note = calling_command("new"),
-    todays_note = calling_command("today"),
+    search_notes = function() require("obsidian.commands.search")(acquire_client(), { args = "" }) end,
+    quick_switch = function() require("obsidian.commands.quick_switch")(acquire_client(), { args = "" }) end,
+    new_note = function() require("obsidian.commands.new")(acquire_client(), { args = "" }) end,
+    todays_note = function() require("obsidian.commands.today")(acquire_client(), { args = "" }) end,
   },
   ---@module "obsidian"
   ---@type my.WorkspaceSpec
