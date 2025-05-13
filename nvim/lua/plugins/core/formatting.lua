@@ -1,4 +1,4 @@
-local toggle = require("my.toggle")
+local utils = require("my.utils")
 
 local FORMAT_OPTS = { lsp_format = "fallback" }
 
@@ -10,7 +10,7 @@ return {
   cmd = { "ConformInfo" },
   ---@module "conform"
   ---@type conform.setupOpts
-  opts = { format_on_save = function() return toggle.get_var("autoformat") and FORMAT_OPTS or nil end },
+  opts = { format_on_save = function() return utils.get_var("autoformat") and FORMAT_OPTS or nil end },
   keys = {
     { "<leader>cq", function() require("conform").format(FORMAT_OPTS) end, desc = "Format" },
   },
