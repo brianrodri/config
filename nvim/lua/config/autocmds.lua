@@ -1,5 +1,3 @@
-local utils = require("my.utils")
-
 ---@type string[]
 --- File types that can be closed by pressing "q" in normal mode.
 local CLOSE_WITH_Q = {
@@ -52,12 +50,25 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Add keymaps that need to wait for all plugins to load.
+-- Add toggle keymaps that need to wait for all plugins to load.
 vim.api.nvim_create_autocmd("User", {
   pattern = "VeryLazy",
   callback = function()
+    local utils = require("my.utils")
     utils.var_toggle({ desc = "Auto Format", var_name = "autoformat", global = false }):map("<leader>oq")
     utils.var_toggle({ desc = "Auto Format", var_name = "autoformat", global = true }):map("<leader>oQ")
+    local snacks = require("snacks")
+    snacks.toggle.animate():map("<leader>oa")
+    snacks.toggle.option("colorcolumn", { on = "+1", off = "" }):map("<leader>oc")
+    snacks.toggle.diagnostics():map("<leader>od")
+    snacks.toggle.inlay_hints():map("<leader>oh")
+    snacks.toggle.indent():map("<leader>oi")
+    snacks.toggle.line_number():map("<leader>ol")
+    snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>or")
+    snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>os")
+    snacks.toggle.treesitter():map("<leader>ot")
+    snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>ow")
+    snacks.toggle.zoom():map("<leader>oz")
   end,
 })
 

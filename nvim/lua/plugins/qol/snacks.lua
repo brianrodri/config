@@ -1,25 +1,3 @@
-local function set_toggle_keymaps()
-  local snacks = require("snacks")
-  snacks.toggle.animate():map("<leader>oa")
-  snacks.toggle.diagnostics():map("<leader>od")
-  snacks.toggle.inlay_hints():map("<leader>oh")
-  snacks.toggle.indent():map("<leader>oi")
-  snacks.toggle.line_number():map("<leader>ol")
-  snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>or")
-  snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>os")
-  snacks.toggle.treesitter():map("<leader>ot")
-  snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>ow")
-  snacks.toggle.zoom():map("<leader>oz")
-
-  snacks
-    .toggle({
-      name = "Color Column",
-      get = function() return vim.o.colorcolumn:len() > 0 end,
-      set = function(enable) vim.o.colorcolumn = enable and "+1" or "" end,
-    })
-    :map("<leader>oc")
-end
-
 ---@module "lazy"
 ---@type LazySpec
 return {
@@ -129,12 +107,7 @@ return {
         SnacksDashboardFooter = "Comment",
         SnacksDashboardSpecial = "Green",
       })
-
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "VeryLazy",
-        callback = set_toggle_keymaps,
-      })
-
+      -- h: snacks-rename-mini.files
       vim.api.nvim_create_autocmd("User", {
         pattern = "MiniFilesActionRename",
         callback = function(event) require("snacks.rename").on_rename_file(event.data.from, event.data.to) end,
