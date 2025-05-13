@@ -20,7 +20,16 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons", "nvim-treesitter/nvim-treesitter" },
     ---@module "render-markdown"
     ---@type render.md.UserConfig
-    opts = { preset = "obsidian" },
+    opts = {
+      preset = "obsidian",
+      checkbox = {
+        unchecked = { icon = "󰄮 " },
+        checked = { icon = "󰄲 " },
+        custom = {
+          cancelled = { raw = "[-]", rendered = "󱋬 ", highlight = "RenderMarkdownDash" },
+        },
+      },
+    },
   },
 
   {
