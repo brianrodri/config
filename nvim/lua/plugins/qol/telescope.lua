@@ -15,6 +15,7 @@ return {
     { "<leader>sb", function() require("telescope.builtin").buffers() end, desc = "Find Buffers" },
     { "<leader>sc", function() require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config Files" },
     { "<leader>sf", function() require("telescope.builtin").find_files() end, desc = "Find Files" },
+    { "<leader>sh", function() require("telescope.builtin").highlights() end, desc = "Find Highlights" },
     { "<leader>sk", function() require("telescope.builtin").keymaps() end, desc = "Find Keymaps" },
     { "<leader>sp", function() require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("data") .. "/lazy/" }) end, desc = "Find Plugin Files" },
     { "<leader>sr", function() require("telescope.builtin").oldfiles() end, desc = "Find Recent Files" },
