@@ -23,14 +23,20 @@ return {
     opts = {
       preset = "obsidian",
       checkbox = {
-        unchecked = { icon = "󰄱 " },
-        checked = { icon = "󰄲 ", scope_highlight = "@markup.strikethrough" },
+        unchecked = { icon = "󰄱" },
+        checked = { icon = "󰄲", scope_highlight = "@markup.strikethrough" },
         custom = {
-          cancelled = {
+          todo = {
             raw = "[-]",
-            rendered = "󰍵 ",
+            rendered = "󱋬",
             highlight = "RenderMarkdownError",
             scope_highlight = "@markup.strikethrough",
+          },
+          mood = {
+            raw = "[=]",
+            rendered = "󰥱",
+            highlight = "MiniIconsPurple",
+            scope_highlight = "MiniIconsPurple",
           },
         },
       },
