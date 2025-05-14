@@ -58,7 +58,7 @@ vim.api.nvim_create_autocmd("User", {
     utils.var_toggle({ desc = "Auto Format", var_name = "autoformat", global = false }):map("<leader>oq")
     utils.var_toggle({ desc = "Auto Format", var_name = "autoformat", global = true }):map("<leader>oQ")
     local snacks = require("snacks")
-    snacks.toggle.animate():map("<leader>oa")
+    snacks.toggle.animate():map("<leader>om")
     snacks.toggle.option("colorcolumn", { on = "+1", off = "" }):map("<leader>oc")
     snacks.toggle.diagnostics():map("<leader>od")
     snacks.toggle.inlay_hints():map("<leader>oh")
@@ -69,6 +69,13 @@ vim.api.nvim_create_autocmd("User", {
     snacks.toggle.treesitter():map("<leader>ot")
     snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>ow")
     snacks.toggle.zoom():map("<leader>oz")
+    -- stylua: ignore
+    -- luacheck: no max line length
+    snacks.toggle({
+      name = "Copilot",
+      get = function() return not require("copilot.client").is_disabled() end,
+      set = function(state) if state then require("copilot.command").enable() else require("copilot.command").disable() end end,
+    }):map("<leader>oa")
   end,
 })
 
