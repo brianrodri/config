@@ -18,22 +18,6 @@ local CLOSE_WITH_Q = {
   "tsplayground",
 }
 
----@module "which-key"
----@type wk.Spec[]
---- Keymaps to attach to every LSP.
-local LSP_WHICH_KEY_SPECS = {
-  { "<leader>cr", function() vim.lsp.buf.rename() end, desc = "Rename Symbol" },
-  { "<leader>ca", function() vim.lsp.buf.code_action() end, desc = "Code Action", mode = { "n", "x" } },
-  { "<leader>c*", function() require("trouble").toggle("lsp_references") end, desc = "References" },
-  { "<leader>cd", function() require("trouble").toggle("lsp_declarations") end, desc = "Declaration" },
-  { "<leader>cD", function() require("trouble").toggle("lsp_definitions") end, desc = "Definitions" },
-  { "<leader>cy", function() require("trouble").toggle("lsp_implementations") end, desc = "Implementations" },
-  { "<leader>cY", function() require("trouble").toggle("lsp_type_definitions") end, desc = "Type Definitions" },
-  { "<leader>cs", function() require("trouble").toggle("lsp_document_symbols") end, desc = "Document Symbols" },
-  { "<leader>cj", function() require("trouble").toggle("lsp_incoming_calls") end, desc = "Incoming Calls" },
-  { "<leader>ck", function() require("trouble").toggle("lsp_outgoing_calls") end, desc = "Outgoing Calls" },
-}
-
 -- Close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("close_with_q", { clear = true }),
@@ -50,31 +34,33 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Add toggle keymaps that need to wait for all plugins to load.
+-- Setup complex keymaps that depend on 2+ *independent* plugins to be implemented.
 vim.api.nvim_create_autocmd("User", {
+  once = true,
+  nested = true,
   pattern = "VeryLazy",
+  desc = "Setup complex keymaps",
   callback = function()
+    local toggle = require("snacks.toggle")
     local utils = require("my.utils")
     utils.var_toggle({ desc = "Auto Format", var_name = "autoformat", global = false }):map("<leader>oq")
     utils.var_toggle({ desc = "Auto Format", var_name = "autoformat", global = true }):map("<leader>oQ")
-    local snacks = require("snacks")
-    snacks.toggle.animate():map("<leader>om")
-    snacks.toggle.option("colorcolumn", { on = "+1", off = "" }):map("<leader>oc")
-    snacks.toggle.diagnostics():map("<leader>od")
-    snacks.toggle.inlay_hints():map("<leader>oh")
-    snacks.toggle.indent():map("<leader>oi")
-    snacks.toggle.line_number():map("<leader>ol")
-    snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>or")
-    snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>os")
-    snacks.toggle.treesitter():map("<leader>ot")
-    snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>ow")
-    snacks.toggle.zoom():map("<leader>oz")
-    -- stylua: ignore
-    -- luacheck: no max line length
-    snacks.toggle({
+    toggle.option("colorcolumn", { name = "Color Column", on = "+1", off = "" }):map("<leader>oc")
+    toggle.diagnostics():map("<leader>od")
+    toggle.inlay_hints():map("<leader>oh")
+    toggle.indent():map("<leader>oi")
+    toggle.line_number():map("<leader>ol")
+    toggle.animate():map("<leader>om")
+    toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>or")
+    toggle.option("spell", { name = "Spelling" }):map("<leader>os")
+    toggle.treesitter():map("<leader>ot")
+    toggle.option("wrap", { name = "Wrap" }):map("<leader>ow")
+    toggle.zoom():map("<leader>oz")
+
+    toggle({
       name = "Copilot",
       get = function() return not require("copilot.client").is_disabled() end,
-      set = function(state) if state then require("copilot.command").enable() else require("copilot.command").disable() end end,
+      set = function(bool) pcall(bool and require("copilot.command").enable or require("copilot.command").disable) end,
     }):map("<leader>oa")
   end,
 })
@@ -88,20 +74,29 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Highlight when yanking text
 vim.api.nvim_create_autocmd("TextYankPost", {
-  desc = "Highlight when yanking text",
   group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
+  desc = "Highlight when yanking text",
   callback = function() vim.highlight.on_yank() end,
 })
 
--- Assign keymappings on LSP attach
+-- Assign keymaps on LSP attach
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp-keymaps", { clear = true }),
   callback = function(args)
-    local specs = vim
-      .iter(LSP_WHICH_KEY_SPECS)
-      :map(function(spec) return vim.tbl_extend("force", { buffer = args.buf }, spec) end)
-      :totable()
-    require("which-key").add(specs)
+    -- stylua: ignore
+    -- luacheck: no max line length
+    require("which-key").add({
+      { "<leader>cr", function() vim.lsp.buf.rename() end, buffer = args.buf, desc = "Rename Symbol" },
+      { "<leader>ca", function() vim.lsp.buf.code_action() end, buffer = args.buf, desc = "Code Action", mode = { "n", "x" } },
+      { "<leader>c*", function() require("trouble").toggle("lsp_references") end, buffer = args.buf, desc = "References" },
+      { "<leader>cd", function() require("trouble").toggle("lsp_declarations") end, buffer = args.buf, desc = "Declaration" },
+      { "<leader>cD", function() require("trouble").toggle("lsp_definitions") end, buffer = args.buf, desc = "Definitions" },
+      { "<leader>cy", function() require("trouble").toggle("lsp_implementations") end, buffer = args.buf, desc = "Implementations" },
+      { "<leader>cY", function() require("trouble").toggle("lsp_type_definitions") end, buffer = args.buf, desc = "Type Definitions" },
+      { "<leader>cs", function() require("trouble").toggle("lsp_document_symbols") end, buffer = args.buf, desc = "Document Symbols" },
+      { "<leader>cj", function() require("trouble").toggle("lsp_incoming_calls") end, buffer = args.buf, desc = "Incoming Calls" },
+      { "<leader>ck", function() require("trouble").toggle("lsp_outgoing_calls") end, buffer = args.buf, desc = "Outgoing Calls" },
+    }, { create = true })
   end,
 })
 
