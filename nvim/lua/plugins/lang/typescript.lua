@@ -29,4 +29,12 @@ return {
     ---@type my.LintOpts
     opts = { linters_by_ft = { typescript = { "eslint" } } },
   },
+
+  {
+    "ahmedkhalf/project.nvim",
+    ---@module "project_nvim"
+    ---@type ProjectOptions
+    opts = { patterns = { "package.json" } },
+    opts_extend = { "patterns" },
+  },
 }

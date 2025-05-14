@@ -31,4 +31,12 @@ return {
     opts = { workspace_folders = { my_vaults.personal:inbox_path() } },
     opts_extend = { "workspace_folders" },
   },
+
+  {
+    "ahmedkhalf/project.nvim",
+    ---@module "project_nvim"
+    ---@type ProjectOptions
+    opts = { patterns = { ".obsidian" } },
+    opts_extend = { "patterns" },
+  },
 }

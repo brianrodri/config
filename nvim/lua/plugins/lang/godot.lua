@@ -23,4 +23,12 @@ return {
     ---@type my.LintOpts
     opts = { linters_by_ft = { gdscript = { "gdlint" } } },
   },
+
+  {
+    "ahmedkhalf/project.nvim",
+    ---@module "project_nvim"
+    ---@type ProjectOptions
+    opts = { patterns = { "project.godot" } },
+    opts_extend = { "patterns" },
+  },
 }

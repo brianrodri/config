@@ -17,6 +17,7 @@ return {
       { "<leader>l", group = "lazy", icon = { icon = "󰒲 ", hl = "WhichKeyIconCyan" } },
       { "<leader>n", group = "notes", icon = { icon = "󰠮 ", hl = "WhichKeyIconPurple" } },
       { "<leader>o", group = "toggle", icon = { icon = " ", hl = "WhichKeyIconYellow" } },
+      { "<leader>p", group = "projects", icon = { icon = " ", hl = "WhichKeyIconYellow" } },
       { "<leader>q", group = "quit", icon = { icon = "󰈆 ", hl = "WhichKeyIconRed" } },
       { "<leader>s", group = "search", icon = { icon = " ", hl = "WhichKeyIconGreen" } },
       { "<leader>t", group = "test", icon = { icon = "󰙨 ", hl = "WhichKeyIconGreen" } },

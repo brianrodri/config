@@ -29,4 +29,12 @@ return {
     ---@type my.LintOpts
     opts = { linters_by_ft = { rust = { "clippy" } } },
   },
+
+  {
+    "ahmedkhalf/project.nvim",
+    ---@module "project_nvim"
+    ---@type ProjectOptions
+    opts = { patterns = { "Cargo.toml" } },
+    opts_extend = { "patterns" },
+  },
 }

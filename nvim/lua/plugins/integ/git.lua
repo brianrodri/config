@@ -55,4 +55,12 @@ return {
       { "<leader>gs", "<cmd>Git<cr>", desc = "Pull" },
     },
   },
+
+  {
+    "ahmedkhalf/project.nvim",
+    ---@module "project_nvim"
+    ---@type ProjectOptions
+    opts = { patterns = { ".git" } },
+    opts_extend = { "patterns" },
+  },
 }
