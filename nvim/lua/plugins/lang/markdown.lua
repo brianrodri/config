@@ -22,12 +22,16 @@ return {
     ---@type render.md.UserConfig
     opts = {
       preset = "obsidian",
+      bullet = { icons = { "󰍴 " }, right_pad = 0, highlight = "@comment" },
       checkbox = {
+        right_pad = 0,
+        checked = { icon = "󰄵 ", highlight = "@text.todo.checked", scope_highlight = "@markup.strikethrough" },
+        unchecked = { icon = "󰄱 ", highlight = "@text.todo.unchecked" },
         -- stylua: ignore
         -- luacheck: no max line length
         custom = {
-          todo = { raw = "[-]", rendered = "󱋬", highlight = "MiniIconsRed", scope_highlight = "@markup.strikethrough" },
-          mood = { raw = "[=]", rendered = "󰥱", highlight = "MiniIconsPurple", scope_highlight = "MiniIconsPurple" },
+          todo = { raw = "[-]", rendered = "󰛲 ", highlight = "@error", scope_highlight = "@markup.strikethrough" },
+          mood = { raw = "[=]", rendered = "󰋓 ", highlight = "Purple", scope_highlight = "PurpleItalic" },
         },
       },
     },
