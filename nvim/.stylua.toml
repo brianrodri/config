@@ -1,6 +1,6 @@
 indent_type = "Spaces"
 indent_width = 2
-column_width = 112
+column_width = 120
 line_endings = "Unix"
 collapse_simple_statement = "Always"
 
