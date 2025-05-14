@@ -17,8 +17,8 @@ return {
     keys = {
       { "<leader>no", my_vaults.action.open_inbox_note, desc = "Open Inbox" },
       { "<leader>na", my_vaults.action.append_to_inbox_note, desc = "Append To Inbox" },
-      { "<leader>n/", my_vaults.action.search_notes, desc = "Search Notes" },
-      { "<leader>nf", my_vaults.action.quick_switch, desc = "Open Note" },
+      { "<leader>n/", my_vaults.action.search_notes, desc = "Grep Notes" },
+      { "<leader>ns", my_vaults.action.quick_switch, desc = "Search Note" },
       { "<leader>nn", my_vaults.action.new_note, desc = "New Note" },
       { "<leader>nt", my_vaults.action.todays_note, desc = "Open Today's Note" },
     },
