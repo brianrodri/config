@@ -8,6 +8,7 @@ export plugins=(
 	"common-aliases"
 	"direnv"
 	"fzf"
+	"gem"
 	"gh"
 	"git"
 	"git-commit"
