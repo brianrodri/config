@@ -8,7 +8,10 @@ return {
     ---@type ProjectOptions
     opts = {
       detection_methods = { "lsp", "pattern" },
-      exclude_dirs = { "~/.local/share/nvim/lazy/*" }, -- exclude lazy-installed plugins
+      exclude_dirs = {
+        "~/.local/share/nvim/lazy", -- If I want to work on these then I'll clone them myself
+        "~/Repositories/neovim", -- I cloned this to _build_ neovim, not to _contribute_ to it (for now)
+      },
       patterns = { ".git" },
       show_hidden = true,
     },
