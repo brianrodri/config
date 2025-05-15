@@ -74,10 +74,26 @@ local function var_toggle(opts)
   }, opts)
 end
 
+---@generic T
+---@param items T|T[]
+---@return T[]
+local function dedupe(items)
+  local result = {}
+  local seen = {}
+  for _, v in ipairs(type(items) == "table" and items or { items }) do
+    if not seen[v] then
+      seen[v] = true
+      table.insert(result, v)
+    end
+  end
+  return result
+end
+
 return {
   bind_left = bind_left,
   bind_right = bind_right,
   compose = compose,
+  dedupe = dedupe,
   try_format = try_format,
   try_parse = try_parse,
   get_var = get_var,
