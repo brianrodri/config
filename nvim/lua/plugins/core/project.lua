@@ -2,7 +2,7 @@
 ---@type LazySpec
 return {
   {
-    "ahmedkhalf/project.nvim",
+    "brianrodri/project.nvim",
     main = "project_nvim",
     ---@module "project_nvim"
     ---@type ProjectOptions
@@ -17,7 +17,7 @@ return {
 
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "ahmedkhalf/project.nvim" },
+    dependencies = { "brianrodri/project.nvim" },
     opts = { extensions = { projects = {} } },
     keys = {
       { "<leader>sp", function() require("telescope").extensions.projects.projects() end, desc = "Find Projects" },

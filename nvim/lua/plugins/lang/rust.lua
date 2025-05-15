@@ -31,7 +31,7 @@ return {
   },
 
   {
-    "ahmedkhalf/project.nvim",
+    "brianrodri/project.nvim",
     ---@module "project_nvim"
     ---@type ProjectOptions
     opts = { patterns = { "Cargo.toml" } },
