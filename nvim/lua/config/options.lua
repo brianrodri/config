@@ -50,3 +50,8 @@ vim.opt.confirm = true
 -- Visualize text-width with a color column
 vim.o.textwidth = 120
 vim.o.colorcolumn = "+1"
+
+-- Use treesitter folding
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.o.foldlevelstart = 99
