@@ -25,9 +25,9 @@ return {
   },
 
   {
-    "brianrodri/project.nvim",
-    ---@module "project_nvim"
-    ---@type ProjectOptions
+    "brianrodri/projects.nvim",
+    ---@module "projects"
+    ---@type v1.ProjectOptions
     opts = { patterns = { "project.godot" } },
     opts_extend = { "patterns" },
   },

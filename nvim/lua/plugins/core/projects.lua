@@ -2,10 +2,9 @@
 ---@type LazySpec
 return {
   {
-    "brianrodri/project.nvim",
-    main = "project_nvim",
-    ---@module "project_nvim"
-    ---@type ProjectOptions
+    "brianrodri/projects.nvim",
+    ---@module "projects"
+    ---@type v1.ProjectOptions
     opts = {
       detection_methods = { "lsp", "pattern" },
       exclude_dirs = {
@@ -20,13 +19,13 @@ return {
 
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "brianrodri/project.nvim" },
+    dependencies = { "brianrodri/projects.nvim" },
     opts = { extensions = { projects = {} } },
     keys = {
       { "<leader>sp", function() require("telescope").extensions.projects.projects() end, desc = "Find Projects" },
 
       { "<leader>ps", function() require("telescope").extensions.projects.projects() end, desc = "Find Projects" },
-      { "<leader>pr", function() require("project_nvim").get_recent_projects() end, desc = "Recent Projects" },
+      { "<leader>pr", function() require("projects").get_recent_projects() end, desc = "Recent Projects" },
     },
   },
 }
