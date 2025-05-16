@@ -93,7 +93,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
       { "<leader>cD", function() require("trouble").toggle("lsp_definitions") end, buffer = args.buf, desc = "Definitions" },
       { "<leader>cy", function() require("trouble").toggle("lsp_implementations") end, buffer = args.buf, desc = "Implementations" },
       { "<leader>cY", function() require("trouble").toggle("lsp_type_definitions") end, buffer = args.buf, desc = "Type Definitions" },
-      { "<leader>cs", function() require("trouble").toggle("lsp_document_symbols") end, buffer = args.buf, desc = "Document Symbols" },
+      { "<leader>cs", function() require("trouble").toggle("my_lsp_document_symbols") end, buffer = args.buf, desc = "Document Symbols" },
       { "<leader>cj", function() require("trouble").toggle("lsp_incoming_calls") end, buffer = args.buf, desc = "Incoming Calls" },
       { "<leader>ck", function() require("trouble").toggle("lsp_outgoing_calls") end, buffer = args.buf, desc = "Outgoing Calls" },
     }, { create = true })
