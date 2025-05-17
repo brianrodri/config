@@ -7,5 +7,9 @@ return {
   ---@module "todo-comments"
   ---@type TodoOptions
   ---@diagnostic disable: missing-fields
-  opts = { signs = false },
+  opts = {
+    signs = false,
+    highlight = { pattern = ".*<(KEYWORDS)\\s*[:\\(]" },
+    search = { pattern = "\\b(KEYWORDS)[:\\(]" },
+  },
 }
