@@ -57,11 +57,11 @@ vim.api.nvim_create_autocmd("User", {
     toggle.option("wrap", { name = "Wrap" }):map("<leader>ow")
     toggle.zoom():map("<leader>oz")
 
-    toggle({
-      name = "Copilot",
-      get = function() return not require("copilot.client").is_disabled() end,
-      set = function(bool) pcall(bool and require("copilot.command").enable or require("copilot.command").disable) end,
-    }):map("<leader>oa")
+    -- toggle({
+    --   name = "Copilot",
+    --   get = function() return not require("copilot.client").is_disabled() end,
+    --   set = function(bool) pcall(bool and require("copilot.command").enable or require("copilot.command").disable) end,
+    -- }):map("<leader>oa")
   end,
 })
 
