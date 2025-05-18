@@ -1,4 +1,4 @@
-local Fmt = require("my.utils.fmt")
+local Fmts = require("my.utils.fmts")
 
 local Funcs = {}
 
@@ -32,7 +32,7 @@ end
 ---@overload fun(format_str: string, time: integer): time_str: nil, err: string
 function Funcs.try_format(format_str, time)
   local ok, result = pcall(vim.fn.strftime, format_str, time)
-  if not ok then return nil, Fmt.call_error(result, "try_format", format_str, time) end
+  if not ok then return nil, Fmts.call_error(result, "try_format", format_str, time) end
   return tostring(result), nil
 end
 
@@ -40,8 +40,8 @@ end
 ---@overload fun(format_str: string, time_str: string): time: nil, err: string
 function Funcs.try_parse(format_str, time_str)
   local ok, result = pcall(vim.fn.strptime, format_str, time_str)
-  if not ok then return nil, Fmt.call_error(result, "try_parse", format_str, time_str) end
-  if result == 0 then return nil, Fmt.call_error("parsing failed", "try_parse", format_str, time_str) end
+  if not ok then return nil, Fmts.call_error(result, "try_parse", format_str, time_str) end
+  if result == 0 then return nil, Fmts.call_error("parsing failed", "try_parse", format_str, time_str) end
   return result, nil
 end
 

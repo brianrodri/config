@@ -1,5 +1,5 @@
 local Errs = require("my.utils.errs")
-local Fmt = require("my.utils.fmt")
+local Fmts = require("my.utils.fmts")
 
 ---@class my.Path
 ---@field path string
@@ -22,9 +22,9 @@ function Path.is_path_obj(obj) return getmetatable(obj) ~= Path end
 function Path.join(...)
   local path_parts = vim.iter({ ... }):filter(function(p) return p ~= nil end):totable()
   if #path_parts == 1 and Path.is_path_obj(path_parts[1]) then return path_parts[1] end
-  assert(#path_parts > 0, Fmt.call_error("one or more path(s) required", "Path.join", ...))
+  assert(#path_parts > 0, Fmts.call_error("one or more path(s) required", "Path.join", ...))
   local ok, result = pcall(vim.fs.joinpath, unpack(vim.tbl_map(tostring, path_parts)))
-  assert(ok, Fmt.call_error(result, "Path.join", ...))
+  assert(ok, Fmts.call_error(result, "Path.join", ...))
   local self = setmetatable({}, Path)
   self.path, self.resolved = result, false
   return self
@@ -35,7 +35,7 @@ end
 ---@param buffer_id? integer  Use 0 for current buffer (defaults to 0).
 function Path.of_buffer(buffer_id)
   local ok, result = pcall(vim.api.nvim_buf_get_name, buffer_id or 0)
-  assert(ok, Fmt.call_error(result, "Path.of_buffer", buffer_id))
+  assert(ok, Fmts.call_error(result, "Path.of_buffer", buffer_id))
   return Path.join(result)
 end
 
@@ -55,7 +55,7 @@ end
 ---@overload fun(what: "config_dirs" | "data_dirs"): my.Path[]
 function Path.stdpath(what)
   local ok, result = pcall(vim.fn.stdpath, what)
-  assert(ok, Fmt.call_error(result, "Path.stdpath", what))
+  assert(ok, Fmts.call_error(result, "Path.stdpath", what))
   return type(result) == "table" and vim.iter(result):map(Path.join):totable() or Path.join(result)
 end
 
@@ -65,11 +65,11 @@ end
 ---@param file_consumer fun(path: file*)
 function Path:with_file(mode, file_consumer)
   local file, open_err = io.open(self.path, mode)
-  assert(file, Fmt.call_error(open_err, "Path.with_file", self, mode, file_consumer))
+  assert(file, Fmts.call_error(open_err, "Path.with_file", self, mode, file_consumer))
   local call_ok, call_err = pcall(file_consumer, file)
   local close_ok, close_err, close_err_code = file:close()
   local root_cause = Errs.join(call_err, close_err and string.format("%s(%d)", close_err, close_err_code))
-  assert(call_ok and close_ok, Fmt.call_error(root_cause, "Path.with_file", self, mode, file_consumer))
+  assert(call_ok and close_ok, Fmts.call_error(root_cause, "Path.with_file", self, mode, file_consumer))
 end
 
 --- Wrapper around |mkdir()|.
@@ -82,7 +82,7 @@ function Path:make_directory() return vim.fn.mkdir(self.path, "p") == 1 end
 ---@return my.Path
 function Path:resolve()
   local realpath, err = vim.uv.fs_realpath(self.path)
-  assert(realpath, Fmt.call_error(err, "Path.resolve", self))
+  assert(realpath, Fmts.call_error(err, "Path.resolve", self))
   self.path, self.resolved = realpath, true
   return self
 end
@@ -92,7 +92,7 @@ end
 ---@return uv.fs_stat.result
 function Path:status()
   local stat, err = vim.uv.fs_stat(self.path)
-  return assert(stat, Fmt.call_error(err, "Path.status", self))
+  return assert(stat, Fmts.call_error(err, "Path.status", self))
 end
 
 --- Wrapper around |isdirectory()|.
