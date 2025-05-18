@@ -3,14 +3,15 @@ local Fmts = require("my.utils.fmts")
 
 ---@class my.Path
 ---@field path string
-local Path = {
-  __tostring = function(self) return self.path end,
-  __eq = function(self, other) return self.path == other.path end,
-}
+local Path = {}
+
+Path.__index = Path
+Path.__tostring = function(self) return self.path end
+Path.__eq = function(self, obj) return Path.is_path_obj(self) and Path.is_path_obj(obj) and self.path == obj.path end
 
 ---@param obj any
 ---@return boolean is_path_obj
-function Path.is_path_obj(obj) return getmetatable(obj) ~= Path end
+function Path.is_path_obj(obj) return getmetatable(obj) == Path end
 
 --- Wrapper around |vim.fs.joinpath()|. Terminates with an error if no paths are provided.
 ---
