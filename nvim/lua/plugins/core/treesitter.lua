@@ -1,4 +1,4 @@
-local utils = require("my.utils")
+local Funcs = require("my.utils.funcs")
 
 ---@module "lazy"
 ---@type LazySpec
@@ -10,7 +10,7 @@ return {
     highlight = { enable = true },
   },
   config = function(_, opts)
-    opts.ensure_installed = utils.dedupe(opts.ensure_installed)
+    opts.ensure_installed = Funcs.dedupe(opts.ensure_installed)
     require("nvim-treesitter.configs").setup(opts)
   end,
 }

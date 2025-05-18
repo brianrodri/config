@@ -1,9 +1,9 @@
----@module "lazy"
----@type LazySpec
-return {
-  { import = "plugins.core" },
-  { import = "plugins.integ" },
-  { import = "plugins.lang" },
-  { import = "plugins.qol" },
-  { import = "plugins.ui" },
+local MODULE_NAMES = {
+  "core",
+  "integ",
+  "lang",
+  "qol",
+  "ui",
 }
+
+return vim.iter(MODULE_NAMES):map(function(name) return { import = "plugins." .. name } end):totable()

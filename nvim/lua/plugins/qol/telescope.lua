@@ -1,3 +1,5 @@
+local Vaults = require("my.vaults")
+
 ---@module "lazy"
 ---@type LazySpec
 return {
@@ -18,7 +20,7 @@ return {
     { "<leader>sh", function() require("telescope.builtin").highlights() end, desc = "Find Highlights" },
     { "<leader>sk", function() require("telescope.builtin").keymaps() end, desc = "Find Keymaps" },
     { "<leader>sl", function() require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("data") .. "/lazy/" }) end, desc = "Find Lazy Files" },
-    { "<leader>sn", function() require("my.vaults").action.quick_switch() end, desc = "Find Notes" },
+    { "<leader>sn", function() Vaults.action.quick_switch() end, desc = "Find Notes" },
     { "<leader>sr", function() require("telescope.builtin").oldfiles() end, desc = "Find Recent Files" },
     { "<leader>ss", function() require("telescope.builtin").builtin() end, desc = "Find Telescope Builtins" },
     { "<leader>sz", function() require("telescope.builtin").spell_suggest() end, desc = "Find Spelling Suggestions" },

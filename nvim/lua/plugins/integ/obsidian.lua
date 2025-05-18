@@ -1,4 +1,4 @@
-local my_vaults = require("my.vaults")
+local Vaults = require("my.vaults")
 
 ---@module "lazy"
 ---@type LazySpec
@@ -11,16 +11,16 @@ return {
     ---@type obsidian.config.ClientOpts
     ---@diagnostic disable: missing-fields
     opts = {
-      workspaces = { my_vaults.personal },
+      workspaces = { Vaults.personal },
       ui = { enable = false },
     },
     keys = {
-      { "<leader>no", my_vaults.action.open_inbox_note, desc = "Open Inbox" },
-      { "<leader>na", my_vaults.action.append_to_inbox_note, desc = "Append To Inbox" },
-      { "<leader>n/", my_vaults.action.search_notes, desc = "Grep Notes" },
-      { "<leader>ns", my_vaults.action.quick_switch, desc = "Search Note" },
-      { "<leader>nn", my_vaults.action.new_note, desc = "New Note" },
-      { "<leader>nt", my_vaults.action.todays_note, desc = "Open Today's Note" },
+      { "<leader>no", Vaults.action.open_inbox_note, desc = "Open Inbox" },
+      { "<leader>na", Vaults.action.append_to_inbox_note, desc = "Append To Inbox" },
+      { "<leader>n/", Vaults.action.search_notes, desc = "Grep Notes" },
+      { "<leader>ns", Vaults.action.quick_switch, desc = "Search Note" },
+      { "<leader>nn", Vaults.action.new_note, desc = "New Note" },
+      { "<leader>nt", Vaults.action.todays_note, desc = "Open Today's Note" },
     },
   },
 
