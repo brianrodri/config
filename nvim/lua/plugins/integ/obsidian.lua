@@ -1,5 +1,15 @@
 local Vaults = require("my.vaults")
 
+local function with_cli(path, runner)
+  if not runner then
+    runner, path = path, runner
+  end
+  return function()
+    local cli = require("obsidian").get_client()
+    runner(cli, path and cli:resolve_note(path.path))
+  end
+end
+
 ---@module "lazy"
 ---@type LazySpec
 return {
@@ -15,12 +25,25 @@ return {
       ui = { enable = false },
     },
     keys = {
-      { "<leader>no", Vaults.action.open_inbox_note, desc = "Open Inbox" },
-      { "<leader>na", Vaults.action.append_to_inbox_note, desc = "Append To Inbox" },
-      { "<leader>n/", Vaults.action.search_notes, desc = "Grep Notes" },
-      { "<leader>ns", Vaults.action.quick_switch, desc = "Search Note" },
-      { "<leader>nn", Vaults.action.new_note, desc = "New Note" },
-      { "<leader>nt", Vaults.action.todays_note, desc = "Open Today's Note" },
+      {
+        "<leader>na",
+        with_cli(Vaults.inbox_path, function(cli, inbox)
+          require("snacks").input({ prompt = "Append To Inbox", default = "- " }, function(line)
+            if vim.fn.empty(line) == 1 then return end
+            cli:write_note(inbox, { update_content = function(lines) return vim.list_extend(lines, { line }) end })
+            if not cli:current_note() then return end
+            if cli:current_note().path == inbox.path then vim.schedule(function() vim.cmd("bufdo e") end) end
+          end)
+        end),
+        desc = "Append To Inbox",
+      },
+
+      { "<leader>no", with_cli(Vaults.inbox_path, function(cli, inbox) cli:open_note(inbox) end), desc = "Open Inbox" },
+      { "<leader>n/", with_cli(function(cli) cli:command("search", { args = "" }) end), desc = "Grep Notes" },
+      { "<leader>ns", with_cli(function(cli) cli:command("quick_switch", { args = "" }) end), desc = "Search Note" },
+      { "<leader>sn", with_cli(function(cli) cli:command("quick_switch", { args = "" }) end), desc = "Search Note" },
+      { "<leader>nn", with_cli(function(cli) cli:command("new", { args = "" }) end), desc = "New Note" },
+      { "<leader>nt", with_cli(function(cli) cli:command("today", { args = "" }) end), desc = "Open Today's Note" },
     },
   },
 

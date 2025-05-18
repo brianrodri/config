@@ -18,6 +18,7 @@ return {
     multiline = false,
     warn_no_results = false,
     open_no_results = true,
+    preview = { scratch = false },
     ---@type table<string, trouble.Mode>
     modes = {
       ---@diagnostic disable-next-line: missing-fields
