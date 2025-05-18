@@ -1,6 +1,6 @@
 local Fmt = require("my.utils.fmt")
 
-local M = {
+local Errs = {
   -- NOTE: TODO's definition is intentionally inconsistent so that tools don't consider it to be an _actual_ TODO.
 
   --- Terminates the last protected call with a helpful "not implemented" error.
@@ -15,7 +15,7 @@ local M = {
 ---
 ---@param ... unknown|?  The error objects to join. `nil` values are skipped.
 ---@return string|?
-function M.join(...)
+function Errs.join(...)
   -- NOTE: `:h Iter:map()` skips over `nil` return values.
   local errs = vim.iter({ ... }):map(function(err) return err and tostring(err) end):totable()
   if #errs == 0 then return nil end
@@ -23,4 +23,4 @@ function M.join(...)
   return vim.iter(errs):map(function(err) return "\t" .. err end):join("\n")
 end
 
-return M
+return Errs
