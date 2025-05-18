@@ -5,21 +5,13 @@ local Fmt = require("my.utils.fmt")
 ---@field path string
 ---@field resolved boolean
 local Path = {
-  -- NOTE: Returning `path` directly so that `tostring(Path)` is interchangeable with `tostring(path_string)`.
   __tostring = function(self) return self.path end,
-
-  ---@private
-  ---@type table<string, uv.fs_stat.result>
-  global_status_cache = {},
+  __eq = function(self, other) return self.path == other.path end,
 }
 
 ---@param obj any
----@return boolean is_path_obj  True if and only if `obj` is an instance of `Path`.
-function Path.is_path_obj(obj)
-  if getmetatable(obj) ~= Path then return false end
-  ---@cast obj my.Path
-  return true
-end
+---@return boolean is_path_obj
+function Path.is_path_obj(obj) return getmetatable(obj) ~= Path end
 
 --- Wrapper around |vim.fs.joinpath()|. Terminates with an error if no paths are provided.
 ---
@@ -34,8 +26,7 @@ function Path.join(...)
   local ok, result = pcall(vim.fs.joinpath, unpack(vim.tbl_map(tostring, path_parts)))
   assert(ok, Fmt.call_error(result, "Path.join", ...))
   local self = setmetatable({}, Path)
-  self.path = result
-  self.resolved = false
+  self.path, self.resolved = result, false
   return self
 end
 
@@ -88,31 +79,20 @@ function Path:make_directory() return vim.fn.mkdir(self.path, "p") == 1 end
 ---
 --- NOTE: This mutates `self`!
 ---
----@param force_sys_call? boolean  Always make system calls when true, even if the path has already been resolved.
 ---@return my.Path
-function Path:resolve(force_sys_call)
-  if not self.resolved or force_sys_call then
-    self.resolved = false
-    local realpath, err = vim.uv.fs_realpath(self.path)
-    assert(realpath, Fmt.call_error(err, "Path.resolve", self))
-    self.path, self.resolved = realpath, true
-  end
+function Path:resolve()
+  local realpath, err = vim.uv.fs_realpath(self.path)
+  assert(realpath, Fmt.call_error(err, "Path.resolve", self))
+  self.path, self.resolved = realpath, true
   return self
 end
 
 --- Wrapper around |fs_stat()|.
 ---
----@param force_sys_call? boolean  Always make system calls when true, even if the status has already been resolved.
 ---@return uv.fs_stat.result
-function Path:status(force_sys_call)
-  assert(self.resolved, Fmt.call_error("Path.resolve() needs to be called first", "Path.status", self))
-  if not Path.global_status_cache[self.path] or force_sys_call then
-    Path.global_status_cache[self.path] = nil
-    local stat, err = vim.uv.fs_stat(self.path)
-    assert(stat, Fmt.call_error(err, "Path.status", self))
-    Path.global_status_cache[self.path] = stat
-  end
-  return Path.global_status_cache[self.path]
+function Path:status()
+  local stat, err = vim.uv.fs_stat(self.path)
+  return assert(stat, Fmt.call_error(err, "Path.status", self))
 end
 
 --- Wrapper around |isdirectory()|.
@@ -125,7 +105,7 @@ function Path:is_directory() return vim.fn.isdirectory(self.path) == 1 end
 ---@return my.Path|?
 function Path:parent()
   local dirname = vim.fs.dirname(self.path)
-  return dirname and Path.join(dirname)
+  return dirname and Path.join(dirname) or nil
 end
 
 --- Wrapper around |vim.fs.root()|.
@@ -138,7 +118,7 @@ end
 function Path:find_root(marker)
   local resolved_marker = vim.is_callable(marker) and function(_, path) return marker(Path.join(path)) end or marker
   local root = vim.fs.root(self.path, resolved_marker)
-  return root and Path.join(root)
+  return root and Path.join(root) or nil
 end
 
 return Path
