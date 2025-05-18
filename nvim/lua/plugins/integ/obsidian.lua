@@ -47,14 +47,6 @@ return {
     },
   },
 
-  -- {
-  --   "zbirenbaum/copilot.lua",
-  --   ---@module "copilot"
-  --   ---@type CopilotConfig
-  --   opts = { workspace_folders = { my_vaults.personal:inbox_path() } },
-  --   opts_extend = { "workspace_folders" },
-  -- },
-
   {
     "brianrodri/projects.nvim",
     ---@module "projects"

@@ -11,7 +11,6 @@ return {
     "nvim-tree/nvim-web-devicons",
     "lewis6991/gitsigns.nvim",
     "folke/noice.nvim",
-    -- "AndreM222/copilot-lualine",
   },
   opts = function()
     return {
@@ -26,12 +25,9 @@ return {
             cond = function() return require("noice").api.status.search.has() end,
           },
         },
-        lualine_x = { "filetype" }, -- TODO: `"copilot"`
-        lualine_y = {
-          { function() return string.format(" %2d", vim.fn.line(".")) end },
-          { function() return string.format(" %2d", vim.fn.charcol(".")) end },
-        },
-        lualine_z = { "lsp_status" }, -- TODO: `ignore_lsp = { "copilot" }`
+        lualine_x = { "filetype" },
+        lualine_y = { "location" },
+        lualine_z = { "lsp_status" },
       },
     }
   end,
