@@ -1,4 +1,5 @@
 local Funcs = require("my.utils.funcs")
+local Path = require("my.utils.path")
 
 local PRETTY_DATE_FORMAT = "%a %B %-d %Y"
 local ISO_DATE_FORMAT = "%Y-%m-%d"
@@ -6,7 +7,8 @@ local ISO_WEEK_FORMAT = "%Y-W%V" -- TODO: Need to use "%G" here rather than "%Y"
 local TEMPLATE_MAP = { ["Daily Template"] = ISO_DATE_FORMAT, ["Weekly Template"] = ISO_WEEK_FORMAT }
 local FOLDER_MAP = { ["1 - Journal/Daily"] = ISO_DATE_FORMAT, ["1 - Journal/Weekly"] = ISO_WEEK_FORMAT }
 
-local INBOX_PATH = "0 - Index/Inbox.md"
+local VAULT = Path.join("~", "Documents", "Vault"):normalize()
+local INBOX = Path.join("0 - Index", "Inbox.md")
 
 ---@overload fun(): client: obsidian.Client
 local function acquire_client() return assert(require("obsidian").get_client(), "failed to acquire client") end
@@ -37,19 +39,16 @@ local function week_formatter(date_format, delta_days, date_sep)
   end
 end
 
----@class my.WorkspaceSpec: obsidian.workspace.WorkspaceSpec
----@field inbox_path fun(self: my.WorkspaceSpec): string
-
 return {
   action = {
     open_inbox_note = function()
       local client = acquire_client()
-      local note = assert(client:resolve_note(INBOX_PATH), string.format("resolve note error: %s", INBOX_PATH))
+      local note = assert(client:resolve_note(INBOX.path), string.format("resolve note error: %s", INBOX.path))
       client:open_note(note)
     end,
     append_to_inbox_note = function()
       local client = acquire_client()
-      local note = assert(client:resolve_note(INBOX_PATH), string.format("resolve note error: %s", INBOX_PATH))
+      local note = assert(client:resolve_note(INBOX.path), string.format("resolve note error: %s", INBOX.path))
       require("snacks").input({ prompt = "Append To " .. note.path.stem, default = "- " }, function(line)
         if not line or line == "" then return end
         client:write_note(note, { update_content = Funcs.bind_right(vim.list_extend, { line }) })
@@ -67,11 +66,10 @@ return {
     todays_note = function() require("obsidian.commands.today")(acquire_client(), { args = "" }) end,
   },
   ---@module "obsidian"
-  ---@type my.WorkspaceSpec
+  ---@type obsidian.workspace.WorkspaceSpec
   personal = {
-    path = "~/Documents/Vault",
-    name = "Vault",
-    inbox_path = function(self) return vim.fs.normalize(self.path .. "/" .. INBOX_PATH) end,
+    path = VAULT.path,
+    name = VAULT:basename(),
 
     ---@diagnostic disable-next-line: missing-fields
     overrides = {
