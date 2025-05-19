@@ -23,7 +23,7 @@ local note_date_formatter = function(ctx, fmt, delta_days)
 end
 
 return {
-  inbox_path = INBOX,
+  inbox_note = INBOX,
 
   ---@module "obsidian"
   ---@type obsidian.workspace.WorkspaceSpec
