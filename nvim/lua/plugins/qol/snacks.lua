@@ -1,3 +1,5 @@
+local Path = require("my.utils.path")
+
 ---@module "lazy"
 ---@type LazySpec
 return {
@@ -74,24 +76,17 @@ return {
             :join("\n"),
           ---@type snacks.dashboard.Item[]
           keys = {
-            {
-              icon = " ",
-              key = "-",
-              desc = "Open Directory",
-              action = function() require("mini.files").open() end,
-            },
-            { icon = "󰝒 ", key = "n", desc = "New File", action = ":ene | startinsert" },
-            { icon = "󱎸 ", key = "/", desc = "Grep", action = ":Telescope live_grep" },
-            { icon = "󰱼 ", key = "f", desc = "Files", action = ":Telescope find_files" },
+            { icon = "󰝒 ", key = "n", desc = "New", action = ":ene | startinsert" },
+            { icon = "󱋡 ", key = "r", desc = "Recents", action = ":Telescope oldfiles" },
+            { icon = " ", key = "g", desc = "Lazygit", action = ":lua Snacks.lazygit()" },
             {
               icon = " ",
               key = "c",
-              desc = "Config Files",
-              action = ":Telescope find_files search_dirs=" .. vim.fn.stdpath("config"),
+              desc = "Configs",
+              action = function()
+                require("telescope.builtin").find_files({ cwd = Path.stdpath("config").path, follow = true })
+              end,
             },
-            { icon = "󱋡 ", key = "r", desc = "Recent Files", action = ":Telescope oldfiles" },
-            { icon = "󰋗 ", key = "?", desc = "Help", action = ":Telescope help_tags" },
-            { icon = " ", key = "g", desc = "Lazygit", action = ":lua Snacks.lazygit()" },
             { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
             { icon = " ", key = "q", desc = "Quit", action = ":qa" },
           },
