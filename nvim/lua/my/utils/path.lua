@@ -69,8 +69,8 @@ function Path:basename() return vim.fs.basename(self.path) end
 ---@return string|? stem
 function Path:stem()
   local basename = self:basename()
-  if not basename then return nil end
-  local parts = vim.iter(vim.split(basename, "."))
+  local parts = vim.iter(vim.split(basename or "", "."))
+  if #parts < 2 then return basename end
   parts:pop()
   return parts:join(".")
 end
@@ -103,8 +103,11 @@ function Path:with_file(mode, file_consumer)
   assert(file, Fmts.call_error(open_err, "Path.with_file", self, mode, file_consumer))
   local call_ok, call_err = pcall(file_consumer, file)
   local close_ok, close_err, close_err_code = file:close()
-  local root_cause = Errs.join(call_err, close_err and string.format("%s(%d)", close_err, close_err_code))
-  assert(call_ok and close_ok, Fmts.call_error(root_cause, "Path.with_file", self, mode, file_consumer))
+  local root_cause = Errs.join(
+    not call_ok and call_err or nil,
+    not close_ok and string.format("%s(%d)", close_err, close_err_code) or nil
+  )
+  assert(vim.fn.empty(root_cause) == 1, Fmts.call_error(root_cause, "Path.with_file", self, mode, file_consumer))
 end
 
 --- Wrapper around |mkdir()|.
@@ -112,14 +115,11 @@ function Path:make_directory() return vim.fn.mkdir(self.path, "p") == 1 end
 
 --- Wrapper around |fs_realpath()|.
 ---
---- NOTE: This mutates `self`!
----
 ---@return my.Path
 function Path:resolve()
   local realpath, err = vim.uv.fs_realpath(self.path)
   assert(realpath, Fmts.call_error(err, "Path.resolve", self))
-  self.path = realpath
-  return self
+  return Path.join(realpath)
 end
 
 --- Wrapper around |isdirectory()|.
