@@ -1,5 +1,3 @@
-local Vaults = require("my.vaults")
-
 ---@module "lazy"
 ---@type LazySpec
 return {
