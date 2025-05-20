@@ -43,6 +43,7 @@ return {
       statuscolumn = { enabled = true },
       words = { enabled = true },
 
+      -- TODO: Extract to "plugins.ui.snacks-dashboard"
       dashboard = {
         enabled = true,
         preset = {
@@ -77,16 +78,18 @@ return {
           ---@type snacks.dashboard.Item[]
           keys = {
             { icon = "󰝒 ", key = "n", desc = "New", action = ":ene | startinsert" },
-            { icon = "󱋡 ", key = "r", desc = "Recents", action = ":Telescope oldfiles" },
-            { icon = " ", key = "g", desc = "Lazygit", action = ":lua Snacks.lazygit()" },
+            { icon = "󱎸 ", key = "/", desc = "Find Pattern", action = ":Telescope live_grep" },
+            { icon = "󰱼 ", key = "f", desc = "Find File", action = ":Telescope find_files" },
+            { icon = "󱋡 ", key = "r", desc = "Find Recent", action = ":Telescope oldfiles" },
             {
-              icon = " ",
+              icon = "󱁻 ",
               key = "c",
-              desc = "Configs",
+              desc = "Find Config",
               action = function()
                 require("telescope.builtin").find_files({ cwd = Path.stdpath("config").path, follow = true })
               end,
             },
+            { icon = " ", key = "g", desc = "Lazygit", action = ":lua Snacks.lazygit()" },
             { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
             { icon = " ", key = "q", desc = "Quit", action = ":qa" },
           },
