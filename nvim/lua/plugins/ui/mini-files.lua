@@ -1,49 +1,52 @@
 ---@module "lazy"
 ---@type LazySpec
 return {
-  -- "echasnovski/mini.nvim",
-  -- main = "mini.files",
-  -- enabled = false,
-  -- opts = {
-  --   windows = {
-  --     preview = true,
-  --     width_focus = 32,
-  --     width_nofocus = 16,
-  --     width_preview = 64,
-  --   },
-  --   mappings = {
-  --     close = "-",
-  --     go_in = "",
-  --     go_in_plus = "L",
-  --     go_out = "",
-  --     go_out_plus = "H",
-  --     reset = "<c-c>",
-  --     reveal_cwd = "g.",
-  --     synchronize = "<cr>",
-  --     trim_left = "<c-h>",
-  --     trim_right = "<c-l>",
-  --   },
-  -- },
-  -- keys = {
-  --   {
-  --     "-",
-  --     function()
-  --       local buf_file = vim.api.nvim_buf_get_name(0)
-  --       require("mini.files").open(vim.uv.fs_stat(buf_file) and buf_file or nil)
-  --     end,
-  --     { desc = "Open Directory" },
-  --   },
-  -- },
-  -- init = function()
-  --   -- h: snacks-rename-mini.files
-  --   vim.api.nvim_create_autocmd("User", {
-  --     pattern = "MiniFilesActionRename",
-  --     callback = function(event) require("snacks.rename").on_rename_file(event.data.from, event.data.to) end,
-  --   })
-  --
-  --   vim.api.nvim_create_autocmd("User", {
-  --     pattern = "MiniFilesActionDelete",
-  --     callback = function(event) require("snacks.bufdelete").delete({ file = event.data.from }) end,
-  --   })
-  -- end,
+  "echasnovski/mini.nvim",
+  main = "mini.files",
+  opts = {
+    windows = {
+      preview = true,
+      width_focus = 32,
+      width_nofocus = 16,
+      width_preview = 64,
+    },
+    mappings = {
+      close = "-",
+      go_in = "",
+      go_in_plus = "L",
+      go_out = "",
+      go_out_plus = "H",
+      reset = "<c-c>",
+      reveal_cwd = "g.",
+      synchronize = "<cr>",
+      trim_left = "<c-h>",
+      trim_right = "<c-l>",
+    },
+  },
+  keys = {
+    {
+      "-",
+      function()
+        local buf_file = vim.api.nvim_buf_get_name(0)
+        require("mini.files").open(vim.uv.fs_stat(buf_file) and buf_file or nil)
+      end,
+      { desc = "Open Directory" },
+    },
+  },
+  init = function()
+    -- h: snacks-rename-mini.files
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "MiniFilesActionRename",
+      callback = function(event)
+        vim.schedule(function() require("snacks.rename").on_rename_file(event.data.from, event.data.to) end)
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "MiniFilesActionDelete",
+      callback = function(event)
+        vim.schedule(function() require("snacks.bufdelete").delete({ file = event.data.from }) end)
+      end,
+    })
+  end,
 }
