@@ -36,7 +36,7 @@
   "parrot.nvim": { "branch": "main", "commit": "758c3acad75469434700b28ee756d6515fdf7c1a" },
   "plenary.nvim": { "branch": "master", "commit": "857c5ac632080dba10aae49dba902ce3abf91b35" },
   "projects.nvim": { "branch": "main", "commit": "5339576e8eb43e56a4f426acdec22a0ec35c0561" },
-  "render-markdown.nvim": { "branch": "main", "commit": "a1b0988f5ab26698afb56b9c2f0525a4de1195c1" },
+  "render-markdown.nvim": { "branch": "main", "commit": "4f05de7536571e231b66dd0363af347b162b5fd7" },
   "snacks.nvim": { "branch": "main", "commit": "bc0630e43be5699bb94dadc302c0d21615421d93" },
   "telescope-emoji.nvim": { "branch": "master", "commit": "86248d97be84a1ce83f0541500ef9edc99ea2aa1" },
   "telescope.nvim": { "branch": "master", "commit": "b4da76be54691e854d3e0e02c36b0245f945c2c7" },
