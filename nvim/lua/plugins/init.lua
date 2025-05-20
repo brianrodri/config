@@ -1,4 +1,5 @@
 local MODULE_NAMES = {
+  "ai",
   "core",
   "integ",
   "lang",
