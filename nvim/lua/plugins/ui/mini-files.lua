@@ -1,3 +1,14 @@
+local function open_in_split(direction)
+  local MiniFiles = require("mini.files")
+  local cur_target = MiniFiles.get_explorer_state().target_window
+  local new_target = vim.api.nvim_win_call(cur_target, function()
+    vim.cmd(direction .. " split")
+    return vim.api.nvim_get_current_win()
+  end)
+  MiniFiles.set_target_window(new_target)
+  MiniFiles.go_in({ close_on_file = true })
+end
+
 ---@module "lazy"
 ---@type LazySpec
 return {
@@ -24,17 +35,27 @@ return {
     },
   },
   keys = {
-    {
-      "-",
-      function()
-        local buf_file = vim.api.nvim_buf_get_name(0)
-        require("mini.files").open(vim.uv.fs_stat(buf_file) and buf_file or nil)
-      end,
-      { desc = "Open Directory" },
-    },
+    { "-", function() require("mini.files").open(vim.api.nvim_buf_get_name(0)) end, { desc = "Open Directory" } },
   },
   init = function()
-    -- h: snacks-rename-mini.files
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "MiniFilesBufferCreate",
+      callback = function(event)
+        local buf_id = event.data.buf_id
+        -- stylua: ignore
+        -- luacheck: no max line length
+        require("which-key").add({
+          { "<C-l>", function() open_in_split("belowright vertical") end, desc = "Open On Right", buffer = buf_id },
+          { "<C-j>", function() open_in_split("belowright horizontal") end, desc = "Open On Bottom", buffer = buf_id },
+          { "<C-k>", function() open_in_split("aboveleft horizontal") end, desc = "Open On Top", buffer = buf_id },
+          { "<C-h>", function() open_in_split("aboveleft vertical") end, desc = "Open On Left", buffer = buf_id },
+          { "<cr>", function() require("mini.files").go_in({ close_on_file = true }) end, desc = "Close", buffer = buf_id },
+          { "q", function() require("mini.files").close() end, desc = "Close", buffer = buf_id },
+          { "<esc>", function() require("mini.files").close() end, desc = "Close", buffer = buf_id },
+        })
+      end,
+    })
+
     vim.api.nvim_create_autocmd("User", {
       pattern = "MiniFilesActionRename",
       callback = function(event)
