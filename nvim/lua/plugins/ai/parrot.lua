@@ -1,6 +1,8 @@
 ---@module "lazy"
 ---@type LazySpec
 return {
+  -- TODO: How do I get markdownlint to ignore parrot.nvim buffers, which happen to use markdown filetypes?
+
   {
     "frankroeder/parrot.nvim",
     dependencies = { "ibhagwan/fzf-lua" },
