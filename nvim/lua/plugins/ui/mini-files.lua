@@ -9,6 +9,11 @@ local function open_in_split(direction)
   MiniFiles.go_in({ close_on_file = true })
 end
 
+local function sync_or_go_in()
+  local MiniFiles = require("mini.files")
+  if not MiniFiles.synchronize() then MiniFiles.go_in({ close_on_file = true }) end
+end
+
 ---@module "lazy"
 ---@type LazySpec
 return {
@@ -49,7 +54,7 @@ return {
           { "<C-j>", function() open_in_split("belowright horizontal") end, desc = "Open On Bottom", buffer = buf_id },
           { "<C-k>", function() open_in_split("aboveleft horizontal") end, desc = "Open On Top", buffer = buf_id },
           { "<C-h>", function() open_in_split("aboveleft vertical") end, desc = "Open On Left", buffer = buf_id },
-          { "<cr>", function() require("mini.files").go_in({ close_on_file = true }) end, desc = "Close", buffer = buf_id },
+          { "<cr>", sync_or_go_in, buffer = buf_id, hidden = true },
           { "q", function() require("mini.files").close() end, desc = "Close", buffer = buf_id },
           { "<esc>", function() require("mini.files").close() end, desc = "Close", buffer = buf_id },
         })
