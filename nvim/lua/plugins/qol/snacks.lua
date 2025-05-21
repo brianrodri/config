@@ -32,7 +32,7 @@ return {
     ---@type snacks.Config
     opts = {
       bigfile = { enabled = true },
-      explorer = { enabled = true },
+      explorer = { enabled = false },
       image = { enabled = true },
       input = { enabled = true },
       notifier = { enabled = true },
