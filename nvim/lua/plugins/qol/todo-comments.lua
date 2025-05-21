@@ -10,7 +10,7 @@ return {
   opts = {
     signs = false,
     keywords = { IMPORTANT = { icon = " ", color = "warning" } },
-    highlight = { keyword = "bg", after = "fg", pattern = { [[.*<(KEYWORDS):]], [[.*<(KEYWORDS)\(.{-}\):]] } },
+    highlight = { pattern = { [[.{-}<(\s?(KEYWORDS)):]], [[.{-}<(\s?(KEYWORDS)\(.{-}\)):]] } },
     search = { pattern = "\\b(KEYWORDS)(:|\\()" },
   },
 }
