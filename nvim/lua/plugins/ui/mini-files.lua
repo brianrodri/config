@@ -9,11 +9,6 @@ local function open_in_split(direction)
   MiniFiles.go_in({ close_on_file = true })
 end
 
-local function sync_or_go_in()
-  local MiniFiles = require("mini.files")
-  if not MiniFiles.synchronize() then MiniFiles.go_in({ close_on_file = true }) end
-end
-
 ---@module "lazy"
 ---@type LazySpec
 return {
@@ -35,7 +30,7 @@ return {
       go_out_plus = "H",
       reset = "<c-c>",
       reveal_cwd = "g.",
-      synchronize = "<cr>",
+      synchronize = "=",
       trim_left = "<c-h>",
       trim_right = "<c-l>",
     },
@@ -48,17 +43,14 @@ return {
       pattern = "MiniFilesBufferCreate",
       callback = function(event)
         local buf_id = event.data.buf_id
-        -- stylua: ignore
-        -- luacheck: no max line length
-        require("which-key").add({
-          { "<C-l>", function() open_in_split("belowright vertical") end, desc = "Open On Right", buffer = buf_id },
-          { "<C-j>", function() open_in_split("belowright horizontal") end, desc = "Open On Bottom", buffer = buf_id },
-          { "<C-k>", function() open_in_split("aboveleft horizontal") end, desc = "Open On Top", buffer = buf_id },
-          { "<C-h>", function() open_in_split("aboveleft vertical") end, desc = "Open On Left", buffer = buf_id },
-          { "<cr>", sync_or_go_in, buffer = buf_id, hidden = true },
-          { "q", function() require("mini.files").close() end, desc = "Close", buffer = buf_id },
-          { "<esc>", function() require("mini.files").close() end, desc = "Close", buffer = buf_id },
-        })
+        local buf_keymap = function(lhs, rhs, desc) vim.keymap.set("n", lhs, rhs, { desc = desc, buffer = buf_id }) end
+        buf_keymap("<C-l>", function() open_in_split("belowright vertical") end, "Open to right")
+        buf_keymap("<C-j>", function() open_in_split("belowright horizontal") end, "Open to bottom")
+        buf_keymap("<C-k>", function() open_in_split("aboveleft horizontal") end, "Open to top")
+        buf_keymap("<C-h>", function() open_in_split("aboveleft vertical") end, "Open to left")
+        buf_keymap("<cr>", function() require("mini.files").go_in({ close_on_file = true }) end, "Go in entry plus")
+        buf_keymap("q", function() require("mini.files").close() end, "Close")
+        buf_keymap("<esc>", function() require("mini.files").close() end, "Close")
       end,
     })
 
