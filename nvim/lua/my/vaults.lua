@@ -8,13 +8,13 @@ local ISO_TIME = "%H:%M"
 local ISO_DATE = "%Y-%m-%d"
 local ISO_WEEK = "%Y-W%V" -- TODO: Need to use "%G" here rather than "%Y" for correctness.
 
-local VAULT_ROOT = Path.join("~", "Documents", "Vault"):normalize():resolve()
-local INBOX = Path.join("0 - Index", "Inbox.md")
-local DAILY_DIR = Path.join("1 - Journal", "Daily")
-local WEEKLY_DIR = Path.join("1 - Journal", "Weekly")
-local FLEETING_NOTES_DIR = Path.join("2 - Fleeting Notes")
-local ATTACHMENTS_DIR = Path.join("8 - Meta", "Attachments")
-local TEMPLATES_DIR = Path.join("8 - Meta", "Neovim Templates")
+local VAULT_ROOT = Path.new("~", "Documents", "Vault"):normalize():resolve()
+local INBOX = Path.new("0 - Index", "Inbox.md")
+local DAILY_DIR = Path.new("1 - Journal", "Daily")
+local WEEKLY_DIR = Path.new("1 - Journal", "Weekly")
+local FLEETING_NOTES_DIR = Path.new("2 - Fleeting Notes")
+local ATTACHMENTS_DIR = Path.new("8 - Meta", "Attachments")
+local TEMPLATES_DIR = Path.new("8 - Meta", "Neovim Templates")
 
 local note_date_formatter = function(ctx, fmt, delta_days)
   local epoch = Dates.from_fmt(ctx.template.stem:match("Week") and ISO_WEEK or ISO_DATE, tostring(ctx.target_note.id))
@@ -36,9 +36,9 @@ return {
       note_id_func = function(title) return title or Dates.to_fmt(ISO_DATE) end,
       note_path_func = function(spec)
         local filename = string.format("%s.md", spec.id)
-        if pcall(Dates.from_fmt, ISO_DATE, spec.id) then return DAILY_DIR:join(filename).path end
-        if pcall(Dates.from_fmt, ISO_WEEK, spec.id) then return WEEKLY_DIR:join(filename).path end
-        return FLEETING_NOTES_DIR:join(filename).path
+        if pcall(Dates.from_fmt, ISO_DATE, spec.id) then return DAILY_DIR:new(filename).path end
+        if pcall(Dates.from_fmt, ISO_WEEK, spec.id) then return WEEKLY_DIR:new(filename).path end
+        return FLEETING_NOTES_DIR:new(filename).path
       end,
       disable_frontmatter = true,
       use_advanced_uri = true,
