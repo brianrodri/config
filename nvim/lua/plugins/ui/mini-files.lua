@@ -17,7 +17,8 @@ end
 ---@module "lazy"
 ---@type LazySpec
 return {
-  "echasnovski/mini.nvim",
+  -- TODO(echasnovski/mini.nvim#1816): switch back to "echasnovski/mini.nvim"
+  "brianrodri/mini.nvim",
   main = "mini.files",
   opts = {
     windows = {
