@@ -9,7 +9,8 @@ return {
   ---@diagnostic disable: missing-fields
   opts = {
     signs = false,
-    highlight = { pattern = ".*<(KEYWORDS)\\s*[:\\(]" },
-    search = { pattern = "\\b(KEYWORDS)[:\\(]" },
+    keywords = { IMPORTANT = { icon = " ", color = "warning" } },
+    highlight = { keyword = "bg", after = "fg", pattern = { [[.*<(KEYWORDS):]], [[.*<(KEYWORDS)\(.{-}\):]] } },
+    search = { pattern = "\\b(KEYWORDS)(:|\\()" },
   },
 }
