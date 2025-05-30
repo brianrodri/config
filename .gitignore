@@ -2,3 +2,5 @@
 .DS_Store
 # Work-specific config
 work.zsh
+# TPM plugins
+tmux/plugins
