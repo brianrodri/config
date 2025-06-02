@@ -1,0 +1,5 @@
+---
+config:
+  fallback-icon: "\U000F02D7"
+  multi-pane-icon: ""
+  show-name: false
