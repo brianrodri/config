@@ -1,5 +1,5 @@
 DOT_FILES = zshrc oh-my-posh.yaml
-CONFIG_DIRS = ghostty tmux
+CONFIG_DIRS = ghostty tmux yamlfmt
 
 install: $(DOT_FILES)
 	git submodule init && git submodule update
