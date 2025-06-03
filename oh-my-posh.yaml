@@ -1,90 +1,118 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 ---
+palette:
+  # source: https://user-images.githubusercontent.com/58662350/214382274-0108806d-b605-4047-af4b-c49ae06a2e8e.png
+  everforest-bg-dim: "#1E2326"
+  everforest-bg0: "#272E33"
+  everforest-bg1: "#2E383C"
+  everforest-bg2: "#374145"
+  everforest-bg3: "#414B50"
+  everforest-bg4: "#495156"
+  everforest-bg5: "#4F5B58"
+  everforest-bg-red: "#4F5B58"
+  everforest-bg-visual: "#4F5B58"
+  everforest-bg-yellow: "#4F5B58"
+  everforest-bg-green: "#4F5B58"
+  everforest-bg-blue: "#4F5B58"
+  everforest-red: "#E67E80"
+  everforest-orange: "#E69875"
+  everforest-yellow: "#DBBC7F"
+  everforest-green: "#A7C080"
+  everforest-blue: "#7FBBB3"
+  everforest-aqua: "#83C092"
+  everforest-purple: "#D699B6"
+  everforest-fg: "#D3C6AA"
+  everforest-statusline1: "#A7C080"
+  everforest-statusline2: "#D3C6AA"
+  everforest-statusline3: "#E67E80"
+  everforest-gray0: "#7A8478"
+  everforest-gray1: "#859289"
+  everforest-gray2: "#9DA9A0"
 secondary_prompt:
   template: ' '
-  foreground: green
+  foreground: p:everforest-green
 transient_prompt:
   template: ' '
   type: text
   style: plain
   foreground_templates:
-    - '{{ if gt .Code 0 }}red{{ end }}'
-    - '{{ if eq .Code 0 }}green{{ end }}'
+    - '{{ if gt .Code 0 }}p:everforest-red{{ end }}'
+    - '{{ if eq .Code 0 }}p:everforest-green{{ end }}'
   newline: true
 blocks:
   - type: prompt
     alignment: left
     segments:
-      - template: ' {{ .Icon }} '
+      - type: os
+        template: ' {{ .Icon }} '
         foreground: white
         background: transparent
-        type: os
         style: powerline
-      - template: "{{ if .Root }} \U000F140B {{ else }}  {{ end }}<b>{{ .UserName }}</b> "
+      - type: session
+        template: "{{ if .Root }} \U000F140B {{ else }}  {{ end }}<b>{{ .UserName }}</b> "
         foreground: transparent
         powerline_symbol: 
-        background: green
-        type: session
+        background: p:everforest-green
         style: powerline
         background_templates:
-          - '{{ if .Root }}red{{ end }}'
-      - properties:
-          folder_icon: ' '
-          home_icon: ' '
+          - '{{ if .Root }}p:everforest-red{{ end }}'
+      - type: path
+        properties:
+          folder_icon: 
+          home_icon: '
           style: full
         template: ' {{ .Path }} '
-        foreground: green
+        foreground: p:everforest-gray1
         powerline_symbol: 
-        background: '#414b50'
-        type: path
+        background: p:everforest-bg1
         style: powerline
-      - foreground: transparent
+      - type: git
+        foreground: p:everforest-gray1
+        background: p:everforest-bg1
+        template: ""
+        style: powerline
+      - type: git
+        style: powerline
         powerline_symbol: 
-        background: transparent
-        type: git
-        style: accordian
-      - properties:
+        background: p:everforest-bg1
+        foreground: p:everforest-green
+        foreground_templates:
+          - '{{ if or (.Working.Changed) (.Staging.Changed) }}p:everforest-yellow{{ end }}'
+          - '{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:everforest-orange{{ end }}'
+          - '{{ if or (gt .Ahead 0) (gt .Behind 0) }}p:everforest-purple{{ end }}'
+        templates:
+          - '{{ .UpstreamIcon }}{{ .HEAD }} '
+          - '{{ if .BranchStatus }}<p:everforest-gray1></> {{ .BranchStatus }} {{ end }}'
+          - '{{ if .Working.Changed }} {{ .Working.String }} {{ end }}'
+          - '{{ if .Staging.Changed }} {{ .Staging.String }} {{ end }}'
+          - "{{ if gt .StashCount 0 }}\U000F0687 {{ .StashCount }} {{ end }}"
+        properties:
           branch_icon: ' '
+          fetch_upstream_icon: true
           fetch_stash_count: true
           fetch_status: true
-        foreground: transparent
-        powerline_symbol: 
-        background: green
-        type: git
-        style: powerline
-        background_templates:
-          - '{{ if or (.Working.Changed) (.Staging.Changed) }}yellow{{ end }}'
-          - '{{ if and (gt .Ahead 0) (gt .Behind 0) }}red{{ end }}'
-          - '{{ if gt .Ahead 0 }}cyan{{ end }}'
-          - '{{ if gt .Behind 0 }}cyan{{ end }}'
-        templates:
-          - ' <b>{{ .HEAD }}</b> '
-          - '{{ if .BranchStatus }}{{ .BranchStatus }} {{ end }}'
-          - '{{ if .Working.Changed }} {{ .Working.String }} {{ end }}'
-          - '{{ if .Staging.Changed }} {{ .Staging.String }} {{ end }}'
-          - "{{ if gt .StashCount 0 }}\U000F120E {{ .StashCount }} {{ end }}"
     newline: true
   - type: prompt
     alignment: right
     segments:
-      - properties:
+      - type: executiontime
+        properties:
           threshold: 1000
         template: '{{ .FormattedMs }}  '
-        foreground: yellow
-        type: executiontime
+        foreground: p:everforest-yellow
         style: plain
         foreground_templates:
-          - '{{ if gt .Code 0 }}red{{ end }}'
-      - foreground: transparent
+          - '{{ if gt .Code 0 }}p:everforest-red{{ end }}'
+      - type: battery
+        foreground: transparent
         templates_logic: first_match
-        background: green
-        type: battery
+        background: p:everforest-green
         style: powerline
         leading_powerline_symbol: 
         background_templates:
-          - '{{ if eq .State.String "Charging" }}green{{ end }}'
-          - '{{ if le .Percentage 20 }}red{{ end }}'
-          - '{{ if le .Percentage 50 }}yellow{{ end }}'
+          - '{{ if eq .State.String "Charging" }}p:everforest-green{{ end }}'
+          - '{{ if le .Percentage 20 }}p:everforest-red{{ end }}'
+          - '{{ if le .Percentage 50 }}p:everforest-yellow{{ end }}'
         templates:
           - "{{ if le .Percentage 10 -}}            {{- if eq .State.String \"Charging\" }} \U000F089C {{ else }} \U000F007A {{ end }}{{ .Percentage }}% {{ end }}"
           - "{{ if le .Percentage 20 -}}            {{- if eq .State.String \"Charging\" }} \U000F0086 {{ else }} \U000F007B {{ end }}{{ .Percentage }}% {{ end }}"
@@ -100,11 +128,11 @@ blocks:
     alignment: left
     segments:
       - template: 
-        foreground: green
+        foreground: p:everforest-green
         type: text
         style: plain
         foreground_templates:
-          - '{{ if ne .Code 0 }}red{{ end }}'
+          - '{{ if ne .Code 0 }}p:everforest-red{{ end }}'
     newline: true
 version: 3
 enable_cursor_positioning: true
