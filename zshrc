@@ -23,10 +23,8 @@ export plugins=(
 	"zsh-completions"
 	"zsh-vi-mode"
 )
-# https://github.com/jeffreytse/zsh-vi-mode?tab=readme-ov-file#execute-extra-commands
-function zvm_after_init() {
-  type "fzf" &>/dev/null && source <(fzf --zsh)
-}
+# https://github.com/jeffreytse/zsh-vi-mode#execute-extra-commands
+zvm_after_init_commands+=('[ -f "$(command -v fzf)" ] && source <(fzf --zsh)')
 # shellcheck disable=SC1091
 [ -f "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 # https://ohmyposh.dev/docs/installation/prompt
