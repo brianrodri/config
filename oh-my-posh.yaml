@@ -1,5 +1,8 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 ---
+version: 3
+enable_cursor_positioning: true
+final_space: true
 palette:
   # source: https://user-images.githubusercontent.com/58662350/214382274-0108806d-b605-4047-af4b-c49ae06a2e8e.png
   everforest-bg-dim: "#1E2326"
@@ -28,112 +31,118 @@ palette:
   everforest-gray0: "#7A8478"
   everforest-gray1: "#859289"
   everforest-gray2: "#9DA9A0"
-secondary_prompt:
-  template: ' '
-  foreground: p:everforest-green
-transient_prompt:
-  template: ' '
-  type: text
-  style: plain
-  foreground_templates:
-    - '{{ if gt .Code 0 }}p:everforest-red{{ end }}'
-    - '{{ if eq .Code 0 }}p:everforest-green{{ end }}'
-  newline: true
 blocks:
   - type: prompt
     alignment: left
+    newline: true
     segments:
       - type: os
-        template: ' {{ .Icon }} '
-        foreground: white
-        background: transparent
         style: powerline
+        foreground: p:everforest-fg
+        background: p:everforest-bg0
+        template: " {{ .Icon }} "
       - type: session
-        template: "{{ if .Root }} \U000F140B {{ else }}  {{ end }}<b>{{ .UserName }}</b> "
-        foreground: transparent
-        powerline_symbol: 
-        background: p:everforest-green
         style: powerline
+        powerline_symbol: 
+        foreground: p:everforest-bg0
         background_templates:
-          - '{{ if .Root }}p:everforest-red{{ end }}'
-      - type: path
-        properties:
-          folder_icon: 
-          home_icon: '
-          style: full
-        template: ' {{ .Path }} '
-        foreground: p:everforest-gray1
-        powerline_symbol: 
-        background: p:everforest-bg1
-        style: powerline
-      - type: git
-        foreground: p:everforest-gray1
-        background: p:everforest-bg1
-        template: ""
-        style: powerline
+          - "{{ if .Root }}p:everforest-red{{ else }}p:everforest-green{{ end }}"
+        template: "{{ if .Root }} \U000F140B {{ else }}  {{ end }}<b>{{ .UserName }}</b> "
       - type: git
         style: powerline
         powerline_symbol: 
+        foreground: p:everforest-gray1
         background: p:everforest-bg1
-        foreground: p:everforest-green
-        foreground_templates:
-          - '{{ if or (.Working.Changed) (.Staging.Changed) }}p:everforest-yellow{{ end }}'
-          - '{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:everforest-orange{{ end }}'
-          - '{{ if or (gt .Ahead 0) (gt .Behind 0) }}p:everforest-purple{{ end }}'
         templates:
-          - '{{ .UpstreamIcon }}{{ .HEAD }} '
-          - '{{ if .BranchStatus }}<p:everforest-gray1></> {{ .BranchStatus }} {{ end }}'
-          - '{{ if .Working.Changed }} {{ .Working.String }} {{ end }}'
-          - '{{ if .Staging.Changed }} {{ .Staging.String }} {{ end }}'
-          - "{{ if gt .StashCount 0 }}\U000F0687 {{ .StashCount }} {{ end }}"
+          # Upstream diff indicators
+          - " {{ .HEAD }} "
+          - "{{ if or  (gt .Ahead 0)      (gt .Behind 0)            }} {{ .UpstreamIcon }} {{ end }}"
+          - "{{ if     (gt .Ahead 0)                                }}<p:everforest-aqua>↑{{ .Ahead }}</> {{ end }}"
+          - "{{ if                        (gt .Behind 0)            }}<p:everforest-purple>↓{{ .Behind }}</> {{ end }}"
+          # Working tree indicators
+          - "{{ if     (.Working.Changed)                           }}  {{ end }}"
+          - "{{ if and (.Working.Changed) (gt .Working.Added 0)     }}<p:everforest-green>\U000F0415{{ .Working.Added }}</> {{ end }}"
+          - "{{ if and (.Working.Changed) (gt .Working.Modified 0)  }}<p:everforest-blue>\U000F0725{{ .Working.Modified }}</> {{ end }}"
+          - "{{ if and (.Working.Changed) (gt .Working.Deleted 0)   }}<p:everforest-red>\U000F0374{{ .Working.Deleted }}</> {{ end }}"
+          - "{{ if and (.Working.Changed) (gt .Working.Untracked 0) }}<p:everforest-yellow>\U000F07E2{{ .Working.Untracked }}</> {{ end }}"
+          - "{{ if and (.Working.Changed) (gt .Working.Unmerged 0)  }}<p:everforest-aqua>\U000F0156{{ .Working.Unmerged }}</> {{ end }}"
+          # Staging tree indicators
+          - "{{ if     (.Staging.Changed)                           }}  {{ end }}"
+          - "{{ if and (.Staging.Changed) (gt .Staging.Added 0)     }}<p:everforest-green>\U000F0415{{ .Staging.Added }}</> {{ end }}"
+          - "{{ if and (.Staging.Changed) (gt .Staging.Modified 0)  }}<p:everforest-blue>\U000F0725{{ .Staging.Modified }}</> {{ end }}"
+          - "{{ if and (.Staging.Changed) (gt .Staging.Deleted 0)   }}<p:everforest-red>\U000F0374{{ .Staging.Deleted }}</> {{ end }}"
+          - "{{ if and (.Staging.Changed) (gt .Staging.Untracked 0) }}<p:everforest-yellow>\U000F07E2{{ .Staging.Untracked }}</> {{ end }}"
+          - "{{ if and (.Staging.Changed) (gt .Staging.Unmerged 0)  }}<p:everforest-aqua>\U000F0156{{ .Staging.Unmerged }}</> {{ end }}"
+          # Stash indicators
+          - "{{ if     (gt .StashCount 0)                           }} \U000F0687 <p:everforest-yellow>{{ .StashCount }}</> {{ end }}"
+          - ""
         properties:
-          branch_icon: ' '
-          fetch_upstream_icon: true
+          branch_ahead_icon: "↑ "
+          branch_behind_icon: "↓ "
+          branch_gone_icon: "≢ "
+          branch_icon: " "
+          branch_identical_icon: "≡ "
+          cherry_pick_icon: " "
+          commit_icon: " "
+          merge_icon: " "
+          no_commits_icon: " "
+          rebase_icon: " "
+          revert_icon: " "
+          tag_icon: " "
           fetch_stash_count: true
           fetch_status: true
-    newline: true
+          fetch_upstream_icon: true
+      - type: path
+        style: powerline
+        powerline_symbol: 
+        foreground: p:everforest-gray1
+        background: p:everforest-bg1
+        template: "{{ if .Segments.Contains \"Git\" }}{{ else }} {{ end }}{{ .Path }} "
+        properties:
+          style: agnoster_full
+          home_icon: "\U000F02DE"
+          folder_icon: "\U000F024B"
   - type: prompt
     alignment: right
     segments:
       - type: executiontime
-        properties:
-          threshold: 1000
-        template: '{{ .FormattedMs }}  '
-        foreground: p:everforest-yellow
         style: plain
         foreground_templates:
-          - '{{ if gt .Code 0 }}p:everforest-red{{ end }}'
+          - "{{ if gt .Code 0 }}p:everforest-red{{ else }}p:everforest-yellow{{ end }}"
+        template: "{{ .FormattedMs }}  "
       - type: battery
-        foreground: transparent
-        templates_logic: first_match
-        background: p:everforest-green
         style: powerline
         leading_powerline_symbol: 
+        foreground: p:everforest-bg0
         background_templates:
-          - '{{ if eq .State.String "Charging" }}p:everforest-green{{ end }}'
-          - '{{ if le .Percentage 20 }}p:everforest-red{{ end }}'
-          - '{{ if le .Percentage 50 }}p:everforest-yellow{{ end }}'
+          - "{{ if or (gt .Percentage 50) (eq .State.String \"Charging\") }}p:everforest-green{{ else if le .Percentage 20 }}p:everforest-red{{ else }}p:everforest-yellow{{ end }}"
         templates:
-          - "{{ if le .Percentage 10 -}}            {{- if eq .State.String \"Charging\" }} \U000F089C {{ else }} \U000F007A {{ end }}{{ .Percentage }}% {{ end }}"
-          - "{{ if le .Percentage 20 -}}            {{- if eq .State.String \"Charging\" }} \U000F0086 {{ else }} \U000F007B {{ end }}{{ .Percentage }}% {{ end }}"
-          - "{{ if le .Percentage 30 -}}            {{- if eq .State.String \"Charging\" }} \U000F0087 {{ else }} \U000F007C {{ end }}{{ .Percentage }}% {{ end }}"
-          - "{{ if le .Percentage 40 -}}            {{- if eq .State.String \"Charging\" }} \U000F0088 {{ else }} \U000F007D {{ end }}{{ .Percentage }}% {{ end }}"
-          - "{{ if le .Percentage 50 -}}            {{- if eq .State.String \"Charging\" }} \U000F089D {{ else }} \U000F007E {{ end }}{{ .Percentage }}% {{ end }}"
-          - "{{ if le .Percentage 60 -}}            {{- if eq .State.String \"Charging\" }} \U000F0089 {{ else }} \U000F007F {{ end }}{{ .Percentage }}% {{ end }}"
-          - "{{ if le .Percentage 70 -}}            {{- if eq .State.String \"Charging\" }} \U000F089E {{ else }} \U000F0080 {{ end }}{{ .Percentage }}% {{ end }}"
-          - "{{ if le .Percentage 80 -}}            {{- if eq .State.String \"Charging\" }} \U000F008A {{ else }} \U000F0081 {{ end }}{{ .Percentage }}% {{ end }}"
-          - "{{ if le .Percentage 90 -}}            {{- if eq .State.String \"Charging\" }} \U000F008B {{ else }} \U000F0082 {{ end }}{{ .Percentage }}% {{ end }}"
+          - "{{ if le .Percentage 10 -}}                       {{- if eq .State.String \"Charging\" }} \U000F089C {{ else }} \U000F007A {{ end }}{{ .Percentage }}% {{ end }}"
+          - "{{ if le .Percentage 20 -}}                       {{- if eq .State.String \"Charging\" }} \U000F0086 {{ else }} \U000F007B {{ end }}{{ .Percentage }}% {{ end }}"
+          - "{{ if le .Percentage 30 -}}                       {{- if eq .State.String \"Charging\" }} \U000F0087 {{ else }} \U000F007C {{ end }}{{ .Percentage }}% {{ end }}"
+          - "{{ if le .Percentage 40 -}}                       {{- if eq .State.String \"Charging\" }} \U000F0088 {{ else }} \U000F007D {{ end }}{{ .Percentage }}% {{ end }}"
+          - "{{ if le .Percentage 50 -}}                       {{- if eq .State.String \"Charging\" }} \U000F089D {{ else }} \U000F007E {{ end }}{{ .Percentage }}% {{ end }}"
+          - "{{ if le .Percentage 60 -}}                       {{- if eq .State.String \"Charging\" }} \U000F0089 {{ else }} \U000F007F {{ end }}{{ .Percentage }}% {{ end }}"
+          - "{{ if le .Percentage 70 -}}                       {{- if eq .State.String \"Charging\" }} \U000F089E {{ else }} \U000F0080 {{ end }}{{ .Percentage }}% {{ end }}"
+          - "{{ if le .Percentage 80 -}}                       {{- if eq .State.String \"Charging\" }} \U000F008A {{ else }} \U000F0081 {{ end }}{{ .Percentage }}% {{ end }}"
+          - "{{ if le .Percentage 90 -}}                       {{- if eq .State.String \"Charging\" }} \U000F008B {{ else }} \U000F0082 {{ end }}{{ .Percentage }}% {{ end }}"
           - "{{ if eq .State.String \"Full\" }} \U000F06A5 {{ else if eq .State.String \"Charging\" }} \U000F0085 {{ else }} \U000F0079 {{ end }}{{ .Percentage }}% "
+        templates_logic: first_match
   - type: prompt
     alignment: left
     segments:
-      - template: 
-        foreground: p:everforest-green
-        type: text
+      - type: text
         style: plain
         foreground_templates:
-          - '{{ if ne .Code 0 }}p:everforest-red{{ end }}'
-    newline: true
-version: 3
-enable_cursor_positioning: true
-final_space: true
+          - "{{ if ne .Code 0 }}p:everforest-red{{ else }}p:everforest-green{{ end }}"
+        template: 
+secondary_prompt:
+  foreground: p:everforest-green
+  template: " "
+transient_prompt:
+  type: text
+  style: plain
+  newline: true
+  foreground_templates:
+    - "{{ if gt .Code 0 }}p:everforest-red{{ else }}p:everforest-green{{ end }}"
+  template: " "
