@@ -1,0 +1,8 @@
+---
+yaml-files:
+  - "*.yaml"
+  - "*.yml"
+  - ".ymllint"
+extends: default
+rules:
+  line-length: disable
