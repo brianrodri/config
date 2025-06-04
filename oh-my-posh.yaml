@@ -1,8 +1,5 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 ---
-version: 3
-enable_cursor_positioning: true
-final_space: true
 palette:
   # source: https://user-images.githubusercontent.com/58662350/214382274-0108806d-b605-4047-af4b-c49ae06a2e8e.png
   everforest-bg-dim: "#1E2326"
@@ -31,6 +28,8 @@ palette:
   everforest-gray0: "#7A8478"
   everforest-gray1: "#859289"
   everforest-gray2: "#9DA9A0"
+version: 3
+final_space: true
 blocks:
   - type: prompt
     alignment: left
@@ -61,18 +60,18 @@ blocks:
           - "{{ if                        (gt .Behind 0)            }}<p:everforest-purple>↓{{ .Behind }}</> {{ end }}"
           # Working tree indicators
           - "{{ if     (.Working.Changed)                           }}  {{ end }}"
-          - "{{ if and (.Working.Changed) (gt .Working.Added 0)     }}<p:everforest-green>\U000F0415{{ .Working.Added }}</> {{ end }}"
-          - "{{ if and (.Working.Changed) (gt .Working.Modified 0)  }}<p:everforest-blue>\U000F0725{{ .Working.Modified }}</> {{ end }}"
-          - "{{ if and (.Working.Changed) (gt .Working.Deleted 0)   }}<p:everforest-red>\U000F0374{{ .Working.Deleted }}</> {{ end }}"
-          - "{{ if and (.Working.Changed) (gt .Working.Untracked 0) }}<p:everforest-yellow>\U000F07E2{{ .Working.Untracked }}</> {{ end }}"
-          - "{{ if and (.Working.Changed) (gt .Working.Unmerged 0)  }}<p:everforest-aqua>\U000F0156{{ .Working.Unmerged }}</> {{ end }}"
+          - "{{ if and (.Working.Changed) (gt .Working.Added 0)     }}<p:everforest-green>+{{ .Working.Added }}</> {{ end }}"
+          - "{{ if and (.Working.Changed) (gt .Working.Modified 0)  }}<p:everforest-blue>~{{ .Working.Modified }}</> {{ end }}"
+          - "{{ if and (.Working.Changed) (gt .Working.Deleted 0)   }}<p:everforest-red>-{{ .Working.Deleted }}</> {{ end }}"
+          - "{{ if and (.Working.Changed) (gt .Working.Untracked 0) }}<p:everforest-yellow>?{{ .Working.Untracked }}</> {{ end }}"
+          - "{{ if and (.Working.Changed) (gt .Working.Unmerged 0)  }}<p:everforest-aqua>x{{ .Working.Unmerged }}</> {{ end }}"
           # Staging tree indicators
           - "{{ if     (.Staging.Changed)                           }}  {{ end }}"
-          - "{{ if and (.Staging.Changed) (gt .Staging.Added 0)     }}<p:everforest-green>\U000F0415{{ .Staging.Added }}</> {{ end }}"
-          - "{{ if and (.Staging.Changed) (gt .Staging.Modified 0)  }}<p:everforest-blue>\U000F0725{{ .Staging.Modified }}</> {{ end }}"
-          - "{{ if and (.Staging.Changed) (gt .Staging.Deleted 0)   }}<p:everforest-red>\U000F0374{{ .Staging.Deleted }}</> {{ end }}"
-          - "{{ if and (.Staging.Changed) (gt .Staging.Untracked 0) }}<p:everforest-yellow>\U000F07E2{{ .Staging.Untracked }}</> {{ end }}"
-          - "{{ if and (.Staging.Changed) (gt .Staging.Unmerged 0)  }}<p:everforest-aqua>\U000F0156{{ .Staging.Unmerged }}</> {{ end }}"
+          - "{{ if and (.Staging.Changed) (gt .Staging.Added 0)     }}<p:everforest-green>+{{ .Staging.Added }}</> {{ end }}"
+          - "{{ if and (.Staging.Changed) (gt .Staging.Modified 0)  }}<p:everforest-blue>~{{ .Staging.Modified }}</> {{ end }}"
+          - "{{ if and (.Staging.Changed) (gt .Staging.Deleted 0)   }}<p:everforest-red>-{{ .Staging.Deleted }}</> {{ end }}"
+          - "{{ if and (.Staging.Changed) (gt .Staging.Untracked 0) }}<p:everforest-yellow>?{{ .Staging.Untracked }}</> {{ end }}"
+          - "{{ if and (.Staging.Changed) (gt .Staging.Unmerged 0)  }}<p:everforest-aqua>x{{ .Staging.Unmerged }}</> {{ end }}"
           # Stash indicators
           - "{{ if     (gt .StashCount 0)                           }} \U000F0687 <p:everforest-yellow>{{ .StashCount }}</> {{ end }}"
           - ""
@@ -104,6 +103,7 @@ blocks:
           folder_icon: "\U000F024B"
   - type: prompt
     alignment: right
+    newline: true
     segments:
       - type: executiontime
         style: plain
@@ -130,6 +130,7 @@ blocks:
         templates_logic: first_match
   - type: prompt
     alignment: left
+    newline: true
     segments:
       - type: text
         style: plain
