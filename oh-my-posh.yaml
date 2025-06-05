@@ -103,7 +103,6 @@ blocks:
           folder_icon: "\U000F024B"
   - type: prompt
     alignment: right
-    newline: true
     segments:
       - type: executiontime
         style: plain
