@@ -1,3 +1,7 @@
+[user]
+   name = "Brian Rodriguez"
+   email = "brian@brianrodri.com"
+
 [diff]
 ;  Tells Git to detect renames. If set to any boolean value, it will enable basic rename detection. If set to "copies"
 ;  or "copy", it will detect copies, as well; equivalent to the git diff options -M -C.
