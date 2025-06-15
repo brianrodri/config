@@ -1,0 +1,3 @@
+# yaml-language-server: $schema=https://json.schemastore.org/clang-tidy
+---
+Checks: modernize-use-default-member-init, modernize-return-braced-init-list, cppcoreguidelines-prefer-member-initializer
