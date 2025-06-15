@@ -1,4 +1,11 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/google/yamlfmt/refs/heads/main/schema.json
 formatter:
   type: basic
+  eof_newline: false
   include_document_start: true
+  line_ending: lf
+  pad_line_comments: 2
+  retain_line_breaks: false
+  retain_line_breaks_single: false
+  scan_folded_as_literal: false
