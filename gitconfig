@@ -1,0 +1,12 @@
+[user]
+   name = "Brian Rodriguez"
+   email = "brian@brianrodri.com"
+
+[diff]
+;  Tells Git to detect renames. If set to any boolean value, it will enable basic rename detection. If set to "copies"
+;  or "copy", it will detect copies, as well; equivalent to the git diff options -M -C.
+   renames = copies
+;  The number of files to consider when performing the copy/rename detection; equivalent to the git diff option -l.
+   renamelimit = 0
+
+; vim: filetype=dosini
