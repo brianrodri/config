@@ -1,6 +1,7 @@
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_CUSTOM="$HOME/Repositories/config/oh-my-zsh"
 export ZSH_TMUX_AUTOSTART=true
+export PERLBREW_ROOT="$HOME/.perl5"
 export plugins=(
 	"F-Sy-H"
 	"alias-tips"
