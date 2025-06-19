@@ -1,3 +1,22 @@
-if [[ -f "$(command -v gem)" ]]; then; export PATH="$(gem env gemdir)/bin:$PATH"; fi
-export MANPATH="$HOME/.cache/cppman:$MANPATH"
+if [ -f "$(command -v cppman)" ]; then
+  export MANPATH="$HOME/.cache/cppman:$MANPATH"
+fi
+
+if [ -f "$(command -v brew)" ]; then
+  export PATH="$(brew --prefix)/bin:$PATH"
+fi
+
+if [ -f "$(command -v gem)" ]; then
+  # Ruby is not linked by default to avoid conflicts with macOS's builtins.
+  export PATH="$(brew --prefix)/opt/ruby/bin:$PATH"
+  # Link to `gem` binaries
+  export PATH="$(gem environment gemdir)/bin:$PATH"
+fi
+
+if [ -f "$(command -v pyenv)" ]; then
+  # https://github.com/pyenv/pyenv#b-set-up-your-shell-environment-for-pyenv
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+fi
+
 export PATH="$HOME/.local/bin:$PATH"
