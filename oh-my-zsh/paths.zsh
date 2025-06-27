@@ -4,6 +4,7 @@ fi
 
 if [ -f "$(command -v brew)" ]; then
   export PATH="$(brew --prefix)/bin:$PATH"
+  export PATH="$(brew --prefix)/opt/llvm/bin:$PATH"
 fi
 
 if [ -f "$(command -v gem)" ]; then
