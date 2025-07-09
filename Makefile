@@ -1,4 +1,4 @@
-DOT_FILES = gitconfig zshrc oh-my-posh.yaml
+DOT_FILES = clang-tidy.yml clang-format.yml gitconfig oh-my-posh.yaml zshrc
 CONFIG_DIRS = ghostty git tmux yamlfmt yamllint
 
 install: $(DOT_FILES)
