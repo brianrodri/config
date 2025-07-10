@@ -1,3 +1,5 @@
 export EDITOR=nvim
-export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+if [ -f "$(command -v brew)" ]; then
+  export LDFLAGS="-L$(brew --prefix)/opt/llvm/lib"
+  export CPPFLAGS="-I$(brew --prefix)/opt/llvm/include"
+fi
