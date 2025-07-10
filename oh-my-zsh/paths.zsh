@@ -21,7 +21,8 @@ fi
 if [ -f "$(command -v pyenv)" ]; then
   # https://github.com/pyenv/pyenv#b-set-up-your-shell-environment-for-pyenv
   export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
+  [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init - zsh)"
 fi
 
 export PATH="$HOME/.local/bin:$PATH"
