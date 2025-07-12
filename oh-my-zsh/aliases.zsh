@@ -8,5 +8,6 @@ alias dr="direnv reload"
 
 # Vault
 alias cdv="cd $HOME/Documents/Vault"
+alias cdr="cd $HOME/Repositories"
 alias cdc="cd $HOME/Repositories/config"
 alias cdn="cd $HOME/Repositories/nvim"
