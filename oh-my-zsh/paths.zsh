@@ -25,4 +25,8 @@ if [ -f "$(command -v pyenv)" ]; then
   eval "$(pyenv init - zsh)"
 fi
 
+if [ -f "$(command -v cargo)" ]; then
+  export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
 export PATH="$HOME/.local/bin:$PATH"
