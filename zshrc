@@ -17,6 +17,7 @@ export plugins=(
 	"last-working-dir"
 	"macos"
 	"npm"
+	"rust"
 	"sublime"
 	"sublime-merge"
 	"tmux"
