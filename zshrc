@@ -21,6 +21,7 @@ export plugins=(
 	"sublime"
 	"sublime-merge"
 	"tmux"
+	"vscode"
 	"zsh-autosuggestions"
 	"zsh-completions"
 	"zsh-vi-mode"
