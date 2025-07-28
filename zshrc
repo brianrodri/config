@@ -7,6 +7,7 @@ export plugins=(
 	"alias-tips"
 	"brew"
 	"common-aliases"
+	"docker"
 	"direnv"
 	"fzf"
 	"gem"
