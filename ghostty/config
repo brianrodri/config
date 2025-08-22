@@ -1,5 +1,5 @@
-theme = everforest-dark-hard
+theme = catppuccin-mocha
 confirm-close-surface = false
-font-size = 15
+font-size = 13
 font-feature = -calt, -liga, -dlig
-font-family = FantasqueSansM Nerd Font
+font-family = Maple Mono NF

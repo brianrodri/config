@@ -1,33 +1,5 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 ---
-palette:
-  # source: https://user-images.githubusercontent.com/58662350/214382274-0108806d-b605-4047-af4b-c49ae06a2e8e.png
-  everforest-bg-dim: "#1E2326"
-  everforest-bg0: "#272E33"
-  everforest-bg1: "#2E383C"
-  everforest-bg2: "#374145"
-  everforest-bg3: "#414B50"
-  everforest-bg4: "#495156"
-  everforest-bg5: "#4F5B58"
-  everforest-bg-red: "#4C3743"
-  everforest-bg-visual: "#493B40"
-  everforest-bg-yellow: "#45443C"
-  everforest-bg-green: "#3C4841"
-  everforest-bg-blue: "#384B55"
-  everforest-red: "#E67E80"
-  everforest-orange: "#E69875"
-  everforest-yellow: "#DBBC7F"
-  everforest-green: "#A7C080"
-  everforest-blue: "#7FBBB3"
-  everforest-aqua: "#83C092"
-  everforest-purple: "#D699B6"
-  everforest-fg: "#D3C6AA"
-  everforest-statusline1: "#A7C080"
-  everforest-statusline2: "#D3C6AA"
-  everforest-statusline3: "#E67E80"
-  everforest-gray0: "#7A8478"
-  everforest-gray1: "#859289"
-  everforest-gray2: "#9DA9A0"
 version: 3
 final_space: true
 blocks:
@@ -37,43 +9,43 @@ blocks:
     segments:
       - type: os
         style: powerline
-        foreground: p:everforest-fg
-        background: p:everforest-bg0
+        foreground: default
+        background: transparent
         template: " {{ .Icon }} "
       - type: session
         style: powerline
-        powerline_symbol: 
-        foreground: p:everforest-bg0
+        powerline_symbol: 
+        foreground: transparent
         background_templates:
-          - "{{ if .Root }}p:everforest-red{{ else }}p:everforest-green{{ end }}"
+          - "{{ if .Root }}red{{ else }}green{{ end }}"
         template: "{{ if .Root }} \U000F140B {{ else }}  {{ end }}<b>{{ .UserName }}</b> "
       - type: git
         style: powerline
-        powerline_symbol: 
-        foreground: p:everforest-gray1
-        background: p:everforest-bg1
+        powerline_symbol: 
+        foreground: default
+        background: black
         templates:
           # Upstream diff indicators
           - " {{ .HEAD }} "
           - "{{ if or  (gt .Ahead 0)      (gt .Behind 0)            }} {{ .UpstreamIcon }} {{ end }}"
-          - "{{ if     (gt .Ahead 0)                                }}<p:everforest-aqua>↑{{ .Ahead }}</> {{ end }}"
-          - "{{ if                        (gt .Behind 0)            }}<p:everforest-purple>↓{{ .Behind }}</> {{ end }}"
+          - "{{ if     (gt .Ahead 0)                                }}<aqua>↑{{ .Ahead }}</> {{ end }}"
+          - "{{ if                        (gt .Behind 0)            }}<purple>↓{{ .Behind }}</> {{ end }}"
           # Working tree indicators
           - "{{ if     (.Working.Changed)                           }}  {{ end }}"
-          - "{{ if and (.Working.Changed) (gt .Working.Added 0)     }}<p:everforest-green>+{{ .Working.Added }}</> {{ end }}"
-          - "{{ if and (.Working.Changed) (gt .Working.Modified 0)  }}<p:everforest-yellow>~{{ .Working.Modified }}</> {{ end }}"
-          - "{{ if and (.Working.Changed) (gt .Working.Deleted 0)   }}<p:everforest-red>-{{ .Working.Deleted }}</> {{ end }}"
-          - "{{ if and (.Working.Changed) (gt .Working.Untracked 0) }}<p:everforest-purple>?{{ .Working.Untracked }}</> {{ end }}"
-          - "{{ if and (.Working.Changed) (gt .Working.Unmerged 0)  }}<p:everforest-aqua>x{{ .Working.Unmerged }}</> {{ end }}"
+          - "{{ if and (.Working.Changed) (gt .Working.Added 0)     }}<green>+{{ .Working.Added }}</> {{ end }}"
+          - "{{ if and (.Working.Changed) (gt .Working.Modified 0)  }}<yellow>~{{ .Working.Modified }}</> {{ end }}"
+          - "{{ if and (.Working.Changed) (gt .Working.Deleted 0)   }}<red>-{{ .Working.Deleted }}</> {{ end }}"
+          - "{{ if and (.Working.Changed) (gt .Working.Untracked 0) }}<purple>?{{ .Working.Untracked }}</> {{ end }}"
+          - "{{ if and (.Working.Changed) (gt .Working.Unmerged 0)  }}<aqua>x{{ .Working.Unmerged }}</> {{ end }}"
           # Staging tree indicators
           - "{{ if     (.Staging.Changed)                           }}  {{ end }}"
-          - "{{ if and (.Staging.Changed) (gt .Staging.Added 0)     }}<p:everforest-green>+{{ .Staging.Added }}</> {{ end }}"
-          - "{{ if and (.Staging.Changed) (gt .Staging.Modified 0)  }}<p:everforest-yellow>~{{ .Staging.Modified }}</> {{ end }}"
-          - "{{ if and (.Staging.Changed) (gt .Staging.Deleted 0)   }}<p:everforest-red>-{{ .Staging.Deleted }}</> {{ end }}"
-          - "{{ if and (.Staging.Changed) (gt .Staging.Untracked 0) }}<p:everforest-purple>?{{ .Staging.Untracked }}</> {{ end }}"
-          - "{{ if and (.Staging.Changed) (gt .Staging.Unmerged 0)  }}<p:everforest-aqua>x{{ .Staging.Unmerged }}</> {{ end }}"
+          - "{{ if and (.Staging.Changed) (gt .Staging.Added 0)     }}<green>+{{ .Staging.Added }}</> {{ end }}"
+          - "{{ if and (.Staging.Changed) (gt .Staging.Modified 0)  }}<yellow>~{{ .Staging.Modified }}</> {{ end }}"
+          - "{{ if and (.Staging.Changed) (gt .Staging.Deleted 0)   }}<red>-{{ .Staging.Deleted }}</> {{ end }}"
+          - "{{ if and (.Staging.Changed) (gt .Staging.Untracked 0) }}<purple>?{{ .Staging.Untracked }}</> {{ end }}"
+          - "{{ if and (.Staging.Changed) (gt .Staging.Unmerged 0)  }}<aqua>x{{ .Staging.Unmerged }}</> {{ end }}"
           # Stash indicators
-          - "{{ if     (gt .StashCount 0)                           }} \U000F0687 <p:everforest-yellow>{{ .StashCount }}</> {{ end }}"
+          - "{{ if     (gt .StashCount 0)                           }} \U000F0687 <yellow>{{ .StashCount }}</> {{ end }}"
           - ""
         properties:
           branch_ahead_icon: "↑ "
@@ -93,10 +65,10 @@ blocks:
           fetch_upstream_icon: true
       - type: path
         style: powerline
-        powerline_symbol: 
-        foreground: p:everforest-gray1
-        background: p:everforest-bg1
-        template: "{{ if .Segments.Contains \"Git\" }}{{ else }} {{ end }}{{ .Path }} "
+        powerline_symbol: 
+        foreground: default
+        background: black
+        template: '{{ if .Segments.Contains "Git" }}{{ else }} {{ end }}{{ .Path }} '
         properties:
           style: agnoster_full
           home_icon: "\U000F02DE"
@@ -107,14 +79,14 @@ blocks:
       - type: executiontime
         style: plain
         foreground_templates:
-          - "{{ if gt .Code 0 }}p:everforest-red{{ else }}p:everforest-yellow{{ end }}"
+          - "{{ if gt .Code 0 }}red{{ else }}yellow{{ end }}"
         template: "{{ .FormattedMs }}  "
       - type: battery
         style: powerline
         leading_powerline_symbol: 
-        foreground: p:everforest-bg0
+        foreground: transparent
         background_templates:
-          - "{{ if or (gt .Percentage 50) (eq .State.String \"Charging\") }}p:everforest-green{{ else if le .Percentage 20 }}p:everforest-red{{ else }}p:everforest-yellow{{ end }}"
+          - '{{ if or (gt .Percentage 50) (eq .State.String "Charging") }}green{{ else if le .Percentage 20 }}red{{ else }}yellow{{ end }}'
         templates:
           - "{{ if le .Percentage 10 -}}                       {{- if eq .State.String \"Charging\" }} \U000F089C {{ else }} \U000F007A {{ end }}{{ .Percentage }}% {{ end }}"
           - "{{ if le .Percentage 20 -}}                       {{- if eq .State.String \"Charging\" }} \U000F0086 {{ else }} \U000F007B {{ end }}{{ .Percentage }}% {{ end }}"
@@ -134,15 +106,15 @@ blocks:
       - type: text
         style: plain
         foreground_templates:
-          - "{{ if ne .Code 0 }}p:everforest-red{{ else }}p:everforest-green{{ end }}"
+          - "{{ if ne .Code 0 }}red{{ else }}green{{ end }}"
         template: 
 secondary_prompt:
-  foreground: p:everforest-green
+  foreground: green
   template: " "
 transient_prompt:
   type: text
   style: plain
   newline: true
   foreground_templates:
-    - "{{ if gt .Code 0 }}p:everforest-red{{ else }}p:everforest-green{{ end }}"
+    - "{{ if gt .Code 0 }}red{{ else }}green{{ end }}"
   template: " "
