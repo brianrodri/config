@@ -25,8 +25,8 @@ if [ -f "$(command -v pyenv)" ]; then
   eval "$(pyenv init - zsh)"
 fi
 
-if [ -f "$(command -v cargo)" ]; then
-  export PATH="$HOME/.cargo/bin:$PATH"
+if [ -f "$(command -v rustup)" ]; then
+  export PATH="$(brew --prefix rustup)/bin:$PATH"
 fi
 
 export PATH="$HOME/.local/bin:$PATH"
