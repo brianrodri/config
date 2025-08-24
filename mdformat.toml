@@ -1,2 +1,2 @@
 number = true
-extensions = ["frontmatter", "obsidian", "wikilink"]
+extensions = ["frontmatter", "obsidian", "wikilink", "simple_breaks", "tables"]
