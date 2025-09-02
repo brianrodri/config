@@ -18,13 +18,6 @@ if [ -f "$(command -v gem)" ]; then
   export PATH="$(gem environment gemdir)/bin:$PATH"
 fi
 
-if [ -f "$(command -v pyenv)" ]; then
-  # https://github.com/pyenv/pyenv#b-set-up-your-shell-environment-for-pyenv
-  export PYENV_ROOT="$HOME/.pyenv"
-  [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init - zsh)"
-fi
-
 if [ -f "$(command -v rustup)" ]; then
   export PATH="$(brew --prefix rustup)/bin:$PATH"
 fi
