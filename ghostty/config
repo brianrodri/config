@@ -1,4 +1,4 @@
-theme = catppuccin-mocha
+theme = Thorn Dark Cold
 confirm-close-surface = false
 font-size = 13
 font-feature = -calt, -liga, -dlig
