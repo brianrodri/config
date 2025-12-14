@@ -50,6 +50,14 @@ blocks:
           - "{{ if and (.Staging.Changed) (gt .Staging.Unmerged 0)  }}<aqua>x{{ .Staging.Unmerged }}</> {{ end }}"
           - "{{ if     (gt .StashCount 0)                           }} \U000F0687 <yellow>{{ .StashCount }}</> {{ end }}"
           - 
+        options:
+          fetch_status: true
+          fetch_upstream_icon: true
+          branch_icon: " "
+          branch_identical_icon: "≡ "
+          branch_ahead_icon: "↑ "
+          branch_behind_icon: "↓ "
+          branch_gone_icon: "≢ "
       - template: '{{ if .Segments.Contains "Git" }}{{ else }} {{ end }}{{ .Path }} '
         foreground: default
         powerline_symbol: 
