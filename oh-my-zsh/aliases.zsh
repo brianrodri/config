@@ -6,8 +6,7 @@ alias gdn="git diff --name-only"
 alias da="direnv allow"
 alias dr="direnv reload"
 
-# Vault
-alias cdv="cd $HOME/Documents/Vault"
+alias cdv="cd $HOME/Vault"
 alias cdr="cd $HOME/Repositories"
 alias cdc="cd $HOME/Repositories/config"
 alias cdn="cd $HOME/Repositories/nvim"
