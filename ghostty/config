@@ -1,5 +1,4 @@
 theme = evergarden-winter-green
 confirm-close-surface = false
-font-size = 13
-font-feature = -calt, -liga, -dlig
-font-family = Maple Mono NF
+font-size = 12
+font-family = GeistMono Nerd Font
